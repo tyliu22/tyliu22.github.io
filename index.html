@@ -2,10 +2,12 @@
 layout: default
 ---
 
+<!-- 定义新类别page clearfix 显示excerpt -->
 <div class="page clearfix" index>
+    <!-- 左半边页面布局 -->
     <div class="left">
-        <h1>Welcome to HyG's Blog!</h1>
-        <small>这里记录着我的前端学习之路</small>
+        <h1>Paper Share!</h1>
+        <small>test</small>
         <hr>
         <ul>
             {% for post in paginator.posts %}
@@ -13,29 +15,35 @@ layout: default
                 <h2>
                   <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
                 </h2>
+                <!-- 左半页面标签行 -->
                 <div class="label">
+                    <!-- 显示日历 post.date -->
                     <div class="label-card">
                         <i class="fa fa-calendar"></i>{{ post.date | date: "%F" }}
                     </div>
+                    <!-- 显示作者 post.author -->
                     <div class="label-card">
                         {% if post.author %}<i class="fa fa-user"></i>{{ post.author }}
                         {% endif %}
                     </div>
+                    <!-- 显示meta post.meta -->
                     <div class="label-card">
                         {% if page.meta %}<i class="fa fa-key"></i>{{ page.meta }}  {% endif %}
                     </div>
-
+                    <!-- 显示链接至 类别 -->
                     <div class="label-card">
                     {% include category.html %}
                     </div>
-
+                    <!-- 显示链接至 标签 -->
                     <div class="label-card">
                     {% include tag.html %}
                     </div>
                 </div>
+                <!-- 显示excerpt post.excerpt -->
                 <div class="excerpt">
                     {{post.excerpt}}
                 </div>
+                <!-- 显示read all -->  
                 <div class="read-all">
                     <a  href="{{ post.url | prepend: site.baseurl }}"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
@@ -46,7 +54,7 @@ layout: default
 
 
 
-        <!-- Pagination links -->
+        <!-- 底部切换页面设置 Pagination links -->
         <div class="pagination">
           {% if paginator.previous_page %}
             <a href="/index.html" class="previous"><i class="fa fa-angle-double-left"></i></a>
@@ -66,9 +74,13 @@ layout: default
         </div>
     </div>
     <!-- <button class="anchor"><i class="fa fa-anchor"></i></button> -->
+    
+    
+    <!-- 右半边页面设置 -->
     <div class="right">
         <div class="wrap">
             <div class="side">
+                <!-- 右边侧边栏 标题及链接 Rescent Posts  -->
                 <div>
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     Recent Posts
@@ -82,6 +94,7 @@ layout: default
 
             <!-- Content -->
             <div class="side ">
+                <!-- 右边侧边栏 Categories -->
                 <div>
                     <i class="fa fa-th-list"></i>
                     Categories
@@ -101,6 +114,7 @@ layout: default
             </div>
             <!-- 其他div框放到这里 -->
             <div class="side">
+                <!-- 右边侧边栏 Tags -->
                 <div>
                     <i class="fa fa-tags"></i>
                     Tags
