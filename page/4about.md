@@ -15,6 +15,3 @@ type: page
 * GitHub：[test](https://github.com)
 * [Facebook](https://www.facebook.com)
 
-// ## Comments
-
-// {% include comments.html %}
