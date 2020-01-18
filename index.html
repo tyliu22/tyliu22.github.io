@@ -2,7 +2,9 @@
 layout: default
 ---
 
+<!-- 定义新类别page clearfix 显示excerpt -->
 <div class="page clearfix" index>
+    <!-- 左半边页面布局 -->
     <div class="left">
         <h1>Paper Share!</h1>
         <small>test</small>
@@ -13,29 +15,35 @@ layout: default
                 <h2>
                   <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
                 </h2>
+                <!-- 左半页面标签行 -->
                 <div class="label">
+                    <!-- 显示日历 post.date -->
                     <div class="label-card">
                         <i class="fa fa-calendar"></i>{{ post.date | date: "%F" }}
                     </div>
+                    <!-- 显示作者 post.author -->
                     <div class="label-card">
                         {% if post.author %}<i class="fa fa-user"></i>{{ post.author }}
                         {% endif %}
                     </div>
+                    <!-- 显示meta post.meta -->
                     <div class="label-card">
                         {% if page.meta %}<i class="fa fa-key"></i>{{ page.meta }}  {% endif %}
                     </div>
-
+                    <!-- 显示链接至 类别 -->
                     <div class="label-card">
                     {% include category.html %}
                     </div>
-
+                    <!-- 显示链接至 标签 -->
                     <div class="label-card">
                     {% include tag.html %}
                     </div>
                 </div>
+                <!-- 显示excerpt post.excerpt -->
                 <div class="excerpt">
                     {{post.excerpt}}
                 </div>
+                <!-- 显示read all -->  
                 <div class="read-all">
                     <a  href="{{ post.url | prepend: site.baseurl }}"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
