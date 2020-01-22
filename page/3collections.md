@@ -10,10 +10,11 @@ type: page
 {:toc}
 
 ## Scholars
+# Reinforcement Learning
+-[Pieter Abbeel](http://www.cs.berkeley.edu/~pabbeel) / [[Google Scholar](https://scholar.google.com/citations?user=vtwH6GkAAAAJ&hl=en)]
 
--[Pieter Abbeel](http://www.cs.berkeley.edu/~pabbeel)/[Google Scholar](https://scholar.google.com/citations?user=vtwH6GkAAAAJ&hl=en)
-
--[Chelsea Finn](https://ai.stanford.edu/~cbfinn/)/[Google Scholar](https://scholar.google.com/citations?hl=en&user=1xw2vTsAAAAJ)
+# Meta Learning
+-[Chelsea Finn](https://ai.stanford.edu/~cbfinn/) / [[Google Scholar](https://scholar.google.com/citations?hl=en&user=1xw2vTsAAAAJ)]
 
 ## Videos & Presentations
 
