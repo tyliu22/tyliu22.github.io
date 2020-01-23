@@ -28,6 +28,8 @@ type: page
 
 - PyTorch implementation of [MAML](https://arxiv.org/abs/1703.03400):[https://github.com/katerakelly/pytorch-maml](https://github.com/katerakelly/pytorch-maml)
 
+- PyTorch implementation of [Meta Learning by Adjusting Priors](http://proceedings.mlr.press/v80/amit18a.html): [https://github.com/ron-amit/meta-learning-adjusting-priors2](https://github.com/ron-amit/meta-learning-adjusting-priors2)
+
 
 
 ## Others
