@@ -30,6 +30,8 @@ type: page
 
 - PyTorch implementation of [Meta Learning by Adjusting Priors](http://proceedings.mlr.press/v80/amit18a.html):  [https://github.com/ron-amit/meta-learning-adjusting-priors2](https://github.com/ron-amit/meta-learning-adjusting-priors2)
 
+# PyTorch
+- [PyTorch Cookbook][https://github.com/polarisZhao/pytorch-cookbook]
 
 
 ## Others
