@@ -30,6 +30,9 @@ type: page
 
 - PyTorch implementation of [Meta Learning by Adjusting Priors](http://proceedings.mlr.press/v80/amit18a.html):  [https://github.com/ron-amit/meta-learning-adjusting-priors2](https://github.com/ron-amit/meta-learning-adjusting-priors2)
 
+- Deep learning models (Pytorch): traditional machine learning; multilayer perceptrons; CNN;  normalization layers; metric learning; autoencoders; GANs; GNNs; RNNs; ordinal regression; transfer learning; PyTorch workflows and mechanics; TensorFlow workflows and mechanics tips and tricks
+[https://github.com/rasbt/deeplearning-models](https://github.com/rasbt/deeplearning-models) 
+
 # PyTorch
 - [PyTorch Cookbook](https://github.com/polarisZhao/pytorch-cookbook)
 
