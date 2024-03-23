@@ -43,7 +43,6 @@ Skills
 
 Publications
 ======
-<!-- iterate all post in the directory publications -->
   <ul>{% for post in site.publications reversed %}
     {% include archive-single-cv.html %}
   {% endfor %}</ul>
