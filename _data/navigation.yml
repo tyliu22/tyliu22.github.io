@@ -1,10 +1,10 @@
 # main links links
 main:
-  - title: "Code"
-    url: /publications/  
-    
   - title: "Blog"
     url: /year-archive/
+
+  - title: "Code"
+    url: /publications/  
     
   - title: "Guide"
     url: /markdown/
