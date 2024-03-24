@@ -1,8 +1,11 @@
 ---
 # This specifies the URL path for the concept page.
 permalink: /pages/
+# the title of this page, which will typically be displayed at the top of the page
 title: "Concept"
+# whether the author's profile info will be displayed on the page
 author_profile: true
+
 redirect_from: 
   - /md/
   - /markdown.html
