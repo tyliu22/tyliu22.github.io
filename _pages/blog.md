@@ -1,6 +1,6 @@
 ---
 layout: archive
-permalink: /blog/
+permalink: /blogpost/
 title: "Blog"
 author_profile: true
 # redirect_from:
