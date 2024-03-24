@@ -3,7 +3,7 @@
 main:
   - title: "Blog"
     # the position of blog.md in pages 
-    url: /blog/
+    url: /blogpost/
 
   - title: "Code"
     # code.md in pages 
