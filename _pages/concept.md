@@ -6,9 +6,9 @@ title: "Concept"
 # whether the author's profile info will be displayed on the page
 author_profile: true
 
-redirect_from: 
-  - /md/
-  - /markdown.html
+# redirect_from: 
+#   - /md/
+#   - /markdown.html
 ---
 
 ## Locations of key files/directories
