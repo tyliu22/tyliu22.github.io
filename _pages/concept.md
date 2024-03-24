@@ -1,10 +1,11 @@
 ---
-permalink: /concept/
+# This specifies the URL path for the concept page.
+permalink: /pages/
 title: "Concept"
 author_profile: true
-# redirect_from: 
-#   - /md/
-#   - /markdown.html
+redirect_from: 
+  - /md/
+  - /markdown.html
 ---
 
 ## Locations of key files/directories
