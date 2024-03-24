@@ -7,7 +7,7 @@ main:
 
   - title: "Code"
     # code.md in pages 
-    url: /code/  
+    url: /pages/  
     
   - title: "Concept"
     # concept.md in pages
