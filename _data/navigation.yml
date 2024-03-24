@@ -2,10 +2,13 @@
 # main file for each subpage
 main:
   - title: "Blog"
+    # the position of blog.md in pages 
     url: /blog/
 
   - title: "Code"
+    # code.md in pages 
     url: /code/  
     
   - title: "Concept"
+    # concept.md in pages
     url: /concept/
