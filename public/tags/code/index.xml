@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Code on Tianyu Liu</title>
+    <link>http://localhost:1313/hugo-PaperMod/tags/code/</link>
+    <description>Recent content in Code on Tianyu Liu</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 05 Apr 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/hugo-PaperMod/tags/code/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Implement transformer from scratch</title>
+      <link>http://localhost:1313/hugo-PaperMod/model/transformer/</link>
+      <pubDate>Fri, 05 Apr 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/hugo-PaperMod/model/transformer/</guid>
+      <description>Implement transformer form scratch.</description>
+    </item>
+  </channel>
+</rss>
