@@ -1,5 +1,11 @@
 If your Hugo-generated `index.html` file and other site contents are located in the `public` directory, but you want to use this directory for GitHub Pages, you can easily adjust the settings in GitHub to point to the `public` directory instead of the `docs` directory. However, GitHub Pages by default allows you to choose only from the root of the branch or the `docs` folder for hosting your site. To use content from the `public` directory directly, you need to manage how content gets into your GitHub repository.
 
+## How to run the server
+
+```
+hugo server
+```
+
 Here's how to configure your project and GitHub repository so that your `public` folder can be used effectively for GitHub Pages:
 
 ### Option 1: Push the `public` folder to GitHub

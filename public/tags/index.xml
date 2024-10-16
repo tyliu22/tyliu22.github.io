@@ -2,87 +2,87 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Tianyu Liu</title>
-    <link>https://tyliu22.github.io/tags/</link>
+    <link>http://localhost:1313/tags/</link>
     <description>Recent content in Tags on Tianyu Liu</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Fri, 05 Apr 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://tyliu22.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Code</title>
-      <link>https://tyliu22.github.io/tags/code/</link>
-      <pubDate>Fri, 05 Apr 2024 00:00:00 +0000</pubDate>
-      <guid>https://tyliu22.github.io/tags/code/</guid>
+      <link>http://localhost:1313/tags/code/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/code/</guid>
       <description></description>
     </item>
     <item>
       <title>Css</title>
-      <link>https://tyliu22.github.io/tags/css/</link>
-      <pubDate>Fri, 05 Apr 2024 00:00:00 +0000</pubDate>
-      <guid>https://tyliu22.github.io/tags/css/</guid>
+      <link>http://localhost:1313/tags/css/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/css/</guid>
       <description></description>
     </item>
     <item>
       <title>Html</title>
-      <link>https://tyliu22.github.io/tags/html/</link>
-      <pubDate>Fri, 05 Apr 2024 00:00:00 +0000</pubDate>
-      <guid>https://tyliu22.github.io/tags/html/</guid>
+      <link>http://localhost:1313/tags/html/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/html/</guid>
       <description></description>
     </item>
     <item>
       <title>Markdown</title>
-      <link>https://tyliu22.github.io/tags/markdown/</link>
-      <pubDate>Fri, 05 Apr 2024 00:00:00 +0000</pubDate>
-      <guid>https://tyliu22.github.io/tags/markdown/</guid>
+      <link>http://localhost:1313/tags/markdown/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/markdown/</guid>
       <description></description>
     </item>
     <item>
       <title>Themes</title>
-      <link>https://tyliu22.github.io/tags/themes/</link>
-      <pubDate>Fri, 05 Apr 2024 00:00:00 +0000</pubDate>
-      <guid>https://tyliu22.github.io/tags/themes/</guid>
+      <link>http://localhost:1313/tags/themes/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/themes/</guid>
       <description></description>
     </item>
     <item>
       <title>Transformer</title>
-      <link>https://tyliu22.github.io/tags/transformer/</link>
-      <pubDate>Fri, 05 Apr 2024 00:00:00 +0000</pubDate>
-      <guid>https://tyliu22.github.io/tags/transformer/</guid>
+      <link>http://localhost:1313/tags/transformer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/transformer/</guid>
       <description></description>
     </item>
     <item>
       <title>Docs</title>
-      <link>https://tyliu22.github.io/tags/docs/</link>
-      <pubDate>Wed, 20 Jan 2021 00:00:00 +0000</pubDate>
-      <guid>https://tyliu22.github.io/tags/docs/</guid>
+      <link>http://localhost:1313/tags/docs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/docs/</guid>
       <description></description>
     </item>
     <item>
       <title>PaperMod</title>
-      <link>https://tyliu22.github.io/tags/papermod/</link>
-      <pubDate>Wed, 20 Jan 2021 00:00:00 +0000</pubDate>
-      <guid>https://tyliu22.github.io/tags/papermod/</guid>
+      <link>http://localhost:1313/tags/papermod/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/papermod/</guid>
       <description></description>
     </item>
     <item>
       <title>Privacy</title>
-      <link>https://tyliu22.github.io/tags/privacy/</link>
-      <pubDate>Sun, 10 Mar 2019 00:00:00 +0000</pubDate>
-      <guid>https://tyliu22.github.io/tags/privacy/</guid>
+      <link>http://localhost:1313/tags/privacy/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/privacy/</guid>
       <description></description>
     </item>
     <item>
       <title>Shortcodes</title>
-      <link>https://tyliu22.github.io/tags/shortcodes/</link>
-      <pubDate>Sun, 10 Mar 2019 00:00:00 +0000</pubDate>
-      <guid>https://tyliu22.github.io/tags/shortcodes/</guid>
+      <link>http://localhost:1313/tags/shortcodes/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/shortcodes/</guid>
       <description></description>
     </item>
     <item>
       <title>Emoji</title>
-      <link>https://tyliu22.github.io/tags/emoji/</link>
-      <pubDate>Tue, 05 Mar 2019 00:00:00 +0000</pubDate>
-      <guid>https://tyliu22.github.io/tags/emoji/</guid>
+      <link>http://localhost:1313/tags/emoji/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/emoji/</guid>
       <description></description>
     </item>
   </channel>

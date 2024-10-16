@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>PaperMod on Tianyu Liu</title>
-    <link>https://tyliu22.github.io/posts/papermod/</link>
+    <link>http://localhost:1313/posts/papermod/</link>
     <description>Recent content in PaperMod on Tianyu Liu</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Wed, 20 Jan 2021 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://tyliu22.github.io/posts/papermod/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/posts/papermod/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Install / Update PaperMod</title>
-      <link>https://tyliu22.github.io/posts/papermod/papermod-installation/</link>
+      <link>http://localhost:1313/posts/papermod/papermod-installation/</link>
       <pubDate>Wed, 20 Jan 2021 00:00:00 +0000</pubDate>
-      <guid>https://tyliu22.github.io/posts/papermod/papermod-installation/</guid>
+      <guid>http://localhost:1313/posts/papermod/papermod-installation/</guid>
       <description>Read aboout Install and Update instructions and sampled configuration templates</description>
     </item>
     <item>
       <title>Features / Mods</title>
-      <link>https://tyliu22.github.io/posts/papermod/papermod-features/</link>
+      <link>http://localhost:1313/posts/papermod/papermod-features/</link>
       <pubDate>Wed, 20 Jan 2021 00:00:00 +0000</pubDate>
-      <guid>https://tyliu22.github.io/posts/papermod/papermod-features/</guid>
+      <guid>http://localhost:1313/posts/papermod/papermod-features/</guid>
       <description>Learn About All Features in PaperMod</description>
     </item>
   </channel>
