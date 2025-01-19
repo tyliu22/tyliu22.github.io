@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Models on Tianyu Liu</title>
-    <link>https://tyliu22.github.io/model/</link>
-    <description>Recent content in Models on Tianyu Liu</description>
+    <title>Python on Tianyu Liu</title>
+    <link>https://tyliu22.github.io/tags/python/</link>
+    <description>Recent content in Python on Tianyu Liu</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Tue, 05 Mar 2019 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://tyliu22.github.io/model/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://tyliu22.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>How to configure Python virtual environment and Docker</title>
       <link>https://tyliu22.github.io/model/emoji-support/</link>

@@ -1,123 +1,1381 @@
-<!doctype html><html lang=en dir=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Implement transformer from scratch | Tianyu Liu</title>
-<meta name=keywords content="transformer,code"><meta name=description content="Transformer: Concept and python code implementation from scratch."><meta name=author content="Tinayu Liu"><link rel=canonical href=https://tyliu22.github.io/model/transformer/><link crossorigin=anonymous href=/assets/css/stylesheet.5ff2630c4d1b3e25bc21f0ecd96681dbcf58219e741fa627857820b5485cb770.css integrity="sha256-X/JjDE0bPiW8IfDs2WaB289YIZ50H6YnhXggtUhct3A=" rel="preload stylesheet" as=style><link rel=icon href=https://tyliu22.github.io/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://tyliu22.github.io/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://tyliu22.github.io/favicon-32x32.png><link rel=apple-touch-icon href=https://tyliu22.github.io/apple-touch-icon.png><link rel=mask-icon href=https://tyliu22.github.io/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=en href=https://tyliu22.github.io/model/transformer/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style></noscript><meta property="og:title" content="Implement transformer from scratch"><meta property="og:description" content="Transformer: Concept and python code implementation from scratch."><meta property="og:type" content="article"><meta property="og:url" content="https://tyliu22.github.io/model/transformer/"><meta property="article:section" content="model"><meta property="article:published_time" content="2024-04-05T00:00:00+00:00"><meta property="article:modified_time" content="2024-04-05T00:00:00+00:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Implement transformer from scratch"><meta name=twitter:description content="Transformer: Concept and python code implementation from scratch."><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Models","item":"https://tyliu22.github.io/model/"},{"@type":"ListItem","position":2,"name":"Implement transformer from scratch","item":"https://tyliu22.github.io/model/transformer/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Implement transformer from scratch","name":"Implement transformer from scratch","description":"Transformer: Concept and python code implementation from scratch.","keywords":["transformer","code"],"articleBody":"Inline Code This is Inline Code\nOnly pre This is pre text Code block with backticks \u003c!DOCTYPE html\u003e Example HTML5 Document Test\nCode block with backticks and language specified \u003c!DOCTYPE html\u003e \u003chtml lang=\"en\"\u003e \u003chead\u003e \u003cmeta charset=\"utf-8\" /\u003e \u003ctitle\u003eExample HTML5 Document\u003c/title\u003e \u003cmeta name=\"description\" content=\"Sample article showcasing basic Markdown syntax and formatting for HTML elements.\" /\u003e \u003c/head\u003e \u003cbody\u003e \u003cp\u003eTest\u003c/p\u003e \u003c/body\u003e \u003c/html\u003e Code block with backticks and language specified with line numbers 1 2 3 4 5 6 7 8 9 10 11 12 13 14 \u003c!DOCTYPE html\u003e \u003chtml lang=\"en\"\u003e \u003chead\u003e \u003cmeta charset=\"utf-8\" /\u003e \u003ctitle\u003eExample HTML5 Document\u003c/title\u003e \u003cmeta name=\"description\" content=\"Sample article showcasing basic Markdown syntax and formatting for HTML elements.\" /\u003e \u003c/head\u003e \u003cbody\u003e \u003cp\u003eTest\u003c/p\u003e \u003c/body\u003e \u003c/html\u003e Code block with line numbers and highlighted lines PaperMod supports linenos=true or linenos=table 1 2 3 4 5 6 7 8 9 10 11 12 13 14 \u003c!DOCTYPE html\u003e \u003chtml lang=\"en\"\u003e \u003chead\u003e \u003cmeta charset=\"utf-8\" /\u003e \u003ctitle\u003eExample HTML5 Document\u003c/title\u003e \u003cmeta name=\"description\" content=\"Sample article showcasing basic Markdown syntax and formatting for HTML elements.\" /\u003e \u003c/head\u003e \u003cbody\u003e \u003cp\u003eTest\u003c/p\u003e \u003c/body\u003e \u003c/html\u003e With linenos=inline line might not get highlighted properly. This issue is fixed with 045c084 1\u003c!DOCTYPE html\u003e 2\u003chtml lang=\"en\"\u003e 3 \u003chead\u003e 4 \u003cmeta charset=\"utf-8\" /\u003e 5 \u003ctitle\u003eExample HTML5 Document\u003c/title\u003e 6 \u003cmeta 7 name=\"description\" 8 content=\"Sample article showcasing basic Markdown syntax and formatting for HTML elements.\" 9 /\u003e 10 \u003c/head\u003e 11 \u003cbody\u003e 12 \u003cp\u003eTest\u003c/p\u003e 13 \u003c/body\u003e 14\u003c/html\u003e Code block indented with four spaces \u003c!doctype html\u003e Example HTML5 Document Test\nCode block with Hugo’s internal highlight shortcode \u003c!doctype html\u003e \u003chtml lang=\"en\"\u003e \u003chead\u003e \u003cmeta charset=\"utf-8\"\u003e \u003ctitle\u003eExample HTML5 Document\u003c/title\u003e \u003c/head\u003e \u003cbody\u003e \u003cp\u003eTest\u003c/p\u003e \u003c/body\u003e \u003c/html\u003e Github Gist ","wordCount":"294","inLanguage":"en","datePublished":"2024-04-05T00:00:00Z","dateModified":"2024-04-05T00:00:00Z","author":[{"@type":"Person","name":"Tinayu Liu"}],"mainEntityOfPage":{"@type":"WebPage","@id":"https://tyliu22.github.io/model/transformer/"},"publisher":{"@type":"Organization","name":"Tianyu Liu","logo":{"@type":"ImageObject","url":"https://tyliu22.github.io/favicon.ico"}}}</script></head><body id=top><script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add("dark"):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove("dark"):window.matchMedia("(prefers-color-scheme: dark)").matches&&document.body.classList.add("dark")</script><header class=header><nav class=nav><div class=logo><a href=https://tyliu22.github.io/ accesskey=h title="Tianyu Liu (Alt + H)">Tianyu Liu</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)"><svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=https://tyliu22.github.io/archives title=Archives><span>Archives</span></a></li><li><a href=https://tyliu22.github.io/search/ title="Search (Alt + /)" accesskey=/><span>Search</span></a></li><li><a href=https://tyliu22.github.io/tags/ title=Tags><span>Tags</span></a></li><li><a href=https://www.peanuts.com/about/snoopy title=Snoopy><span>Snoopy</span>&nbsp;<svg fill="none" shape-rendering="geometricPrecision" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><div class=breadcrumbs><a href=https://tyliu22.github.io/>Home</a>&nbsp;»&nbsp;<a href=https://tyliu22.github.io/model/>Models</a></div><h1 class="post-title entry-hint-parent">Implement transformer from scratch</h1><div class=post-description>Transformer: Concept and python code implementation from scratch.</div><div class=post-meta><span title='2024-04-05 00:00:00 +0000 UTC'>April 5, 2024</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;Tinayu Liu</div></header><div class=toc><details open><summary accesskey=c title="(Alt + C)"><span class=details>Table of Contents</span></summary><div class=inner><ul><li><a href=#inline-code aria-label="Inline Code">Inline Code</a></li><li><a href=#only-pre aria-label="Only pre">Only pre</a></li><li><a href=#code-block-with-backticks aria-label="Code block with backticks">Code block with backticks</a></li><li><a href=#code-block-with-backticks-and-language-specified aria-label="Code block with backticks and language specified">Code block with backticks and language specified</a></li><li><a href=#code-block-with-backticks-and-language-specified-with-line-numbers aria-label="Code block with backticks and language specified with line numbers">Code block with backticks and language specified with line numbers</a></li><li><a href=#code-block-with-line-numbers-and-markhighlightedmark-lines aria-label="Code block with line numbers and highlighted lines">Code block with line numbers and highlighted lines</a></li><li><a href=#code-block-indented-with-four-spaces aria-label="Code block indented with four spaces">Code block indented with four spaces</a></li><li><a href=#code-block-with-hugos-internal-highlight-shortcode aria-label="Code block with Hugo&rsquo;s internal highlight shortcode">Code block with Hugo&rsquo;s internal highlight shortcode</a></li><li><a href=#github-gist aria-label="Github Gist">Github Gist</a></li></ul></div></details></div><div class=post-content><h3 id=inline-code>Inline Code<a hidden class=anchor aria-hidden=true href=#inline-code>#</a></h3><p><code>This is Inline Code</code></p><h3 id=only-pre>Only <code>pre</code><a hidden class=anchor aria-hidden=true href=#only-pre>#</a></h3><pre>
-This is pre text
-</pre><h3 id=code-block-with-backticks>Code block with backticks<a hidden class=anchor aria-hidden=true href=#code-block-with-backticks>#</a></h3><pre tabindex=0><code>&lt;!DOCTYPE html&gt;
-&lt;html lang=&#34;en&#34;&gt;
-  &lt;head&gt;
-    &lt;meta charset=&#34;utf-8&#34; /&gt;
-    &lt;title&gt;Example HTML5 Document&lt;/title&gt;
-    &lt;meta
-      name=&#34;description&#34;
-      content=&#34;Sample article showcasing basic Markdown syntax and formatting for HTML elements.&#34;
-    /&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;p&gt;Test&lt;/p&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-</code></pre><h3 id=code-block-with-backticks-and-language-specified>Code block with backticks and language specified<a hidden class=anchor aria-hidden=true href=#code-block-with-backticks-and-language-specified>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=line><span class=cl><span class=cp>&lt;!DOCTYPE html&gt;</span>
-</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>html</span> <span class=na>lang</span><span class=o>=</span><span class=s>&#34;en&#34;</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl>  <span class=p>&lt;</span><span class=nt>head</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>meta</span> <span class=na>charset</span><span class=o>=</span><span class=s>&#34;utf-8&#34;</span> <span class=p>/&gt;</span>
-</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>title</span><span class=p>&gt;</span>Example HTML5 Document<span class=p>&lt;/</span><span class=nt>title</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>meta</span>
-</span></span><span class=line><span class=cl>      <span class=na>name</span><span class=o>=</span><span class=s>&#34;description&#34;</span>
-</span></span><span class=line><span class=cl>      <span class=na>content</span><span class=o>=</span><span class=s>&#34;Sample article showcasing basic Markdown syntax and formatting for HTML elements.&#34;</span>
-</span></span><span class=line><span class=cl>    <span class=p>/&gt;</span>
-</span></span><span class=line><span class=cl>  <span class=p>&lt;/</span><span class=nt>head</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl>  <span class=p>&lt;</span><span class=nt>body</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>p</span><span class=p>&gt;</span>Test<span class=p>&lt;/</span><span class=nt>p</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl>  <span class=p>&lt;/</span><span class=nt>body</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>html</span><span class=p>&gt;</span>
-</span></span></code></pre></div><h3 id=code-block-with-backticks-and-language-specified-with-line-numbers>Code block with backticks and language specified with line numbers<a hidden class=anchor aria-hidden=true href=#code-block-with-backticks-and-language-specified-with-line-numbers>#</a></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
-</span><span class=lnt> 2
-</span><span class=lnt> 3
-</span><span class=lnt> 4
-</span><span class=lnt> 5
-</span><span class=lnt> 6
-</span><span class=lnt> 7
-</span><span class=lnt> 8
-</span><span class=lnt> 9
-</span><span class=lnt>10
-</span><span class=lnt>11
-</span><span class=lnt>12
-</span><span class=lnt>13
-</span><span class=lnt>14
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=line><span class=cl><span class=cp>&lt;!DOCTYPE html&gt;</span>
-</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>html</span> <span class=na>lang</span><span class=o>=</span><span class=s>&#34;en&#34;</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl>  <span class=p>&lt;</span><span class=nt>head</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>meta</span> <span class=na>charset</span><span class=o>=</span><span class=s>&#34;utf-8&#34;</span> <span class=p>/&gt;</span>
-</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>title</span><span class=p>&gt;</span>Example HTML5 Document<span class=p>&lt;/</span><span class=nt>title</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>meta</span>
-</span></span><span class=line><span class=cl>      <span class=na>name</span><span class=o>=</span><span class=s>&#34;description&#34;</span>
-</span></span><span class=line><span class=cl>      <span class=na>content</span><span class=o>=</span><span class=s>&#34;Sample article showcasing basic Markdown syntax and formatting for HTML elements.&#34;</span>
-</span></span><span class=line><span class=cl>    <span class=p>/&gt;</span>
-</span></span><span class=line><span class=cl>  <span class=p>&lt;/</span><span class=nt>head</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl>  <span class=p>&lt;</span><span class=nt>body</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>p</span><span class=p>&gt;</span>Test<span class=p>&lt;/</span><span class=nt>p</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl>  <span class=p>&lt;/</span><span class=nt>body</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>html</span><span class=p>&gt;</span>
-</span></span></code></pre></td></tr></table></div></div><h3 id=code-block-with-line-numbers-and-markhighlightedmark-lines>Code block with line numbers and <mark>highlighted</mark> lines<a hidden class=anchor aria-hidden=true href=#code-block-with-line-numbers-and-markhighlightedmark-lines>#</a></h3><ul><li>PaperMod supports <code>linenos=true</code> or <code>linenos=table</code></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
-</span><span class=hl><span class=lnt> 2
-</span></span><span class=lnt> 3
-</span><span class=lnt> 4
-</span><span class=lnt> 5
-</span><span class=lnt> 6
-</span><span class=lnt> 7
-</span><span class=hl><span class=lnt> 8
-</span></span><span class=lnt> 9
-</span><span class=lnt>10
-</span><span class=lnt>11
-</span><span class=lnt>12
-</span><span class=lnt>13
-</span><span class=lnt>14
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=line><span class=cl><span class=cp>&lt;!DOCTYPE html&gt;</span>
-</span></span><span class="line hl"><span class=cl><span class=p>&lt;</span><span class=nt>html</span> <span class=na>lang</span><span class=o>=</span><span class=s>&#34;en&#34;</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl>  <span class=p>&lt;</span><span class=nt>head</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>meta</span> <span class=na>charset</span><span class=o>=</span><span class=s>&#34;utf-8&#34;</span> <span class=p>/&gt;</span>
-</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>title</span><span class=p>&gt;</span>Example HTML5 Document<span class=p>&lt;/</span><span class=nt>title</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>meta</span>
-</span></span><span class=line><span class=cl>      <span class=na>name</span><span class=o>=</span><span class=s>&#34;description&#34;</span>
-</span></span><span class="line hl"><span class=cl>      <span class=na>content</span><span class=o>=</span><span class=s>&#34;Sample article showcasing basic Markdown syntax and formatting for HTML elements.&#34;</span>
-</span></span><span class=line><span class=cl>    <span class=p>/&gt;</span>
-</span></span><span class=line><span class=cl>  <span class=p>&lt;/</span><span class=nt>head</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl>  <span class=p>&lt;</span><span class=nt>body</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl>    <span class=p>&lt;</span><span class=nt>p</span><span class=p>&gt;</span>Test<span class=p>&lt;/</span><span class=nt>p</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl>  <span class=p>&lt;/</span><span class=nt>body</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>html</span><span class=p>&gt;</span>
-</span></span></code></pre></td></tr></table></div></div><ul><li><del>With <code>linenos=inline</code> line <mark><strong>might not</strong> get highlighted</mark> properly.<del></li><li>This issue is fixed with <a href=https://github.com/adityatelange/hugo-PaperMod/commit/045c08496d61b1b3f9c79e69e7d3d243a526d8f3>045c084</a></li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=line><span class=ln> 1</span><span class=cl><span class=cp>&lt;!DOCTYPE html&gt;</span>
-</span></span><span class="line hl"><span class=ln> 2</span><span class=cl><span class=p>&lt;</span><span class=nt>html</span> <span class=na>lang</span><span class=o>=</span><span class=s>&#34;en&#34;</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=ln> 3</span><span class=cl>  <span class=p>&lt;</span><span class=nt>head</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=ln> 4</span><span class=cl>    <span class=p>&lt;</span><span class=nt>meta</span> <span class=na>charset</span><span class=o>=</span><span class=s>&#34;utf-8&#34;</span> <span class=p>/&gt;</span>
-</span></span><span class=line><span class=ln> 5</span><span class=cl>    <span class=p>&lt;</span><span class=nt>title</span><span class=p>&gt;</span>Example HTML5 Document<span class=p>&lt;/</span><span class=nt>title</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=ln> 6</span><span class=cl>    <span class=p>&lt;</span><span class=nt>meta</span>
-</span></span><span class=line><span class=ln> 7</span><span class=cl>      <span class=na>name</span><span class=o>=</span><span class=s>&#34;description&#34;</span>
-</span></span><span class="line hl"><span class=ln> 8</span><span class=cl>      <span class=na>content</span><span class=o>=</span><span class=s>&#34;Sample article showcasing basic Markdown syntax and formatting for HTML elements.&#34;</span>
-</span></span><span class=line><span class=ln> 9</span><span class=cl>    <span class=p>/&gt;</span>
-</span></span><span class=line><span class=ln>10</span><span class=cl>  <span class=p>&lt;/</span><span class=nt>head</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=ln>11</span><span class=cl>  <span class=p>&lt;</span><span class=nt>body</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=ln>12</span><span class=cl>    <span class=p>&lt;</span><span class=nt>p</span><span class=p>&gt;</span>Test<span class=p>&lt;/</span><span class=nt>p</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=ln>13</span><span class=cl>  <span class=p>&lt;/</span><span class=nt>body</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=ln>14</span><span class=cl><span class=p>&lt;/</span><span class=nt>html</span><span class=p>&gt;</span>
-</span></span></code></pre></div><h3 id=code-block-indented-with-four-spaces>Code block indented with four spaces<a hidden class=anchor aria-hidden=true href=#code-block-indented-with-four-spaces>#</a></h3><pre><code>&lt;!doctype html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-  &lt;meta charset=&quot;utf-8&quot;&gt;
-  &lt;title&gt;Example HTML5 Document&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;p&gt;Test&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><h3 id=code-block-with-hugos-internal-highlight-shortcode>Code block with Hugo&rsquo;s internal highlight shortcode<a hidden class=anchor aria-hidden=true href=#code-block-with-hugos-internal-highlight-shortcode>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-html data-lang=html><span class=line><span class=cl><span class=cp>&lt;!doctype html&gt;</span>
-</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>html</span> <span class=na>lang</span><span class=o>=</span><span class=s>&#34;en&#34;</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>head</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl>  <span class=p>&lt;</span><span class=nt>meta</span> <span class=na>charset</span><span class=o>=</span><span class=s>&#34;utf-8&#34;</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl>  <span class=p>&lt;</span><span class=nt>title</span><span class=p>&gt;</span>Example HTML5 Document<span class=p>&lt;/</span><span class=nt>title</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>head</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl><span class=p>&lt;</span><span class=nt>body</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl>  <span class=p>&lt;</span><span class=nt>p</span><span class=p>&gt;</span>Test<span class=p>&lt;/</span><span class=nt>p</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>body</span><span class=p>&gt;</span>
-</span></span><span class=line><span class=cl><span class=p>&lt;/</span><span class=nt>html</span><span class=p>&gt;</span></span></span></code></pre></div><h3 id=github-gist>Github Gist<a hidden class=anchor aria-hidden=true href=#github-gist>#</a></h3><script src=https://gist.github.com/adityatelange/376cd56ee2c94aaa2e8b93200f2ba8b5.js></script></div><footer class=post-footer><ul class=post-tags><li><a href=https://tyliu22.github.io/tags/transformer/>Transformer</a></li><li><a href=https://tyliu22.github.io/tags/code/>Code</a></li></ul><nav class=paginav><a class=prev href=https://tyliu22.github.io/posts/markdown-syntax/><span class=title>« Prev</span><br><span>Cover Guide</span>
-</a><a class=next href=https://tyliu22.github.io/posts/rich-content/><span class=title>Next »</span><br><span>Rich Content and Shortcodes</span></a></nav><ul class=share-buttons><li><a target=_blank rel="noopener noreferrer" aria-label="share Implement transformer from scratch on x" href="https://x.com/intent/tweet/?text=Implement%20transformer%20from%20scratch&amp;url=https%3a%2f%2ftyliu22.github.io%2fmodel%2ftransformer%2f&amp;hashtags=transformer%2ccode"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M512 62.554V449.446C512 483.97 483.97 512 449.446 512H62.554C28.03 512 0 483.97.0 449.446V62.554C0 28.03 28.029.0 62.554.0H449.446C483.971.0 512 28.03 512 62.554zM269.951 190.75 182.567 75.216H56L207.216 272.95 63.9 436.783h61.366L235.9 310.383l96.667 126.4H456L298.367 228.367l134-153.151H371.033zM127.633 110h36.468l219.38 290.065H349.5z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share Implement transformer from scratch on linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2ftyliu22.github.io%2fmodel%2ftransformer%2f&amp;title=Implement%20transformer%20from%20scratch&amp;summary=Implement%20transformer%20from%20scratch&amp;source=https%3a%2f%2ftyliu22.github.io%2fmodel%2ftransformer%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM160.461 423.278V197.561h-75.04v225.717h75.04zm270.539.0V293.839c0-69.333-37.018-101.586-86.381-101.586-39.804.0-57.634 21.891-67.617 37.266v-31.958h-75.021c.995 21.181.0 225.717.0 225.717h75.02V297.222c0-6.748.486-13.492 2.474-18.315 5.414-13.475 17.767-27.434 38.494-27.434 27.135.0 38.007 20.707 38.007 51.037v120.768H431zM123.448 88.722C97.774 88.722 81 105.601 81 127.724c0 21.658 16.264 39.002 41.455 39.002h.484c26.165.0 42.452-17.344 42.452-39.002-.485-22.092-16.241-38.954-41.943-39.002z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share Implement transformer from scratch on reddit" href="https://reddit.com/submit?url=https%3a%2f%2ftyliu22.github.io%2fmodel%2ftransformer%2f&title=Implement%20transformer%20from%20scratch"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM446 265.638c0-22.964-18.616-41.58-41.58-41.58-11.211.0-21.361 4.457-28.841 11.666-28.424-20.508-67.586-33.757-111.204-35.278l18.941-89.121 61.884 13.157c.756 15.734 13.642 28.29 29.56 28.29 16.407.0 29.706-13.299 29.706-29.701.0-16.403-13.299-29.702-29.706-29.702-11.666.0-21.657 6.792-26.515 16.578l-69.105-14.69c-1.922-.418-3.939-.042-5.585 1.036-1.658 1.073-2.811 2.761-3.224 4.686l-21.152 99.438c-44.258 1.228-84.046 14.494-112.837 35.232-7.468-7.164-17.589-11.591-28.757-11.591-22.965.0-41.585 18.616-41.585 41.58.0 16.896 10.095 31.41 24.568 37.918-.639 4.135-.99 8.328-.99 12.576.0 63.977 74.469 115.836 166.33 115.836s166.334-51.859 166.334-115.836c0-4.218-.347-8.387-.977-12.493 14.564-6.47 24.735-21.034 24.735-38.001zM326.526 373.831c-20.27 20.241-59.115 21.816-70.534 21.816-11.428.0-50.277-1.575-70.522-21.82-3.007-3.008-3.007-7.882.0-10.889 3.003-2.999 7.882-3.003 10.885.0 12.777 12.781 40.11 17.317 59.637 17.317 19.522.0 46.86-4.536 59.657-17.321 3.016-2.999 7.886-2.995 10.885.008 3.008 3.011 3.003 7.882-.008 10.889zm-5.23-48.781c-16.373.0-29.701-13.324-29.701-29.698.0-16.381 13.328-29.714 29.701-29.714 16.378.0 29.706 13.333 29.706 29.714.0 16.374-13.328 29.698-29.706 29.698zM160.91 295.348c0-16.381 13.328-29.71 29.714-29.71 16.369.0 29.689 13.329 29.689 29.71.0 16.373-13.32 29.693-29.689 29.693-16.386.0-29.714-13.32-29.714-29.693z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share Implement transformer from scratch on facebook" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2ftyliu22.github.io%2fmodel%2ftransformer%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H342.978V319.085h66.6l12.672-82.621h-79.272v-53.617c0-22.603 11.073-44.636 46.58-44.636H425.6v-70.34s-32.71-5.582-63.982-5.582c-65.288.0-107.96 39.569-107.96 111.204v62.971h-72.573v82.621h72.573V512h-191.104c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share Implement transformer from scratch on whatsapp" href="https://api.whatsapp.com/send?text=Implement%20transformer%20from%20scratch%20-%20https%3a%2f%2ftyliu22.github.io%2fmodel%2ftransformer%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zm-58.673 127.703c-33.842-33.881-78.847-52.548-126.798-52.568-98.799.0-179.21 80.405-179.249 179.234-.013 31.593 8.241 62.428 23.927 89.612l-25.429 92.884 95.021-24.925c26.181 14.28 55.659 21.807 85.658 21.816h.074c98.789.0 179.206-80.413 179.247-179.243.018-47.895-18.61-92.93-52.451-126.81zM263.976 403.485h-.06c-26.734-.01-52.954-7.193-75.828-20.767l-5.441-3.229-56.386 14.792 15.05-54.977-3.542-5.637c-14.913-23.72-22.791-51.136-22.779-79.287.033-82.142 66.867-148.971 149.046-148.971 39.793.014 77.199 15.531 105.329 43.692 28.128 28.16 43.609 65.592 43.594 105.4-.034 82.149-66.866 148.983-148.983 148.984zm81.721-111.581c-4.479-2.242-26.499-13.075-30.604-14.571-4.105-1.495-7.091-2.241-10.077 2.241-2.986 4.483-11.569 14.572-14.182 17.562-2.612 2.988-5.225 3.364-9.703 1.12-4.479-2.241-18.91-6.97-36.017-22.23C231.8 264.15 222.81 249.484 220.198 245s-.279-6.908 1.963-9.14c2.016-2.007 4.48-5.232 6.719-7.847 2.24-2.615 2.986-4.484 4.479-7.472 1.493-2.99.747-5.604-.374-7.846-1.119-2.241-10.077-24.288-13.809-33.256-3.635-8.733-7.327-7.55-10.077-7.688-2.609-.13-5.598-.158-8.583-.158-2.986.0-7.839 1.121-11.944 5.604-4.105 4.484-15.675 15.32-15.675 37.364.0 22.046 16.048 43.342 18.287 46.332 2.24 2.99 31.582 48.227 76.511 67.627 10.685 4.615 19.028 7.371 25.533 9.434 10.728 3.41 20.492 2.929 28.209 1.775 8.605-1.285 26.499-10.833 30.231-21.295 3.732-10.464 3.732-19.431 2.612-21.298-1.119-1.869-4.105-2.99-8.583-5.232z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share Implement transformer from scratch on telegram" href="https://telegram.me/share/url?text=Implement%20transformer%20from%20scratch&amp;url=https%3a%2f%2ftyliu22.github.io%2fmodel%2ftransformer%2f"><svg viewBox="2 2 28 28" height="30" width="30" fill="currentcolor"><path d="M26.49 29.86H5.5a3.37 3.37.0 01-2.47-1 3.35 3.35.0 01-1-2.47V5.48A3.36 3.36.0 013 3 3.37 3.37.0 015.5 2h21A3.38 3.38.0 0129 3a3.36 3.36.0 011 2.46V26.37a3.35 3.35.0 01-1 2.47 3.38 3.38.0 01-2.51 1.02zm-5.38-6.71a.79.79.0 00.85-.66L24.73 9.24a.55.55.0 00-.18-.46.62.62.0 00-.41-.17q-.08.0-16.53 6.11a.59.59.0 00-.41.59.57.57.0 00.43.52l4 1.24 1.61 4.83a.62.62.0 00.63.43.56.56.0 00.4-.17L16.54 20l4.09 3A.9.9.0 0021.11 23.15zM13.8 20.71l-1.21-4q8.72-5.55 8.78-5.55c.15.0.23.0.23.16a.18.18.0 010 .06s-2.51 2.3-7.52 6.8z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share Implement transformer from scratch on ycombinator" href="https://news.ycombinator.com/submitlink?t=Implement%20transformer%20from%20scratch&u=https%3a%2f%2ftyliu22.github.io%2fmodel%2ftransformer%2f"><svg width="30" height="30" viewBox="0 0 512 512" fill="currentcolor" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"><path d="M449.446.0C483.971.0 512 28.03 512 62.554V449.446C512 483.97 483.97 512 449.446 512H62.554C28.03 512 0 483.97.0 449.446V62.554C0 28.03 28.029.0 62.554.0H449.446zM183.8767 87.9921h-62.034L230.6673 292.4508V424.0079h50.6655V292.4508L390.1575 87.9921H328.1233L256 238.2489z"/></svg></a></li></ul></footer></article></main><footer class=footer><span>&copy; 2024 Powered by Snoopy</span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
-</a><script>let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove("dark"),localStorage.setItem("pref-theme","light")):(document.body.classList.add("dark"),localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="copy";function s(){t.innerHTML="copied!",setTimeout(()=>{t.innerHTML="copy"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>How to configure Python virtual environment and Docker | Tianyu Liu</title>
+<meta name="keywords" content="transformer, code">
+<meta name="description" content="Transformer: Concept and python code implementation from scratch.">
+<meta name="author" content="Tinayu Liu">
+<link rel="canonical" href="http://localhost:1313/model/transformer/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.5ff2630c4d1b3e25bc21f0ecd96681dbcf58219e741fa627857820b5485cb770.css" integrity="sha256-X/JjDE0bPiW8IfDs2WaB289YIZ50H6YnhXggtUhct3A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/model/transformer/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:title" content="How to configure Python virtual environment and Docker" />
+<meta property="og:description" content="Transformer: Concept and python code implementation from scratch." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/model/transformer/" /><meta property="article:section" content="model" />
+<meta property="article:published_time" content="2024-04-05T00:00:00+00:00" />
+<meta property="article:modified_time" content="2024-04-05T00:00:00+00:00" />
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="How to configure Python virtual environment and Docker"/>
+<meta name="twitter:description" content="Transformer: Concept and python code implementation from scratch."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Models",
+      "item": "http://localhost:1313/model/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "How to configure Python virtual environment and Docker",
+      "item": "http://localhost:1313/model/transformer/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "How to configure Python virtual environment and Docker",
+  "name": "How to configure Python virtual environment and Docker",
+  "description": "Transformer: Concept and python code implementation from scratch.",
+  "keywords": [
+    "transformer", "code"
+  ],
+  "articleBody": "Python is a popular, high-level, general-purpose programming language known for its simplicity and readability. A virtual environment is an isolated Python environment that allows you to work on a project without affecting the global Python installation or other projects. It ensures that dependencies for one project do not interfere with others. Dependencies are external libraries or packages that a Python project requires to function. Task: Suppose you have several ML projects, each project requires a seperate python environment with different python version. To achieve this, there are three subtasks: - Python version management - Python virtual environment management - Package dependency management\nHow to configure Python virtual environment Python environment software pip pip : default package manager for Python, used to install, upgrade, and manage Python packages and libraries from the Python Package Index (PyPI) or other repositories.\nKey features: - Install from requirements.txt or from a Local File or URL - Global installation: - If you run pip without activating a virtual environment. - When no virtual environment is active, pip installs packages globally, typically in the system-wide Python installation directory. - Virtual environment installation: - If you activate a virtual environment before running pip. - When a virtual environment is active, pip installs packages only within the virtual environment’s directory, isolating them from the global environment.\nvenv (Build-in) venv: Lightweight and simple virtual environment for small to medium projects. Key features: - comes with pre-installed with Python (3.3+) - minimal external dependencies Steps:\n# Create a virtual environment python -m venv myenv # Activate the environment # On Windows: myenv\\Scripts\\activate # On macOS/Linux: source myenv/bin/activate # Deactivate deactivate virtualenv virtualenv : virtual environment, not build-in. Best for advanced features and compatibility with older Python versions (\u003c3.3) Key features: - Allows creation of virtual environments for both Python 2 and 3. - Faster environment creation compared to venv. Steps:\n# Install virtualenv (not build in) pip install virtualenv # Create a virtual environment virtualenv myenv # Activate the environment source myenv/bin/activate # macOS/Linux myenv\\Scripts\\activate # Windows # Deactivate deactivate pipenv pipenv : Virtual environment and dependency management in one tool. Key features: - automatically creates a virtual environment. - uses Pipfile for dependency tracking (replaces requirements.txt). Steps:\n# Install pipenv pip install pipenv # Create a virtual environment and install dependencies pipenv install pendulum # Activate the virtual environment pipenv shell # Deactivate exit poetry poetry : Managing virtual environments, dependencies, and project structure in modern Python projects. Creating a project (sets up virtual environment automatically) and initialising a pre-existing projects step by step.\nKey Features: - Combines virtual environment creation and dependency management. - Uses pyproject.toml.\nSteps:\n# Install Poetry pip install poetry # Create a project (sets up virtual environment automatically) poetry new my_project # Or initialising a pre-existing project cd pre-existing-project poetry init # Add dependencies poetry add torch # Activate the environment poetry shell # Deactivate exit pyenv pyenv : Manages multiple Python versions. While not a virtual environment tool itself.\nKey features: - Easily switch between Python versions. - Works with pyenv-virtualenv to create isolated environments.\nSteps:\n# Create a new python version pyenv install # Create a virtual environment pyenv virtualenv # Activate the environment pyenv activate Conda or Anaconda Conda or Anaconda : Data science and machine learning projects, or when working with non-Python dependencies. Conda is an open-source lightweight package, dependency, and environment management system. Anaconda is a distribution of Conda that comes prepackaged with a large number of data science, machine learning, and scientific computing libraries and tools.\nKey Features: - Manages Python and non-Python packages. - Cross-platform compatibility.\nSteps:\n# Create a virtual environment conda create --name myenv python=3.10 # Activate the environment conda activate myenv # Deactivate conda deactivate nox nox : Managing testing environments for multiple Python versions.\nKey features: - Automates environment setup and testing tasks.\nSteps:\nStep 1: noxfile.py: import nox @nox.session(python=[\"3.9\", \"3.10\"]) def tests(session): session.install(\"pytest\") session.run(\"pytest\") Step 2: Run environments nox Summarization Tool Manages Python Versions Manages Virtual Environments Manages Dependencies Built-in? Use Case pip No No Yes Yes Manage Python packages from PyPI venv No Yes No Yes Basic virtual environment creation. virtualenv No Yes No No Flexible, feature-rich virtual environment creation. pipenv No Yes Yes No Integrated environment and dependency management. poetry No Yes Yes No Advanced dependency management and publishing tools. pyenv Yes No No No Managing multiple Python versions. Conda Yes Yes Yes No Managing Python/non-Python dependencies, data science workflows. Nox Yes Yes Yes No Managing testing environments for multiple Python versions Combination choices for Python projects When starting a Python project after installing Python, you have multiple ways to install and manage python versions, virtual environments and dependencies. In this part, we introduce several different ways:\nsystem python + venv + pip pyenv + venv + pip pyenv + poetry 1. Lightweight Setup: Python + venv + pip User case: Simple and small script or utility projects or when you’re working with one Python version. Management: - Python versions: system python; - Virtual environments: venv; - Dependencies: pip Use the python version installed on your system. Create a virtual environment with venv and manage dependencies with pip.\nSteps:\npython -m venv myenv python -m venv myenv pip install 2. Multiple Python Versions: pyenv + venv + pip User case: Simple projects when you’re working with different Python versions. Management: - Python versions: pyenv; - Virtual environments: venv; - Dependencies: pip Manage python versions with pyenv. Create a virtual environment with venv and manage dependencies with pip.\nSteps:\npyenv install 3.8.10 pyenv install 3.10.5 pyenv local 3.8.10 # Set Python version for the current project python -m venv myenv pip install 3. Modern Standard: pyenv + Poetry (Recommendation) User case: Modern, structured projects needing specific Python versions and dependency management. Management: - Python versions: pyenv; - Virtual environments: poetry; - Dependencies: poetry Manage python versions with pyenv. Create a virtual environment with poetry and manage dependencies with poetry.\nSteps:\npyenv install 3.9.7 pyenv local 3.9.7 # Set Python version for the current project poetry new my_project cd my_project poetry add flask poetry shell # Activates Poetry's virtual environment 4. Full Isolation: Docker User case: Production-like environments or team projects where the system Python version should not be used.\nSteps:\nStep 1: create a Dockerfile FROM python:3.10 WORKDIR /app COPY . . RUN pip install -r requirements.txt CMD [\"python\", \"app.py\"] Step 2: Build and run the container docker build -t my-python-app . docker run -it my-python-app 5. Data Science Workflow: Conda User case: Data science, machine learning, or projects needing non-Python dependencies.\nSteps:\nStep 1: create a Dockerfile conda create --name myenv python=3.9 conda activate myenv conda install numpy pandas 6. Testing Across Python Versions: pyenv + nox User case: Automated testing for compatibility across multiple Python versions.\nSteps:\nStep 1: create a noxfile.py import nox @nox.session(python=[\"3.8\", \"3.9\", \"3.10\"]) def tests(session): session.install(\"pytest\") session.run(\"pytest\") Step 2: Run tests in all environments nox Combination Choices Combination Python Version Management Virtual Environment Dependency Management Best For Python + venv + pip System Python venv pip Small, simple projects pyenv + venv + pip pyenv venv pip Projects needing different Python versions pyenv + Poetry pyenv Poetry’s built-in env Poetry Modern, structured, multi-version projects Docker Docker image Docker container pip Reproducible, production-like environments Conda Conda Conda environment conda or pip Data science or non-Python dependencies pyenv + nox pyenv nox testing env pip Testing compatibility across versions How to deploy poetry Python project on Docker configuring poetry for projects Ensure you have Poetry installed on your system via running\npoetry --version Configuring Poetry for a New Project Poetry can create a structured project directory with a pyproject.toml file for dependencies and project metadata.\nStep 1: create a new project\npoetry new my_project This generates the following structure:\nmy_project/ ├── pyproject.toml ├── README.rst ├── my_project │ └── __init__.py ├── tests └── __init__.py Step 2: Add Dependencies:\npoetry add torch # Add a development dependency poetry add --dev pytest Step 3: Activate the Virtual Environment\npoetry shell Step 4: Use poetry run to execute commands inside the environment\npoetry run python main.py Configuring Poetry for a Pre-existing Project For an existing project, you can initialize Poetry to manage dependencies.\nStep 1: Navigate to the Project Directory\ncd my_existing_project Step 2: Initialize Poetry\npoetry init This will prompt you to provide:\nProject name Version Description Author details License Dependencies Once completed, a pyproject.toml file is created. Step 3: Add Dependencies\n# Add dependencies from `requirements.txt` directly poetry add $(cat requirements.txt | xargs) # Add dependencies poetry add flask Step 4: To install dependencies specified in pyproject.toml\npoetry install Step 5: Activate the Virtual Environment\npoetry shell Example Workflow Creating a New Project:\npoetry new my_project cd my_project poetry add torch poetry shell python -m torch --version Using Poetry in an Existing Project:\ncd existing_project poetry init poetry add flask pytest poetry install poetry shell pytest Configuring Docker for Python projects Configuring Docker for common web/non-web Python projects This mainly consists of several steps: configure Dockerfile, build docker image, and then run the Docker container\nStep 1: Install Docker\n# verify the installation docker --version Step 2: Create a Python Project (option)\nmkdir my-python-project cd my-python-project touch main.py Add some sample code in app.py\nprint(\"Hello, Docker!\") Step 3: Create a requirements.txt List your dependencies in a requirements.txt file:\npendulum Step 4: Create a Dockerfile The Dockerfile defines the environment and how the application is built and run.\n# Use an official Python image FROM python:3.10-slim # Set the working directory in the container WORKDIR /app # Copy the project files into the container COPY . . # Install dependencies RUN pip install --no-cache-dir -r requirements.txt # Expose a port if you're running a web app. For a standard Python project (e.g., a script, data processing task, CLI tool, etc.), there’s no need for `EXPOSE` EXPOSE 5000 # Define the command to run the application CMD [\"python\", \"main.py\"] Step 5: Build the Docker Image Build the image from the Dockerfile:\ndocker build -t my-python-app . Step 6: Run the Docker Container Run the container using the built image:\ndocker run -it --rm my-python-app -it: Interactive terminal. --rm: Automatically remove the container after it exits. If you’re running a web app, map the ports:\ndocker run -it --rm -p 5000:5000 my-python-app Step 7: Using docker-compose (Optional) If your project has multiple services (e.g., a database), use docker-compose for easier management.\nExample docker-compose.yml:\nversion: '3.9' services: web: build: context: . ports: - \"5000:5000\" volumes: - .:/app command: python main.py Run the services:\ndocker-compose up Step 8: Configure .dockerignore Add a .dockerignore file to exclude unnecessary files from the build context:\n*.pyc __pycache__/ .env Check container logs\ndocker logs Step 9: Example for Flask Web App\nIf you’re using Flask, the main.py might look like this:\nfrom flask import Flask app = Flask(__name__) @app.route(\"/\") def home(): return \"Hello, Docker with Flask!\" if __name__ == \"__main__\": app.run(host=\"0.0.0.0\", port=5000) Update the Dockerfile to expose Flask’s port:\nEXPOSE 5000 Summary Workflow\nWrite your application code (main.py). Create a requirements.txt for dependencies. Write a Dockerfile to define the environment. Build the Docker image: docker build -t my-python-app . Run the container: docker run -it --rm -p 5000:5000 my-python-app Advanced Configuration\nEnvironment Variables: Pass variables using the -e flag or .env file. docker run -it -e FLASK_ENV=development my-python-app Bind Volumes: Sync code changes without rebuilding docker run -it -v $(pwd):/app my-python-app Multi-stage Builds: Optimize production builds. Configuring poetry project in Docker Poetry replaces requirements.txt with its own modern dependency tracking system using the pyproject.toml and poetry.lock files. Here’s what you should do to manage dependencies or generate a requirements.txt if needed:\nUse poetry add to add dependencies and install all dependencies listed in pyproject.toml\n# Add dependencies poetry add pendulum # install all dependencies listed in `pyproject.toml` poetry install How to configure poetry project in Docker Generate a requirements.txt from Poetry poetry export -f requirements.txt --output requirements.txt Using Poetry in Docker Without requirements.txt # Use an official Python image FROM python:3.10-slim # Set the working directory inside the container WORKDIR /app # Install Poetry globally RUN pip install poetry # Copy Poetry configuration files to the container COPY pyproject.toml poetry.lock ./ # Install project dependencies using Poetry RUN poetry install --no-root # Copy the rest of the application code COPY . . # Define the default command to run the application CMD [\"poetry\", \"run\", \"python\", \"main.py\"] Adding environment variables (Optional) If your project uses environment variables, you can pass them into the container: Add a .env file in your project: DEBUG=True SECRET_KEY=mysecretkey Update the Dockerfile to install python-dotenv and load environment variables: # Install python-dotenv RUN poetry add python-dotenv # Copy the .env file COPY .env .env Pass environment variables while running the container: docker run -it --rm --env-file .env my-poetry-app Using docker-compose for Multi-Service Projects. If your project involves multiple services (e.g., a database), use docker-compose. Example docker-compose.yml:\nversion: \"3.9\" services: web: build: context: . ports: - \"5000:5000\" volumes: - .:/app command: poetry run python main.py Run the services:\ndocker-compose up Full example workflow for poetry projects Here’s a sample workflow for a Flask app using Poetry and Docker:\nApplication Structure: my-poetry-app/ ├── app.py ├── pyproject.toml ├── poetry.lock ├── Dockerfile └── README.md app.py from flask import Flask app = Flask(__name__) @app.route(\"/\") def home(): return \"Hello, Poetry with Docker!\" if __name__ == \"__main__\": app.run(host=\"0.0.0.0\", port=5000) pyproject.toml (Add flash) [tool.poetry.dependencies] python = \"^3.10\" flask = \"^2.2\" Build and Run docker build -t my-poetry-app . docker run -it --rm -p 5000:5000 my-poetry-app docker-compose.yml with Multiple Services When you python project is related to multiple services, such as web app, database and cache, in this case, a docker-compose.yml is required to manage multiple Docker containers (services) and their relationships.\nComparison between Dockerfile and docker-compose.yml Dockerfile: A Dockerfile is a script containing instructions to build a Docker image for your application. It focuses on creating a single Docker image, and build a custom environment for your application.\nBuilds an Image:\nSpecifies the base image (e.g., python:3.10-slim). Contains commands to install dependencies, copy application files, and define the container runtime behavior. Example: # Dockerfile FROM python:3.10-slim WORKDIR /app COPY . . RUN pip install -r requirements.txt CMD [\"python\", \"app.py\"] When to use:\nAlways required if you need a custom image for your application. docker-compose.yml: A docker-compose.yml file defines and manages multiple Docker containers (services) and their relationships. It focuses on managing and running multiple services (containers) and orchestrates multiple services, such as web apps, databases, caches, etc., in a unified setup.\nService Orchestration:\nDefines and runs multiple containers (services) together. Specifies how services interact (e.g., a web app connects to a database). Example: # docker-compose.yml version: \"3.9\" services: web: build: context: . ports: - \"5000:5000\" db: image: postgres:13 environment: POSTGRES_USER: user POSTGRES_PASSWORD: password When to use:\nWhen your application involves multiple services (e.g., a web server, database, and message queue). Simplifies running containers by combining docker run commands into a single configuration. Command Usage Dockerfile\n# Build an Image docker build -t my-app . # Run a Container docker run -it --rm my-app codker-compose.yml\n# Run all services docker-compose up # Stop all services docker-compose down Key Differences Feature Dockerfile docker-compose.yml Scope Builds a single image. Manages and runs multiple containers as a group. Complexity Simpler, focuses on building the image. More complex, includes networking and relationships between services. Networking Does not handle networking. Automatically sets up a default network for services to communicate with each other. Environment Variables Can be set during container runtime. Defines environment variables for multiple containers in one place. File Format Dockerfile syntax (specific to Docker builds). YAML, used to define services, volumes, networks, and configurations. Dependency Orchestration Not supported (handles only one container). Supports orchestration and dependency startup (e.g., wait for the database to be ready). When using docker-compose.yml, you typically configure a Dockerfile for each service that requires a custom image. The docker-compose.yml orchestrates the services, and the Dockerfile defines how the image for each service is built.\nWhy Configure a Dockerfile for Each Project?\nCustom Configuration: Each service might need a unique setup. For example: A Python web app might need dependencies from pyproject.toml or requirements.txt. A database service like PostgreSQL might use a standard image with additional configuration files. Environment Isolation: Using a Dockerfile ensures that each service is built with the required dependencies and configurations. Version Control: You can track changes in your custom images by managing the Dockerfile in your project’s repository. When Is a Dockerfile Needed? You need a Dockerfile if:\nThe service requires specific dependencies, environment variables, or configurations. The service uses custom application code (e.g., a Python application). You’re not using a pre-built image or you need to extend it. You don’t need a Dockerfile if: The service uses a standard image with no modifications (e.g., postgres, redis, etc.). Full example workflow docker-compose.yml with Multiple Services Here’s an example with two services: a Python Flask app (with a custom Dockerfile) and a PostgreSQL database (using a pre-built image).\nDirectory Structure:\nmy_project/ ├── app/ │ ├── app.py │ ├── pyproject.toml │ ├── poetry.lock │ ├── Dockerfile ├── docker-compose.yml Dockerfile for the Flask App This file defines the custom image for the Python service. # Use a lightweight Python image FROM python:3.10-slim # Set the working directory inside the container WORKDIR /app # Install Poetry RUN pip install poetry # Copy Poetry configuration files COPY pyproject.toml poetry.lock ./ # Install dependencies using Poetry RUN poetry install --no-root # Copy the application code COPY . . # Expose the Flask default port EXPOSE 5000 # Define the command to run the app CMD [\"poetry\", \"run\", \"python\", \"app.py\"] docker-compose.yml This file orchestrates both the Flask app and PostgreSQL database.\nversion: \"3.9\" services: web: build: context: ./app ports: - \"5000:5000\" # Map container port 5000 to host port 5000 environment: - FLASK_ENV=development # Flask environment variable depends_on: - db # Ensure the database starts before the web app db: image: postgres:13 # Uses the official `postgres:13` image. environment: POSTGRES_USER: user POSTGRES_PASSWORD: password POSTGRES_DB: mydb ports: - \"5432:5432\" # Map container port 5432 to host port 5432 volumes: - postgres_data:/var/lib/postgresql/data # Persist database data volumes: postgres_data: # Named volume for database persistence How the Configuration Works\nPython Service (web): Uses the Dockerfile in the app/ directory to build a custom image. Maps port 5000 on the container to port 5000 on the host. Waits for the database (db) service to be ready before starting. PostgreSQL Service (db): Uses the official postgres:13 image. Configures database credentials and a persistent volume. ",
+  "wordCount" : "3081",
+  "inLanguage": "en",
+  "datePublished": "2024-04-05T00:00:00Z",
+  "dateModified": "2024-04-05T00:00:00Z",
+  "author":[{
+    "@type": "Person",
+    "name": "Tinayu Liu"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/model/transformer/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tianyu Liu",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="Tianyu Liu (Alt + H)">Tianyu Liu</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/archives" title="Archives">
+                    <span>Archives</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.peanuts.com/about/snoopy" title="Snoopy">
+                    <span>Snoopy</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/model/">Models</a></div>
+    <h1 class="post-title entry-hint-parent">
+      How to configure Python virtual environment and Docker
+    </h1>
+    <div class="post-description">
+      Transformer: Concept and python code implementation from scratch.
+    </div>
+    <div class="post-meta"><span title='2024-04-05 00:00:00 +0000 UTC'>April 5, 2024</span>&nbsp;·&nbsp;15 min&nbsp;·&nbsp;Tinayu Liu
+
+</div>
+  </header> <div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#how-to-configure-python-virtual-environment" aria-label="How to configure Python virtual environment">How to configure Python virtual environment</a><ul>
+                        
+                <li>
+                    <a href="#python-environment-software" aria-label="Python environment software">Python environment software</a><ul>
+                        
+                <li>
+                    <a href="#pip" aria-label="pip">pip</a></li>
+                <li>
+                    <a href="#venv-build-in" aria-label="venv (Build-in)">venv (Build-in)</a></li>
+                <li>
+                    <a href="#virtualenv" aria-label="virtualenv">virtualenv</a></li>
+                <li>
+                    <a href="#pipenv" aria-label="pipenv">pipenv</a></li>
+                <li>
+                    <a href="#poetry" aria-label="poetry">poetry</a></li>
+                <li>
+                    <a href="#pyenv" aria-label="pyenv">pyenv</a></li>
+                <li>
+                    <a href="#conda-or-anaconda" aria-label="Conda or Anaconda">Conda or Anaconda</a></li>
+                <li>
+                    <a href="#nox" aria-label="nox">nox</a></li>
+                <li>
+                    <a href="#summarization" aria-label="Summarization">Summarization</a></li></ul>
+                </li>
+                <li>
+                    <a href="#combination-choices-for-python-projects" aria-label="Combination choices for Python projects">Combination choices for Python projects</a><ul>
+                        
+                <li>
+                    <a href="#1-lightweight-setup-python--venv--pip" aria-label="1. Lightweight Setup: Python &#43; venv &#43; pip">1. Lightweight Setup: Python + venv + pip</a></li>
+                <li>
+                    <a href="#2-multiple-python-versions-pyenv--venv--pip" aria-label="2. Multiple Python Versions: pyenv &#43; venv &#43; pip">2. Multiple Python Versions: pyenv + venv + pip</a></li>
+                <li>
+                    <a href="#3--modern-standard-pyenv--poetry-recommendation" aria-label="3. Modern Standard: pyenv &#43; Poetry (Recommendation)">3. Modern Standard: pyenv + Poetry (Recommendation)</a></li>
+                <li>
+                    <a href="#4--full-isolation-docker" aria-label="4.  Full Isolation: Docker">4.  Full Isolation: Docker</a></li>
+                <li>
+                    <a href="#5-data-science-workflow-conda" aria-label="5. Data Science Workflow: Conda">5. Data Science Workflow: Conda</a></li>
+                <li>
+                    <a href="#6-testing-across-python-versions-pyenv--nox" aria-label="6. Testing Across Python Versions: pyenv &#43; nox">6. Testing Across Python Versions: pyenv + nox</a></li>
+                <li>
+                    <a href="#combination-choices" aria-label="Combination Choices">Combination Choices</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#how-to-deploy-poetry-python-project-on--docker" aria-label="How to deploy poetry Python project on Docker">How to deploy poetry Python project on Docker</a><ul>
+                        
+                <li>
+                    <a href="#configuring-poetry-for-projects" aria-label="configuring poetry for projects">configuring poetry for projects</a><ul>
+                        
+                <li>
+                    <a href="#configuring-poetry-for-a-new-project" aria-label="Configuring Poetry for a New Project">Configuring Poetry for a New Project</a></li>
+                <li>
+                    <a href="#configuring-poetry-for-a-pre-existing-project" aria-label="Configuring Poetry for a Pre-existing Project">Configuring Poetry for a Pre-existing Project</a></li>
+                <li>
+                    <a href="#example-workflow" aria-label="Example Workflow">Example Workflow</a></li></ul>
+                </li>
+                <li>
+                    <a href="#configuring-docker-for-python-projects" aria-label="Configuring Docker for Python projects">Configuring Docker for Python projects</a><ul>
+                        
+                <li>
+                    <a href="#configuring-docker-for-common-webnon-web-python-projects" aria-label="Configuring Docker for common web/non-web Python projects">Configuring Docker for common web/non-web Python projects</a></li>
+                <li>
+                    <a href="#configuring-poetry-project-in-docker" aria-label="Configuring poetry project in Docker">Configuring poetry project in Docker</a><ul>
+                        
+                <li>
+                    <a href="#how-to-configure-poetry-project-in-docker" aria-label="How to configure poetry project in Docker">How to configure poetry project in Docker</a></li>
+                <li>
+                    <a href="#full-example-workflow-for-poetry-projects" aria-label="Full example workflow for poetry projects">Full example workflow for poetry projects</a></li></ul>
+                </li>
+                <li>
+                    <a href="#docker-composeyml-with-multiple-services" aria-label="docker-compose.yml with Multiple Services">docker-compose.yml with Multiple Services</a><ul>
+                        
+                <li>
+                    <a href="#comparison-between-dockerfile-and-docker-composeyml" aria-label="Comparison between Dockerfile and docker-compose.yml">Comparison between Dockerfile and docker-compose.yml</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#key-differences" aria-label="Key Differences">Key Differences</a><ul>
+                        <ul>
+                        
+                <li>
+                    <a href="#full-example-workflow-docker-composeyml-with-multiple-services" aria-label="Full example workflow docker-compose.yml with Multiple Services">Full example workflow docker-compose.yml with Multiple Services</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><p><strong>Python</strong> is a popular, high-level, general-purpose programming language known for its simplicity and readability. A <strong>virtual environment</strong> is an isolated Python environment that allows you to work on a project without affecting the global Python installation or other projects. It ensures that dependencies for one project do not interfere with others. <strong>Dependencies</strong> are external libraries or packages that a Python project requires to function. </p>
+<p><em><strong>Task</strong></em>: Suppose you have several ML projects, each project requires a seperate python environment with different python version. To achieve this, there are three subtasks:
+- Python version management
+- Python virtual environment management
+- Package dependency management</p>
+<h2 id="how-to-configure-python-virtual-environment">How to configure Python virtual environment<a hidden class="anchor" aria-hidden="true" href="#how-to-configure-python-virtual-environment">#</a></h2>
+<h3 id="python-environment-software">Python environment software<a hidden class="anchor" aria-hidden="true" href="#python-environment-software">#</a></h3>
+<h4 id="pip"><code>pip</code><a hidden class="anchor" aria-hidden="true" href="#pip">#</a></h4>
+<p><code>pip</code> : default package manager for Python, used to install, upgrade, and manage Python packages and libraries from the Python Package Index (PyPI) or other repositories.</p>
+<p>Key features:
+- Install from <code>requirements.txt</code> or from a Local File or URL
+- Global installation:
+- If you run <code>pip</code> without activating a virtual environment.
+- When no virtual environment is active, <code>pip</code> installs packages globally, typically in the system-wide Python installation directory.
+- Virtual environment installation:
+- If you activate a virtual environment before running <code>pip</code>.
+- When a virtual environment is active, <code>pip</code> installs packages only within the virtual environment&rsquo;s directory, isolating them from the global environment.</p>
+<h4 id="venv-build-in"><code>venv</code> (Build-in)<a hidden class="anchor" aria-hidden="true" href="#venv-build-in">#</a></h4>
+<p><code>venv</code>: Lightweight and simple <em>virtual environment</em> for small to medium projects.
+Key features:
+- comes with pre-installed with Python (3.3+)
+- minimal external dependencies
+Steps:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create a virtual environment</span>
+</span></span><span class="line"><span class="cl">python -m venv myenv
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Activate the environment</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># On Windows:</span>
+</span></span><span class="line"><span class="cl">myenv<span class="se">\S</span>cripts<span class="se">\a</span>ctivate
+</span></span><span class="line"><span class="cl"><span class="c1"># On macOS/Linux:</span>
+</span></span><span class="line"><span class="cl"><span class="nb">source</span> myenv/bin/activate
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Deactivate</span>
+</span></span><span class="line"><span class="cl">deactivate
+</span></span></code></pre></div><h4 id="virtualenv"><code>virtualenv</code><a hidden class="anchor" aria-hidden="true" href="#virtualenv">#</a></h4>
+<p><code>virtualenv</code> : virtual environment, not build-in.  Best for advanced features and compatibility with older Python versions (&lt;3.3)
+Key features:
+- Allows creation of virtual environments for both Python 2 and 3.
+- Faster environment creation compared to <code>venv</code>.
+Steps:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Install virtualenv (not build in)</span>
+</span></span><span class="line"><span class="cl">pip install virtualenv
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Create a virtual environment</span>
+</span></span><span class="line"><span class="cl">virtualenv myenv
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Activate the environment</span>
+</span></span><span class="line"><span class="cl"><span class="nb">source</span> myenv/bin/activate  <span class="c1"># macOS/Linux</span>
+</span></span><span class="line"><span class="cl">myenv<span class="se">\S</span>cripts<span class="se">\a</span>ctivate     <span class="c1"># Windows</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Deactivate</span>
+</span></span><span class="line"><span class="cl">deactivate
+</span></span></code></pre></div><h4 id="pipenv"><code>pipenv</code><a hidden class="anchor" aria-hidden="true" href="#pipenv">#</a></h4>
+<p><code>pipenv</code> :  <em>Virtual environment</em> and <em>dependency</em> management in one tool.
+Key features:
+- automatically creates a virtual environment.
+- uses <code>Pipfile</code> for dependency tracking (replaces <code>requirements.txt</code>).
+Steps:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Install pipenv</span>
+</span></span><span class="line"><span class="cl">pip install pipenv
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Create a virtual environment and install dependencies</span>
+</span></span><span class="line"><span class="cl">pipenv install pendulum
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Activate the virtual environment</span>
+</span></span><span class="line"><span class="cl">pipenv shell
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Deactivate</span>
+</span></span><span class="line"><span class="cl"><span class="nb">exit</span>
+</span></span></code></pre></div><h4 id="poetry"><code>poetry</code><a hidden class="anchor" aria-hidden="true" href="#poetry">#</a></h4>
+<p><code>poetry</code> : Managing virtual environments, dependencies, and project structure in modern Python projects. Creating a project (sets up virtual environment automatically) and initialising a pre-existing projects step by step.</p>
+<p>Key Features:
+- Combines virtual environment creation and dependency management.
+- Uses <code>pyproject.toml</code>.</p>
+<p>Steps:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Install Poetry</span>
+</span></span><span class="line"><span class="cl">pip install poetry
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Create a project (sets up virtual environment automatically)</span>
+</span></span><span class="line"><span class="cl">poetry new my_project
+</span></span><span class="line"><span class="cl"><span class="c1"># Or initialising a pre-existing project</span>
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> pre-existing-project
+</span></span><span class="line"><span class="cl">poetry init
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Add dependencies</span>
+</span></span><span class="line"><span class="cl">poetry add torch
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Activate the environment</span>
+</span></span><span class="line"><span class="cl">poetry shell
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Deactivate</span>
+</span></span><span class="line"><span class="cl"><span class="nb">exit</span>
+</span></span></code></pre></div><h4 id="pyenv"><code>pyenv</code><a hidden class="anchor" aria-hidden="true" href="#pyenv">#</a></h4>
+<p><code>pyenv</code> : Manages multiple Python versions. While not a virtual environment tool itself.</p>
+<p>Key features:
+- Easily switch between Python versions.
+- Works with <code>pyenv-virtualenv</code> to create isolated environments.</p>
+<p>Steps:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create a new python version</span>
+</span></span><span class="line"><span class="cl">pyenv install &lt;version&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Create a virtual environment</span>
+</span></span><span class="line"><span class="cl">pyenv virtualenv &lt;version&gt; &lt;env_name&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Activate the environment</span>
+</span></span><span class="line"><span class="cl">pyenv activate &lt;env_name&gt;
+</span></span></code></pre></div><h4 id="conda-or-anaconda"><code>Conda</code> or <code>Anaconda</code><a hidden class="anchor" aria-hidden="true" href="#conda-or-anaconda">#</a></h4>
+<p><code>Conda</code> or <code>Anaconda</code> : Data science and machine learning projects, or when working with non-Python dependencies. <code>Conda</code> is an  open-source lightweight package, dependency, and environment management system. <code>Anaconda</code> is a distribution of Conda that comes prepackaged with a large number of data science, machine learning, and scientific computing libraries and tools.</p>
+<p>Key Features:
+- Manages Python and non-Python packages.
+- Cross-platform compatibility.</p>
+<p>Steps:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create a virtual environment</span>
+</span></span><span class="line"><span class="cl">conda create --name myenv <span class="nv">python</span><span class="o">=</span>3.10
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Activate the environment</span>
+</span></span><span class="line"><span class="cl">conda activate myenv
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Deactivate</span>
+</span></span><span class="line"><span class="cl">conda deactivate
+</span></span></code></pre></div><h4 id="nox"><code>nox</code><a hidden class="anchor" aria-hidden="true" href="#nox">#</a></h4>
+<p><code>nox</code> : Managing testing environments for multiple Python versions.</p>
+<p>Key features:
+- Automates environment setup and testing tasks.</p>
+<p>Steps:</p>
+<ul>
+<li>Step 1: <code>noxfile.py</code>:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">nox</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@nox.session</span><span class="p">(</span><span class="n">python</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;3.9&#34;</span><span class="p">,</span> <span class="s2">&#34;3.10&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">tests</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">session</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="s2">&#34;pytest&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&#34;pytest&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><ul>
+<li>Step 2: Run environments</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nox
+</span></span></code></pre></div><h4 id="summarization">Summarization<a hidden class="anchor" aria-hidden="true" href="#summarization">#</a></h4>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Manages Python Versions</th>
+<th>Manages Virtual Environments</th>
+<th>Manages Dependencies</th>
+<th>Built-in?</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pip</code></td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Manage Python packages from PyPI</td>
+</tr>
+<tr>
+<td><code>venv</code></td>
+<td>No</td>
+<td>Yes</td>
+<td>No</td>
+<td>Yes</td>
+<td>Basic virtual environment creation.</td>
+</tr>
+<tr>
+<td><code>virtualenv</code></td>
+<td>No</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>Flexible, feature-rich virtual environment creation.</td>
+</tr>
+<tr>
+<td><code>pipenv</code></td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>Integrated environment and dependency management.</td>
+</tr>
+<tr>
+<td><code>poetry</code></td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>Advanced dependency management and publishing tools.</td>
+</tr>
+<tr>
+<td><code>pyenv</code></td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+<td>Managing multiple Python versions.</td>
+</tr>
+<tr>
+<td><code>Conda</code></td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>Managing Python/non-Python dependencies, data science workflows.</td>
+</tr>
+<tr>
+<td><code>Nox</code></td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>Managing testing environments for multiple Python versions</td>
+</tr>
+</tbody>
+</table>
+<h3 id="combination-choices-for-python-projects">Combination choices for Python projects<a hidden class="anchor" aria-hidden="true" href="#combination-choices-for-python-projects">#</a></h3>
+<p>When starting a Python project after installing Python, you have multiple ways to install and manage <strong>python versions</strong>, <strong>virtual environments</strong> and <strong>dependencies</strong>. In this part, we introduce several different ways:</p>
+<ul>
+<li>system python + <code>venv</code> + <code>pip</code></li>
+<li><code>pyenv</code> + <code>venv</code> + <code>pip</code></li>
+<li><code>pyenv</code> + <code>poetry</code></li>
+</ul>
+<h4 id="1-lightweight-setup-python--venv--pip">1. Lightweight Setup: Python + <code>venv</code> + <code>pip</code><a hidden class="anchor" aria-hidden="true" href="#1-lightweight-setup-python--venv--pip">#</a></h4>
+<p>User case: Simple and small script or utility projects or when you’re working with one Python version.
+Management:
+- Python versions: system python;
+- Virtual environments: <code>venv</code>;
+- Dependencies: <code>pip</code>
+Use the python version installed on your system. Create a virtual environment with <code>venv</code> and manage dependencies with <code>pip</code>.</p>
+<p>Steps:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">python -m venv myenv
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">python -m venv myenv
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">pip install &lt;package&gt;
+</span></span></code></pre></div><h4 id="2-multiple-python-versions-pyenv--venv--pip">2. Multiple Python Versions: <code>pyenv</code> + <code>venv</code> + <code>pip</code><a hidden class="anchor" aria-hidden="true" href="#2-multiple-python-versions-pyenv--venv--pip">#</a></h4>
+<p>User case: Simple projects when you’re working with different Python versions.
+Management:
+- Python versions: <code>pyenv</code>;
+- Virtual environments: <code>venv</code>;
+- Dependencies: <code>pip</code>
+Manage python versions with <code>pyenv</code>. Create a virtual environment with <code>venv</code> and manage dependencies with <code>pip</code>.</p>
+<p>Steps:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">pyenv install 3.8.10
+</span></span><span class="line"><span class="cl">pyenv install 3.10.5
+</span></span><span class="line"><span class="cl">pyenv <span class="nb">local</span> 3.8.10  <span class="c1"># Set Python version for the current project</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">python -m venv myenv
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">pip install &lt;package&gt;
+</span></span></code></pre></div><h4 id="3--modern-standard-pyenv--poetry-recommendation">3.  Modern Standard: <code>pyenv</code> + <code>Poetry</code> (Recommendation)<a hidden class="anchor" aria-hidden="true" href="#3--modern-standard-pyenv--poetry-recommendation">#</a></h4>
+<p>User case: Modern, structured projects needing specific Python versions and dependency management.
+Management:
+- Python versions: <code>pyenv</code>;
+- Virtual environments: <code>poetry</code>;
+- Dependencies: <code>poetry</code>
+Manage python versions with <code>pyenv</code>. Create a virtual environment with <code>poetry</code> and manage dependencies with <code>poetry</code>.</p>
+<p>Steps:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">pyenv install 3.9.7
+</span></span><span class="line"><span class="cl">pyenv <span class="nb">local</span> 3.9.7  <span class="c1"># Set Python version for the current project</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">poetry new my_project
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> my_project
+</span></span><span class="line"><span class="cl">poetry add flask
+</span></span><span class="line"><span class="cl">poetry shell  <span class="c1"># Activates Poetry&#39;s virtual environment</span>
+</span></span></code></pre></div><h4 id="4--full-isolation-docker">4.  Full Isolation: Docker<a hidden class="anchor" aria-hidden="true" href="#4--full-isolation-docker">#</a></h4>
+<p>User case: Production-like environments or team projects where the system Python version should not be used.</p>
+<p>Steps:</p>
+<ul>
+<li>Step 1: create a <code>Dockerfile</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-dockerfile" data-lang="dockerfile"><span class="line"><span class="cl"><span class="k">FROM</span><span class="s"> python:3.10</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">WORKDIR</span><span class="s"> /app</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">COPY</span> . .<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">RUN</span> pip install -r requirements.txt<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">CMD</span> <span class="p">[</span><span class="s2">&#34;python&#34;</span><span class="p">,</span> <span class="s2">&#34;app.py&#34;</span><span class="p">]</span><span class="err">
+</span></span></span></code></pre></div><ul>
+<li>Step 2: Build and run the container</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker build -t my-python-app .
+</span></span><span class="line"><span class="cl">docker run -it my-python-app
+</span></span></code></pre></div><h4 id="5-data-science-workflow-conda">5. Data Science Workflow: <code>Conda</code><a hidden class="anchor" aria-hidden="true" href="#5-data-science-workflow-conda">#</a></h4>
+<p>User case: Data science, machine learning, or projects needing non-Python dependencies.</p>
+<p>Steps:</p>
+<ul>
+<li>Step 1: create a <code>Dockerfile</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">conda create --name myenv <span class="nv">python</span><span class="o">=</span>3.9
+</span></span><span class="line"><span class="cl">conda activate myenv
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">conda install numpy pandas
+</span></span></code></pre></div><h4 id="6-testing-across-python-versions-pyenv--nox">6. Testing Across Python Versions: <code>pyenv</code> + <code>nox</code><a hidden class="anchor" aria-hidden="true" href="#6-testing-across-python-versions-pyenv--nox">#</a></h4>
+<p>User case: Automated testing for compatibility across multiple Python versions.</p>
+<p>Steps:</p>
+<ul>
+<li>Step 1: create a <code>noxfile.py</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">nox</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@nox.session</span><span class="p">(</span><span class="n">python</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;3.8&#34;</span><span class="p">,</span> <span class="s2">&#34;3.9&#34;</span><span class="p">,</span> <span class="s2">&#34;3.10&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">tests</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">session</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="s2">&#34;pytest&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&#34;pytest&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><ul>
+<li>Step 2: Run tests in all environments</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nox
+</span></span></code></pre></div><h4 id="combination-choices">Combination Choices<a hidden class="anchor" aria-hidden="true" href="#combination-choices">#</a></h4>
+<table>
+<thead>
+<tr>
+<th>Combination</th>
+<th>Python Version Management</th>
+<th>Virtual Environment</th>
+<th>Dependency Management</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python + <code>venv</code> + <code>pip</code></td>
+<td>System Python</td>
+<td><code>venv</code></td>
+<td><code>pip</code></td>
+<td>Small, simple projects</td>
+</tr>
+<tr>
+<td><code>pyenv</code> + <code>venv</code> + <code>pip</code></td>
+<td><code>pyenv</code></td>
+<td><code>venv</code></td>
+<td><code>pip</code></td>
+<td>Projects needing different Python versions</td>
+</tr>
+<tr>
+<td><code>pyenv</code> + <code>Poetry</code></td>
+<td><code>pyenv</code></td>
+<td>Poetry’s built-in env</td>
+<td>Poetry</td>
+<td>Modern, structured, multi-version projects</td>
+</tr>
+<tr>
+<td>Docker</td>
+<td>Docker image</td>
+<td>Docker container</td>
+<td><code>pip</code></td>
+<td>Reproducible, production-like environments</td>
+</tr>
+<tr>
+<td><code>Conda</code></td>
+<td>Conda</td>
+<td>Conda environment</td>
+<td><code>conda</code> or <code>pip</code></td>
+<td>Data science or non-Python dependencies</td>
+</tr>
+<tr>
+<td><code>pyenv</code> + <code>nox</code></td>
+<td><code>pyenv</code></td>
+<td><code>nox</code> testing env</td>
+<td><code>pip</code></td>
+<td>Testing compatibility across versions</td>
+</tr>
+</tbody>
+</table>
+<h2 id="how-to-deploy-poetry-python-project-on--docker">How to deploy <code>poetry</code> Python project on  Docker<a hidden class="anchor" aria-hidden="true" href="#how-to-deploy-poetry-python-project-on--docker">#</a></h2>
+<h3 id="configuring-poetry-for-projects">configuring <code>poetry</code> for projects<a hidden class="anchor" aria-hidden="true" href="#configuring-poetry-for-projects">#</a></h3>
+<p>Ensure you have <code>Poetry</code> installed on your system via running</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">poetry</span> <span class="o">--</span><span class="n">version</span>
+</span></span></code></pre></div><h4 id="configuring-poetry-for-a-new-project">Configuring <code>Poetry</code> for a New Project<a hidden class="anchor" aria-hidden="true" href="#configuring-poetry-for-a-new-project">#</a></h4>
+<p><code>Poetry</code> can create a structured project directory with a <code>pyproject.toml</code> file for dependencies and project metadata.</p>
+<p>Step 1: create a new project</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">poetry new my_project
+</span></span></code></pre></div><p>This generates the following structure:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl">my_project/
+</span></span><span class="line"><span class="cl">├── pyproject.toml
+</span></span><span class="line"><span class="cl">├── README.rst
+</span></span><span class="line"><span class="cl">├── my_project
+</span></span><span class="line"><span class="cl">│   └── <span class="gs">__init__</span>.py
+</span></span><span class="line"><span class="cl">├── tests
+</span></span><span class="line"><span class="cl">    └── <span class="gs">__init__</span>.py
+</span></span></code></pre></div><p>Step 2: Add Dependencies:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">poetry</span> <span class="n">add</span> <span class="n">torch</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Add a development dependency</span>
+</span></span><span class="line"><span class="cl"><span class="n">poetry</span> <span class="n">add</span> <span class="o">--</span><span class="n">dev</span> <span class="n">pytest</span>
+</span></span></code></pre></div><p>Step 3: Activate the Virtual Environment</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">poetry shell
+</span></span></code></pre></div><p>Step 4: Use <code>poetry run</code> to execute commands inside the environment</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">poetry run python main.py
+</span></span></code></pre></div><h4 id="configuring-poetry-for-a-pre-existing-project">Configuring <code>Poetry</code> for a Pre-existing Project<a hidden class="anchor" aria-hidden="true" href="#configuring-poetry-for-a-pre-existing-project">#</a></h4>
+<p>For an existing project, you can initialize <code>Poetry</code> to manage dependencies.</p>
+<p>Step 1: Navigate to the Project Directory</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> my_existing_project
+</span></span></code></pre></div><p>Step 2: Initialize <code>Poetry</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">poetry</span> <span class="n">init</span>
+</span></span></code></pre></div><p>This will prompt you to provide:</p>
+<ul>
+<li>Project name</li>
+<li>Version</li>
+<li>Description</li>
+<li>Author details</li>
+<li>License</li>
+<li>Dependencies
+Once completed, a <code>pyproject.toml</code> file is created.</li>
+</ul>
+<p>Step 3: Add Dependencies</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Add dependencies from `requirements.txt` directly</span>
+</span></span><span class="line"><span class="cl">poetry add <span class="k">$(</span>cat requirements.txt <span class="p">|</span> xargs<span class="k">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Add dependencies</span>
+</span></span><span class="line"><span class="cl">poetry add flask
+</span></span></code></pre></div><p>Step 4: To install dependencies specified in <code>pyproject.toml</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">poetry install
+</span></span></code></pre></div><p>Step 5: Activate the Virtual Environment</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">poetry shell
+</span></span></code></pre></div><h4 id="example-workflow">Example Workflow<a hidden class="anchor" aria-hidden="true" href="#example-workflow">#</a></h4>
+<p>Creating a New Project:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">poetry new my_project
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> my_project
+</span></span><span class="line"><span class="cl">poetry add torch
+</span></span><span class="line"><span class="cl">poetry shell
+</span></span><span class="line"><span class="cl">python -m torch --version
+</span></span></code></pre></div><p>Using Poetry in an Existing Project:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> existing_project
+</span></span><span class="line"><span class="cl">poetry init
+</span></span><span class="line"><span class="cl">poetry add flask pytest
+</span></span><span class="line"><span class="cl">poetry install
+</span></span><span class="line"><span class="cl">poetry shell
+</span></span><span class="line"><span class="cl">pytest
+</span></span></code></pre></div><h3 id="configuring-docker-for-python-projects">Configuring Docker for Python projects<a hidden class="anchor" aria-hidden="true" href="#configuring-docker-for-python-projects">#</a></h3>
+<h4 id="configuring-docker-for-common-webnon-web-python-projects">Configuring Docker for common web/non-web Python projects<a hidden class="anchor" aria-hidden="true" href="#configuring-docker-for-common-webnon-web-python-projects">#</a></h4>
+<p>This mainly consists of several steps:  configure <code>Dockerfile</code>, build docker <code>image</code>, and then run the Docker container</p>
+<p><strong>Step 1: Install Docker</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># verify the installation</span>
+</span></span><span class="line"><span class="cl">docker --version
+</span></span></code></pre></div><p><strong>Step 2: Create a Python Project (option)</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir my-python-project
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> my-python-project
+</span></span><span class="line"><span class="cl">touch main.py
+</span></span></code></pre></div><p>Add some sample code in <code>app.py</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Hello, Docker!&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><p><strong>Step 3: Create a <code>requirements.txt</code></strong>
+List your dependencies in a <code>requirements.txt</code> file:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">pendulum
+</span></span></code></pre></div><hr>
+<p><strong>Step 4: Create a Dockerfile</strong>
+The <strong>Dockerfile</strong> defines the environment and how the application is built and run.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Dockerfile" data-lang="Dockerfile"><span class="line"><span class="cl"><span class="c"># Use an official Python image</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">FROM</span><span class="s"> python:3.10-slim</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c"># Set the working directory in the container</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">WORKDIR</span><span class="s"> /app</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c"># Copy the project files into the container</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">COPY</span> . .<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c"># Install dependencies</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">RUN</span> pip install --no-cache-dir -r requirements.txt<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c"># Expose a port if you&#39;re running a web app. For a standard Python project (e.g., a script, data processing task, CLI tool, etc.), there’s no need for `EXPOSE`</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">EXPOSE</span><span class="s"> 5000</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c"># Define the command to run the application</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">CMD</span> <span class="p">[</span><span class="s2">&#34;python&#34;</span><span class="p">,</span> <span class="s2">&#34;main.py&#34;</span><span class="p">]</span><span class="err">
+</span></span></span></code></pre></div><p><strong>Step 5: Build the Docker Image</strong>
+Build the image from the Dockerfile:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker build -t my-python-app .
+</span></span></code></pre></div><p><strong>Step 6: Run the Docker Container</strong>
+Run the container using the built image:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker run -it --rm my-python-app
+</span></span></code></pre></div><ul>
+<li><code>-it</code>: Interactive terminal.</li>
+<li><code>--rm</code>: Automatically remove the container after it exits.</li>
+</ul>
+<p>If you&rsquo;re running a web app, map the ports:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker run -it --rm -p 5000:5000 my-python-app
+</span></span></code></pre></div><hr>
+<p><strong>Step 7: Using <code>docker-compose</code> (Optional)</strong>
+If your project has multiple services (e.g., a database), use <strong>docker-compose</strong> for easier management.</p>
+<p>Example <code>docker-compose.yml</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;3.9&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">services</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">web</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">build</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="s2">&#34;5000:5000&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">.:/app</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l">python main.py</span><span class="w">
+</span></span></span></code></pre></div><p>Run the services:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker-compose up
+</span></span></code></pre></div><p><strong>Step 8: Configure <code>.dockerignore</code></strong>
+Add a <code>.dockerignore</code> file to exclude unnecessary files from the build context:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext"><span class="line"><span class="cl">*.pyc
+</span></span><span class="line"><span class="cl">__pycache__/
+</span></span><span class="line"><span class="cl">.env
+</span></span></code></pre></div><p>Check container logs</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker logs &lt;container_id&gt;
+</span></span></code></pre></div><hr>
+<p><strong>Step 9: Example for Flask Web App</strong></p>
+<p>If you’re using Flask, the <code>main.py</code> might look like this:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s2">&#34;/&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">home</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s2">&#34;Hello, Docker with Flask!&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&#34;0.0.0.0&#34;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+</span></span></code></pre></div><p>Update the Dockerfile to expose Flask&rsquo;s port:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">EXPOSE <span class="m">5000</span>
+</span></span></code></pre></div><p><strong>Summary Workflow</strong></p>
+<ol>
+<li>Write your application code (<code>main.py</code>).</li>
+<li>Create a <code>requirements.txt</code> for dependencies.</li>
+<li>Write a Dockerfile to define the environment.</li>
+<li>Build the Docker image:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker build -t my-python-app .
+</span></span></code></pre></div><ol start="5">
+<li>Run the container:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker run -it --rm -p 5000:5000 my-python-app
+</span></span></code></pre></div><p><strong>Advanced Configuration</strong></p>
+<ul>
+<li>Environment Variables: Pass variables using the <code>-e</code> flag or <code>.env</code> file.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker run -it -e <span class="nv">FLASK_ENV</span><span class="o">=</span>development my-python-app
+</span></span></code></pre></div><ul>
+<li>Bind Volumes: Sync code changes without rebuilding</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker run -it -v <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/app my-python-app
+</span></span></code></pre></div><ul>
+<li>Multi-stage Builds: Optimize production builds.</li>
+</ul>
+<h4 id="configuring-poetry-project-in-docker">Configuring <code>poetry</code> project in Docker<a hidden class="anchor" aria-hidden="true" href="#configuring-poetry-project-in-docker">#</a></h4>
+<p>Poetry replaces <code>requirements.txt</code> with its own modern dependency tracking system using the <code>pyproject.toml</code> and <code>poetry.lock</code> files. Here’s what you should do to manage dependencies or generate a <code>requirements.txt</code> if needed:</p>
+<p>Use <code>poetry add</code> to add dependencies and install all dependencies listed in <code>pyproject.toml</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Add dependencies</span>
+</span></span><span class="line"><span class="cl">poetry add pendulum
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># install all dependencies listed in `pyproject.toml` </span>
+</span></span><span class="line"><span class="cl">poetry install
+</span></span></code></pre></div><h5 id="how-to-configure-poetry-project-in-docker">How to configure <code>poetry</code> project in Docker<a hidden class="anchor" aria-hidden="true" href="#how-to-configure-poetry-project-in-docker">#</a></h5>
+<ol>
+<li>Generate a <code>requirements.txt</code> from Poetry</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">poetry <span class="nb">export</span> -f requirements.txt --output requirements.txt
+</span></span></code></pre></div><ol start="2">
+<li>Using Poetry in Docker Without <code>requirements.txt</code></li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Use an official Python image</span>
+</span></span><span class="line"><span class="cl">FROM python:3.10-slim
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Set the working directory inside the container</span>
+</span></span><span class="line"><span class="cl">WORKDIR /app
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Install Poetry globally</span>
+</span></span><span class="line"><span class="cl">RUN pip install poetry
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Copy Poetry configuration files to the container</span>
+</span></span><span class="line"><span class="cl">COPY pyproject.toml poetry.lock ./
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Install project dependencies using Poetry</span>
+</span></span><span class="line"><span class="cl">RUN poetry install --no-root
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Copy the rest of the application code</span>
+</span></span><span class="line"><span class="cl">COPY . .
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Define the default command to run the application</span>
+</span></span><span class="line"><span class="cl">CMD <span class="o">[</span><span class="s2">&#34;poetry&#34;</span>, <span class="s2">&#34;run&#34;</span>, <span class="s2">&#34;python&#34;</span>, <span class="s2">&#34;main.py&#34;</span><span class="o">]</span>
+</span></span></code></pre></div><ol start="3">
+<li>Adding environment variables (Optional)
+If your project uses environment variables, you can pass them into the container:</li>
+</ol>
+<ul>
+<li>Add a <code>.env</code> file in your project:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">DEBUG</span><span class="o">=</span>True
+</span></span><span class="line"><span class="cl"><span class="nv">SECRET_KEY</span><span class="o">=</span>mysecretkey
+</span></span></code></pre></div><ul>
+<li>Update the Dockerfile to install <code>python-dotenv</code> and load environment variables:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Dockerfile" data-lang="Dockerfile"><span class="line"><span class="cl"><span class="c"># Install python-dotenv</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">RUN</span> poetry add python-dotenv<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c"># Copy the .env file</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">COPY</span> .env .env<span class="err">
+</span></span></span></code></pre></div><ul>
+<li>Pass environment variables while running the container:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker run -it --rm --env-file .env my-poetry-app
+</span></span></code></pre></div><ol start="4">
+<li>Using <code>docker-compose</code> for Multi-Service Projects.
+If your project involves multiple services (e.g., a database), use <strong>docker-compose</strong>.</li>
+</ol>
+<p>Example <code>docker-compose.yml</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;3.9&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">services</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">web</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">build</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="s2">&#34;5000:5000&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">.:/app</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l">poetry run python main.py</span><span class="w">
+</span></span></span></code></pre></div><p>Run the services:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker-compose up
+</span></span></code></pre></div><h5 id="full-example-workflow-for-poetry-projects">Full example workflow for <code>poetry</code> projects<a hidden class="anchor" aria-hidden="true" href="#full-example-workflow-for-poetry-projects">#</a></h5>
+<p>Here’s a sample workflow for a <strong>Flask app</strong> using Poetry and Docker:</p>
+<ol>
+<li>Application Structure:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="n">my</span><span class="p">-</span><span class="n">poetry</span><span class="p">-</span><span class="n">app</span><span class="p">/</span>
+</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">app</span><span class="p">.</span><span class="n">py</span>
+</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">pyproject</span><span class="p">.</span><span class="n">toml</span>
+</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">poetry</span><span class="p">.</span><span class="k">lock</span>
+</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">Dockerfile</span>
+</span></span><span class="line"><span class="cl"><span class="err">└──</span> <span class="n">README</span><span class="p">.</span><span class="n">md</span>
+</span></span></code></pre></div><ol start="2">
+<li><code>app.py</code></li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@app.route</span><span class="p">(</span><span class="s2">&#34;/&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">home</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s2">&#34;Hello, Poetry with Docker!&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&#34;0.0.0.0&#34;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+</span></span></code></pre></div><ol start="3">
+<li><code>pyproject.toml</code> (Add flash)</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="line"><span class="cl"><span class="p">[</span><span class="nx">tool</span><span class="p">.</span><span class="nx">poetry</span><span class="p">.</span><span class="nx">dependencies</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="nx">python</span> <span class="p">=</span> <span class="s2">&#34;^3.10&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">flask</span> <span class="p">=</span> <span class="s2">&#34;^2.2&#34;</span>
+</span></span></code></pre></div><ol start="4">
+<li>Build and Run</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">docker build -t my-poetry-app .
+</span></span><span class="line"><span class="cl">docker run -it --rm -p 5000:5000 my-poetry-app
+</span></span></code></pre></div><h4 id="docker-composeyml-with-multiple-services"><code>docker-compose.yml</code> with Multiple Services<a hidden class="anchor" aria-hidden="true" href="#docker-composeyml-with-multiple-services">#</a></h4>
+<p>When you python project is related to multiple services, such as web app, database and cache, in this case, a <code>docker-compose.yml</code> is required to manage multiple Docker containers (services) and their relationships.</p>
+<h5 id="comparison-between-dockerfile-and-docker-composeyml">Comparison between <code>Dockerfile</code> and <code>docker-compose.yml</code><a hidden class="anchor" aria-hidden="true" href="#comparison-between-dockerfile-and-docker-composeyml">#</a></h5>
+<hr>
+<p><code>Dockerfile</code>:  A <code>Dockerfile</code> is a script containing instructions to build a Docker image for your application. It focuses on creating a single Docker image, and build a custom environment for your application.</p>
+<p>Builds an Image:</p>
+<ul>
+<li>Specifies the base image (e.g., <code>python:3.10-slim</code>).</li>
+<li>Contains commands to install dependencies, copy application files, and define the container runtime behavior.
+Example:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Dockerfile" data-lang="Dockerfile"><span class="line"><span class="cl"><span class="c"># Dockerfile</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">FROM</span><span class="s"> python:3.10-slim</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">WORKDIR</span><span class="s"> /app</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">COPY</span> . .<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">RUN</span> pip install -r requirements.txt<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">CMD</span> <span class="p">[</span><span class="s2">&#34;python&#34;</span><span class="p">,</span> <span class="s2">&#34;app.py&#34;</span><span class="p">]</span><span class="err">
+</span></span></span></code></pre></div><p>When to use:</p>
+<ul>
+<li>Always required if you need a custom image for your application.</li>
+</ul>
+<hr>
+<p><code>docker-compose.yml</code>: A <strong><code>docker-compose.yml</code></strong> file defines and manages multiple Docker containers (services) and their relationships. It focuses on managing and running multiple <strong>services (containers)</strong> and orchestrates multiple services, such as web apps, databases, caches, etc., in a unified setup.</p>
+<p>Service Orchestration:</p>
+<ul>
+<li>Defines and runs multiple containers (services) together.</li>
+<li>Specifies how services interact (e.g., a web app connects to a database).
+Example:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="c"># docker-compose.yml</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;3.9&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">services</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">web</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">build</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l">.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="s2">&#34;5000:5000&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">db</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">postgres:13</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">environment</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">POSTGRES_USER</span><span class="p">:</span><span class="w"> </span><span class="l">user</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">POSTGRES_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l">password</span><span class="w">
+</span></span></span></code></pre></div><p>When to use:</p>
+<ul>
+<li>When your application involves multiple services (e.g., a web server, database, and message queue).</li>
+<li>Simplifies running containers by combining <code>docker run</code> commands into a single configuration.</li>
+</ul>
+<hr>
+<p>Command Usage
+<code>Dockerfile</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Build an Image</span>
+</span></span><span class="line"><span class="cl">docker build -t my-app .
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Run a Container</span>
+</span></span><span class="line"><span class="cl">docker run -it --rm my-app
+</span></span></code></pre></div><p><code>codker-compose.yml</code></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Run all services</span>
+</span></span><span class="line"><span class="cl">docker-compose up
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Stop all services</span>
+</span></span><span class="line"><span class="cl">docker-compose down
+</span></span></code></pre></div><h3 id="key-differences">Key Differences<a hidden class="anchor" aria-hidden="true" href="#key-differences">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Dockerfile</th>
+<th>docker-compose.yml</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scope</td>
+<td>Builds a single image.</td>
+<td>Manages and runs multiple containers as a group.</td>
+</tr>
+<tr>
+<td>Complexity</td>
+<td>Simpler, focuses on building the image.</td>
+<td>More complex, includes networking and relationships between services.</td>
+</tr>
+<tr>
+<td>Networking</td>
+<td>Does not handle networking.</td>
+<td>Automatically sets up a default network for services to communicate with each other.</td>
+</tr>
+<tr>
+<td>Environment Variables</td>
+<td>Can be set during container runtime.</td>
+<td>Defines environment variables for multiple containers in one place.</td>
+</tr>
+<tr>
+<td>File Format</td>
+<td><code>Dockerfile</code> syntax (specific to Docker builds).</td>
+<td><code>YAML</code>, used to define services, volumes, networks, and configurations.</td>
+</tr>
+<tr>
+<td>Dependency Orchestration</td>
+<td>Not supported (handles only one container).</td>
+<td>Supports orchestration and dependency startup (e.g., wait for the database to be ready).</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>When using <code>docker-compose.yml</code>, you typically configure a <strong>Dockerfile</strong> for each service that requires a custom image. The <code>docker-compose.yml</code> orchestrates the services, and the <strong>Dockerfile</strong> defines how the image for each service is built.</p>
+<p><strong>Why Configure a Dockerfile for Each Project?</strong></p>
+<ul>
+<li>Custom Configuration: Each service might need a unique setup. For example:
+<ul>
+<li>A Python web app might need dependencies from <code>pyproject.toml</code> or <code>requirements.txt</code>.</li>
+<li>A database service like PostgreSQL might use a standard image with additional configuration files.</li>
+</ul>
+</li>
+<li>Environment Isolation: Using a Dockerfile ensures that each service is built with the required dependencies and configurations.</li>
+<li>Version Control: You can track changes in your custom images by managing the Dockerfile in your project&rsquo;s repository.</li>
+</ul>
+<hr>
+<p><strong>When Is a Dockerfile Needed?</strong>
+You need a Dockerfile if:</p>
+<ul>
+<li>The service requires specific dependencies, environment variables, or configurations.</li>
+<li>The service uses custom application code (e.g., a Python application).</li>
+<li>You’re not using a pre-built image or you need to extend it.
+You don’t need a Dockerfile if:</li>
+<li>The service uses a standard image with no modifications (e.g., <code>postgres</code>, <code>redis</code>, etc.).</li>
+</ul>
+<h5 id="full-example-workflow-docker-composeyml-with-multiple-services">Full example workflow <code>docker-compose.yml</code> with Multiple Services<a hidden class="anchor" aria-hidden="true" href="#full-example-workflow-docker-composeyml-with-multiple-services">#</a></h5>
+<p>Here’s an example with two services: a <strong>Python Flask app</strong> (with a custom Dockerfile) and a <strong>PostgreSQL database</strong> (using a pre-built image).</p>
+<p>Directory Structure:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-csharp" data-lang="csharp"><span class="line"><span class="cl"><span class="n">my_project</span><span class="p">/</span>
+</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">app</span><span class="p">/</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">├──</span> <span class="n">app</span><span class="p">.</span><span class="n">py</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">├──</span> <span class="n">pyproject</span><span class="p">.</span><span class="n">toml</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">├──</span> <span class="n">poetry</span><span class="p">.</span><span class="k">lock</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">├──</span> <span class="n">Dockerfile</span>
+</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">docker</span><span class="p">-</span><span class="n">compose</span><span class="p">.</span><span class="n">yml</span>
+</span></span></code></pre></div><hr>
+<ol>
+<li><code>Dockerfile</code> for the Flask App
+This file defines the custom image for the Python service.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Dockerfile" data-lang="Dockerfile"><span class="line"><span class="cl"><span class="c"># Use a lightweight Python image</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">FROM</span><span class="s"> python:3.10-slim</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c"># Set the working directory inside the container</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">WORKDIR</span><span class="s"> /app</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c"># Install Poetry</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">RUN</span> pip install poetry<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c"># Copy Poetry configuration files</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">COPY</span> pyproject.toml poetry.lock ./<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c"># Install dependencies using Poetry</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">RUN</span> poetry install --no-root<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c"># Copy the application code</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">COPY</span> . .<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c"># Expose the Flask default port</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">EXPOSE</span><span class="s"> 5000</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="c"># Define the command to run the app</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">CMD</span> <span class="p">[</span><span class="s2">&#34;poetry&#34;</span><span class="p">,</span> <span class="s2">&#34;run&#34;</span><span class="p">,</span> <span class="s2">&#34;python&#34;</span><span class="p">,</span> <span class="s2">&#34;app.py&#34;</span><span class="p">]</span><span class="err">
+</span></span></span></code></pre></div><ol start="2">
+<li><code>docker-compose.yml</code></li>
+</ol>
+<p>This file orchestrates both the Flask app and PostgreSQL database.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;3.9&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">services</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">web</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">build</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l">./app</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="s2">&#34;5000:5000&#34;</span><span class="w">  </span><span class="c"># Map container port 5000 to host port 5000</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">environment</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">FLASK_ENV=development </span><span class="w"> </span><span class="c"># Flask environment variable</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">db </span><span class="w"> </span><span class="c"># Ensure the database starts before the web app</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">db</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">postgres:13 </span><span class="w"> </span><span class="c"># Uses the official `postgres:13` image.    </span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">environment</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">POSTGRES_USER</span><span class="p">:</span><span class="w"> </span><span class="l">user</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">POSTGRES_PASSWORD</span><span class="p">:</span><span class="w"> </span><span class="l">password</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">POSTGRES_DB</span><span class="p">:</span><span class="w"> </span><span class="l">mydb</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="s2">&#34;5432:5432&#34;</span><span class="w">  </span><span class="c"># Map container port 5432 to host port 5432</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">postgres_data:/var/lib/postgresql/data </span><span class="w"> </span><span class="c"># Persist database data</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">postgres_data</span><span class="p">:</span><span class="w">  </span><span class="c"># Named volume for database persistence</span><span class="w">
+</span></span></span></code></pre></div><hr>
+<p>How the Configuration Works</p>
+<ol>
+<li>Python Service (<code>web</code>):
+<ul>
+<li>Uses the <code>Dockerfile</code> in the <code>app/</code> directory to build a custom image.</li>
+<li>Maps port <code>5000</code> on the container to port <code>5000</code> on the host.</li>
+<li>Waits for the database (<code>db</code>) service to be ready before starting.</li>
+</ul>
+</li>
+<li>PostgreSQL Service (<code>db</code>):
+<ul>
+<li>Uses the official <code>postgres:13</code> image.</li>
+<li>Configures database credentials and a persistent volume.</li>
+</ul>
+</li>
+</ol>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/tags/transformer/">Transformer</a></li>
+      <li><a href="http://localhost:1313/tags/code/">Code</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/posts/markdown-syntax/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>Cover Guide</span>
+  </a>
+  <a class="next" href="http://localhost:1313/posts/rich-content/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Rich Content and Shortcodes</span>
+  </a>
+</nav>
+
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share How to configure Python virtual environment and Docker on x"
+            href="https://x.com/intent/tweet/?text=How%20to%20configure%20Python%20virtual%20environment%20and%20Docker&amp;url=http%3a%2f%2flocalhost%3a1313%2fmodel%2ftransformer%2f&amp;hashtags=transformer%2ccode">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share How to configure Python virtual environment and Docker on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2flocalhost%3a1313%2fmodel%2ftransformer%2f&amp;title=How%20to%20configure%20Python%20virtual%20environment%20and%20Docker&amp;summary=How%20to%20configure%20Python%20virtual%20environment%20and%20Docker&amp;source=http%3a%2f%2flocalhost%3a1313%2fmodel%2ftransformer%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share How to configure Python virtual environment and Docker on reddit"
+            href="https://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fmodel%2ftransformer%2f&title=How%20to%20configure%20Python%20virtual%20environment%20and%20Docker">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share How to configure Python virtual environment and Docker on facebook"
+            href="https://facebook.com/sharer/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fmodel%2ftransformer%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share How to configure Python virtual environment and Docker on whatsapp"
+            href="https://api.whatsapp.com/send?text=How%20to%20configure%20Python%20virtual%20environment%20and%20Docker%20-%20http%3a%2f%2flocalhost%3a1313%2fmodel%2ftransformer%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share How to configure Python virtual environment and Docker on telegram"
+            href="https://telegram.me/share/url?text=How%20to%20configure%20Python%20virtual%20environment%20and%20Docker&amp;url=http%3a%2f%2flocalhost%3a1313%2fmodel%2ftransformer%2f">
+            <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share How to configure Python virtual environment and Docker on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=How%20to%20configure%20Python%20virtual%20environment%20and%20Docker&u=http%3a%2f%2flocalhost%3a1313%2fmodel%2ftransformer%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    
+    
+    <span>&copy; 2025 Powered by Snoopy</span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

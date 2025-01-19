@@ -1,19 +1,1110 @@
-<!doctype html><html lang=en dir=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>How to prepare your interview - data scientist Part 2 | Tianyu Liu</title>
-<meta name=keywords content="interview,classical_ML,data_science"><meta name=description content="Data preprocessing; Feature engineering;"><meta name=author content="Tianyu Liu"><link rel=canonical href=https://tyliu22.github.io/interview/interview-for-classical-ml---data--feature/><link crossorigin=anonymous href=/assets/css/stylesheet.5ff2630c4d1b3e25bc21f0ecd96681dbcf58219e741fa627857820b5485cb770.css integrity="sha256-X/JjDE0bPiW8IfDs2WaB289YIZ50H6YnhXggtUhct3A=" rel="preload stylesheet" as=style><link rel=icon href=https://tyliu22.github.io/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://tyliu22.github.io/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://tyliu22.github.io/favicon-32x32.png><link rel=apple-touch-icon href=https://tyliu22.github.io/apple-touch-icon.png><link rel=mask-icon href=https://tyliu22.github.io/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=en href=https://tyliu22.github.io/interview/interview-for-classical-ml---data--feature/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style></noscript><meta property="og:title" content="How to prepare your interview - data scientist Part 2"><meta property="og:description" content="Data preprocessing; Feature engineering;"><meta property="og:type" content="article"><meta property="og:url" content="https://tyliu22.github.io/interview/interview-for-classical-ml---data--feature/"><meta property="og:image" content="https://tyliu22.github.io/images/msg.png"><meta property="article:section" content="interview"><meta property="article:published_time" content="2024-12-27T00:00:00+00:00"><meta property="article:modified_time" content="2024-12-27T00:00:00+00:00"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://tyliu22.github.io/images/msg.png"><meta name=twitter:title content="How to prepare your interview - data scientist Part 2"><meta name=twitter:description content="Data preprocessing; Feature engineering;"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Interviews","item":"https://tyliu22.github.io/interview/"},{"@type":"ListItem","position":2,"name":"How to prepare your interview - data scientist Part 2","item":"https://tyliu22.github.io/interview/interview-for-classical-ml---data--feature/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"How to prepare your interview - data scientist Part 2","name":"How to prepare your interview - data scientist Part 2","description":"Data preprocessing; Feature engineering;","keywords":["interview","classical_ML","data_science"],"articleBody":" Experience is the father of wisdom.\nThis article offers data preprocessing, feature engineering, cross validation, loss function and model evaluation metrics, overfitting.\nData preprocessing In the structured dataset, data may consists of different types, for examples, numerical data (eg. age), categorical data (eg. Gender)\nData clearing Handling Missing Values in Data Missing values can negatively impact data analysis and machine learning models. Below is a summary of the most popular approaches to handle missing data.\nRemoval Techniques Drop Rows – Remove rows with missing values. Drop Columns – Remove columns with too many missing values. When to Use:\n- Small amount of missing data.\n- Risk of losing information. Imputation Techniques Mean/Median/Mode Imputation – Replace missing values with the column’s mean, median, or mode. Forward/Backward Fill – Use previous or next values to fill missing data (time series). KNN Imputation – Use K-Nearest Neighbors to estimate missing values. When to Use:\n- Moderate amount of missing data.\n- Preserves data integrity without deletion. Advanced Techniques Regression/Prediction Models – Use machine learning models to predict missing values. When to Use:\n- Large datasets with significant missing data.\n- More accurate, computationally expensive. Handling Categorical Data Mode Imputation – Fill missing values with the most frequent category. Label ‘Unknown’ – Tag missing values explicitly as ‘Unknown’ or ‘Missing’. When to Use:\n- Categorical features.\n- Avoids introducing biases. Choosing the Right Method Missing Rate Recommended Approach \u003c 5% Mean/Median/Mode, Drop Rows 5-20% KNN, Forward Fill, Regression \u003e 20% Multiple Imputation, Drop Columns Detecting Outliers in Data Outliers are data points that significantly differ from the majority of the data. Below is a summary of the most popular statistical and machine learning methods to detect outliers.\nStatistical Methods Z-Score (Standard Score) - Measures the number of standard deviations a data point is from the mean. Threshold: |z| \u003e 3 Formula: $$z= (x - mean) / std$$ Machine Learning Approaches Isolation Forest - Anomaly detection algorithm that isolates outliers based on decision trees.\n- Contamination Parameter: Proportion of outliers (e.g., 0.05). One-Class SVM (Support Vector Machine) - Classifies data as inliers or outliers by finding a boundary that separates normal data. K-Nearest Neighbors (KNN) / Local Outlier Factor (LOF) - Detects outliers by measuring the local density deviation of a data point. Choosing the Right Method Method Best For Z-Score / IQR Simple datasets with low dimensionality Isolation Forest Large datasets with complex patterns One-Class SVM High-dimensional data KNN (LOF) Local outlier detection Data scaling and encoding Scaling and encoding are crucial preprocessing steps for preparing data for machine learning models. This ensures that numerical features are comparable and categorical data is represented numerically.\nnumerical feature Scaling and transforming numerical data ensures that the numerical size and distribution of features are consistent.\nnormalisation:\nMaps data into a fixed range, typically [0, 1], ensuring numerical stability and comparability. min-max scaling: Formula: $$x’ = \\frac{x - min}{max - min}$$ Scales data to the [0, 1] range based on minimum and maximum values. log scaling: Handles wide ranges and reduces skew by applying logarithmic transformation. standardisation:\nMaps data into a standard normal distribution (mean = 0, std = 1). z-score standardisation: Formula: $$z = \\frac{x - mean}{std}$$ Transforms data into a distribution with a mean of 0 and standard deviation of 1. discretisation:\nConverts continuous features into discrete bins, helping to handle long-tail distributions. Use normalisation when: A fixed output range (e.g., [0, 1]) is required OR data is stable and has no extreme values.\nUse standardisation when: Data contains outliers or noise.\nfeature binning\n- Groups data into intervals or buckets. categorical feature Encoding categorical data is necessary to convert non-numeric labels into numerical values for model processing.\none-hot encoding:\nConverts categories into binary indicators. Each category is represented by a binary vector (e.g., 001, 010, 100). Use for: Sparse, unordered categorical data. label encoding:\nMaps categories to integer values (0, 1, 2, …). Suitable for ordered features and tree-based models. ordinal encoding:\nMaps categories to specific numbers, preserving their order. Use for: Ordinal categorical data with meaningful ranking. count encoding:\nReplaces categories with the frequency of their occurrence. Pros: Maintains feature relationships. Provides frequency distribution. Cons: Can introduce bias. Ineffective for large category sets. target encoding:\nMaps categories to statistical values (e.g., mean, median of target). Pros: Handles high-cardinality features. Preserves category information. Cons: Risk of information leakage. Sensitive to outliers and overfitting. technique purpose suitable for pros cons normalisation scale to [0, 1] KNN, neural networks preserves data distribution sensitive to outliers standardisation mean = 0, std = 1 SVM, linear regression, PCA robust to outliers not bounded to fixed range log scaling reduce skew and handle wide ranges skewed data, exponential growth reduces skew effectively can distort small values discretisation convert continuous to discrete decision trees, interpretable models reduces noise and outliers information loss with fewer bins one-hot encoding binary columns for each category nominal (unordered) data no ordinal relationships increases dimensionality label encoding map categories to integers ordinal data, tree-based models simple and efficient introduces ordinal relationship for nominal data ordinal encoding encode categories while preserving order ordinal data preserves category order inappropriate for nominal data count encoding replace categories with frequency of occurrence categorical features with few categories maintains distribution information biased by small sample sizes target encoding map categories to mean/median of target variable high-cardinality categorical features reduces dimensionality risk of overfitting and information leakage Data augmentation for class imbalance Data augmentation techniques help address class imbalance by generating new samples for minority classes or reducing the number of samples in majority classes.\nupsampling Upsampling increases the number of samples in the minority class to match the majority class, improving model performance on imbalanced datasets.\nsmote (synthetic minority oversampling technique): SMOTE is a popular upsampling technique used to address class imbalance by generating synthetic data points for the minority class. Unlike simple duplication, SMOTE creates new samples by interpolating between existing samples, increasing the diversity of the data.\nhow smote works:\nSelect a Minority Class Sample: - Randomly choose a data point from the minority class. Identify k Nearest Neighbors: - Find the k-nearest neighbors of the selected sample within the minority class. Generate Synthetic Points: - Randomly select one of the k neighbors.\n- Create a synthetic data point by interpolating between the selected sample and its neighbor: $$x_{new} = x_i + (x_{neighbor} - x_i) \\times \\lambda$$ where ( \\lambda ) is a random value between 0 and 1. Repeat Until Balance: - Continue generating synthetic samples until the desired class balance is achieved. undersampling Undersampling reduces the number of samples in the majority class to balance the dataset, preventing the model from being biased toward the majority class.\nrandom undersampling: Randomly removes samples from the majority class. Simple and quick but may lead to information loss. nearmiss: Selects majority class samples closest to the minority class for removal. Focuses on boundary samples, improving class separation. comparison of techniques technique purpose suitable for pros cons smote generate synthetic minority samples imbalanced data, classification tasks increases data diversity may generate overlapping samples random undersampling randomly reduce majority samples large datasets with redundant samples simple and fast risk of information loss nearmiss remove majority samples near minority imbalanced data with clear boundaries improves class boundary distinction computationally expensive Feature engineering Numerical features: normalisation/standardisation; binning; polynomial features Categorical features: one-hot encoding; target encoding; frequency/count feature Text features: tf-idf; word embedding Image features: use filter or convolution to detect feature; use pre-train model to extract feature Feature importance analysis Feature Importance Analysis - Summary Feature importance analysis helps identify which features contribute the most to a model’s predictions. This improves model interpretability, simplifies models, and guides feature selection.\nModel-Based Feature Importance\nFeature importance is derived directly from the model’s internal structure. Linear Models (Linear/Logistic Regression):\n- Coefficients reflect feature importance. Larger coefficients indicate higher importance. - Use Case: Simple linear relationships.\n- Action: Drop features with near-zero coefficients (Lasso), and manage multicollinearity (Ridge). Lasso Regression (L1 Regularization):\n- Shrinks some coefficients to zero, selecting the most important features.\n- Use Case: Feature selection with many irrelevant features.\n- Action: Tune regularization strength (alpha) and drop zero-coefficient features. Ridge Regression (L2 Regularization):\n- Reduces the magnitude of coefficients without shrinking them to zero.\n- Use Case: Multicollinearity and high-dimensional data.\n- Action: Use when elimination is not required. Tree-Based Methods (Decision Trees, Random Forest, XGBoost):\n- Measures feature importance by how much they reduce impurity (Gini or Information Gain). Use Case: Non-linear models and feature interactions. Action: Focus on high-importance features for refinement. Feature importance can be computed by how much each feature contributes to reducing impurity (classification) or variance (regression) when used in decision splits. Feature Importance Based on Gini Impurity or Gain Gini Impurity (for Classification): Measures how often a feature reduces the uncertainty (impurity) in a node across all trees. Information Gain (for Regression): Measures how much the feature reduces the variance or Mean Squared Error (MSE) across all trees. Model-Free Feature Importance\nModel-free methods assess feature relevance independently of model structure, useful for black-box models. Recursive Feature Elimination (RFE):\n- Recursively removes the least important features by refitting the model iteratively. - Use Case: Optimal for incremental simplification.\n- Action: Use RFE and select features based on cross-validation. Permutation Importance:\n- Randomly shuffles feature values and measures the performance drop.\n- Use Case: Model-agnostic, works with neural networks and complex models.\n- Action: Use permutation_importance and eliminate features with minimal effect. SHAP (SHapley Additive exPlanations):\n- Game-theory-based approach to assign feature contribution scores.\n- Use Case: Explaining black-box models globally and locally.\n- Action: Visualize SHAP plots to guide feature selection. Feature interaction Feature Interaction Analysis Feature interaction analysis enhances model performance by uncovering relationships between features. This allows models to capture dependencies that might not be evident through simple linear approaches.\nCorrelation Matrices for Numerical Variables\nA correlation matrix calculates pairwise correlation between numerical features. Pearson’s Correlation measures the strength and direction of the linear relationship between two variables. Spearman’s Correlation ranks data to capture monotonic relationships, making it robust to non-linear interactions.\nDetects collinearity and redundant numerical features by highlighting feature pairs with high correlation. Cross-Tabulation for Categorical Variables Cross-tabulation constructs a contingency table to show the frequency distribution of categorical data. A Chi-Square Test is applied to determine whether two categorical variables are independent by comparing observed and expected frequencies.\nReveals dependencies between categorical features and identifies patterns of co-occurrence. SHAP Value (SHapley Additive exPlanations) SHAP values are calculated using cooperative game theory, attributing contributions to each feature based on its impact on the model’s output. The method generates explanations by comparing all possible permutations of features and their effects on predictions. Partial Dependence Plots visualize the relationship between specific features and predictions while averaging over other features.\nUncovers interactions in models like decision trees, gradient boosting, and neural networks by accurately reflecting feature contributions. Heatmap + Hierarchical Clustering\nVisualize relationships between features and group similar ones. A heatmap displays a correlation matrix using color gradients, making it easy to spot strongly correlated features. Hierarchical Clustering groups features based on their pairwise similarity, building a dendrogram that shows the clustering process. Features in the same cluster exhibit similar patterns and can indicate redundancy or feature interactions.\nDetects patterns, collinearity, and clusters of interacting features, aiding in feature selection and model simplification. Feature Multi-Collinearity (For Generalised Linear Model) Feature multi-collinearity occurs when two or more features exhibit a linear relationship, leading to redundancy in the model. In linear models or GLM (Generalized Linear Models), high collinearity can:\nInflate the variance of model coefficients. Reduce the reliability of coefficient estimates. Lead to unstable and less interpretable models. Cause overfitting and poor generalization to new data. Addressing multi-collinearity is essential for enhancing model performance, ensuring stability, and improving interpretability.\nHow to Detect Feature Multicollinearity 1 Correlation Matrix\n- Calculates pairwise correlation values between features.\n- High correlation (typically \u003e 0.7 or \u003c -0.7) indicates potential collinearity.\n- Effective for quick visualization of feature relationships.\n- Useful in the exploratory data analysis (EDA) phase.\n- Limitation: Does not capture multi-variable collinearity, only pairwise.\nVIF (Variance Inflation Factor) VIF measures how much the variance of a regression coefficient is inflated due to collinearity. A VIF score of 1 indicates no collinearity, while:\n- VIF between 1 and 5 suggests moderate correlation.\n- VIF above 5 or 10 signals high collinearity requiring attention. VIF is preferable for detecting multi-variable collinearity, unlike correlation matrices. Workflow for VIF in Linear or Logistic Regression Fit the Model\nTrain the linear, logistic, or generalized linear model on the dataset. Calculate VIF\nCompute VIF values for each independent variable to assess their collinearity. Inspect High VIF Identify features with high VIF values (typically greater than 5 or 10). Remove or Combine Features Remove one of the highly correlated features. Combine or create interaction terms to preserve information while reducing redundancy. Refit the Model\nRerun the model using the reduced or modified feature set and check for improvements. Monitor changes in VIF scores and model coefficients. Check Model Performance Evaluate the model’s predictive performance on validation data. Ensure that removing or modifying features results in more stable and interpretable coefficients. Compare R², adjusted R², or AIC/BIC values to confirm improved model fit. Feature Binning Feature binning is the process of transforming continuous numerical features into discrete intervals or “bins/buckets.” This transformation helps models like logistic regression capture nonlinear patterns more effectively.\nBenefits of Feature Binning Handle Non-Linearity\nBinning can capture non-linear relationships better than using continuous features directly. Reducing Outliers / Long-Tail Distribution\nBy grouping extreme values into categories, binning reduces the influence of outliers, stabilizing model performance. Reduce Model Complexity Simplifies the model, reduces noise effects, and increases robustness by limiting the granularity of numerical features. Types of Feature Binning Fixed Width Binning Divides the range of values into equal-sized bins regardless of data distribution. Quantile Binning\nBins are created so that each bin contains an equal number of data points. This approach is useful for skewed distributions. Custom Binning Binning is performed based on domain knowledge or specific business logic, allowing for tailored intervals that reflect the nature of the data. how to handle new feature For Tree-Based Models (Random Forest, Decision Trees, XGBoost)\nTree models typically do not allow incremental retraining. The structure of the tree is fixed after training. However, here are a few workarounds:: Retrain the model from scratch with old and new features. Use the existing model as a base learner. Train a new small tree or boosting model on the residuals/errors of the original model using the new feature. XGBoost/LightGBM Specific Approach\nXGBoost and LightGBM allow incremental retraining using update() but only for new data, not new features. Trick: Concatenate the new feature as an interaction term or use it in ensemble stacking. ","wordCount":"2461","inLanguage":"en","image":"https://tyliu22.github.io/images/msg.png","datePublished":"2024-12-27T00:00:00Z","dateModified":"2024-12-27T00:00:00Z","author":{"@type":"Person","name":"Tianyu Liu"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://tyliu22.github.io/interview/interview-for-classical-ml---data--feature/"},"publisher":{"@type":"Organization","name":"Tianyu Liu","logo":{"@type":"ImageObject","url":"https://tyliu22.github.io/favicon.ico"}}}</script></head><body id=top><script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add("dark"):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove("dark"):window.matchMedia("(prefers-color-scheme: dark)").matches&&document.body.classList.add("dark")</script><header class=header><nav class=nav><div class=logo><a href=https://tyliu22.github.io/ accesskey=h title="Tianyu Liu (Alt + H)">Tianyu Liu</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)"><svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=https://tyliu22.github.io/archives title=Archives><span>Archives</span></a></li><li><a href=https://tyliu22.github.io/search/ title="Search (Alt + /)" accesskey=/><span>Search</span></a></li><li><a href=https://tyliu22.github.io/tags/ title=Tags><span>Tags</span></a></li><li><a href=https://www.peanuts.com/about/snoopy title=Snoopy><span>Snoopy</span>&nbsp;<svg fill="none" shape-rendering="geometricPrecision" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><div class=breadcrumbs><a href=https://tyliu22.github.io/>Home</a>&nbsp;»&nbsp;<a href=https://tyliu22.github.io/interview/>Interviews</a></div><h1 class="post-title entry-hint-parent">How to prepare your interview - data scientist Part 2</h1><div class=post-description>Data preprocessing; Feature engineering;</div><div class=post-meta><span title='2024-12-27 00:00:00 +0000 UTC'>December 27, 2024</span>&nbsp;·&nbsp;12 min&nbsp;·&nbsp;Tianyu Liu</div></header><figure class=entry-cover><img loading=eager srcset="https://tyliu22.github.io/images/msg_hu5deb5e6d9e0f2517f781ba2ad78170fc_29736_360x0_resize_box_3.png 360w ,https://tyliu22.github.io/images/msg_hu5deb5e6d9e0f2517f781ba2ad78170fc_29736_480x0_resize_box_3.png 480w ,https://tyliu22.github.io/images/msg_hu5deb5e6d9e0f2517f781ba2ad78170fc_29736_720x0_resize_box_3.png 720w ,https://tyliu22.github.io/images/msg_hu5deb5e6d9e0f2517f781ba2ad78170fc_29736_1080x0_resize_box_3.png 1080w ,https://tyliu22.github.io/images/msg_hu5deb5e6d9e0f2517f781ba2ad78170fc_29736_1500x0_resize_box_3.png 1500w ,https://tyliu22.github.io/images/msg.png 1600w" sizes="(min-width: 768px) 720px, 100vw" src=https://tyliu22.github.io/images/msg.png alt="Generated using [OG Image Playground by Vercel](https://og-playground.vercel.app/)" width=1600 height=800><p>Generated using <a href=https://og-playground.vercel.app/>OG Image Playground by Vercel</a></p></figure><div class=toc><details open><summary accesskey=c title="(Alt + C)"><span class=details>Table of Contents</span></summary><div class=inner><ul><li><a href=#data-preprocessing aria-label="Data preprocessing">Data preprocessing</a><ul><li><a href=#data-clearing aria-label="Data clearing">Data clearing</a><ul><li><a href=#handling-missing-values-in-data aria-label="Handling Missing Values in Data">Handling Missing Values in Data</a></li><li><a href=#detecting-outliers-in-data aria-label="Detecting Outliers in Data">Detecting Outliers in Data</a></li></ul></li><li><a href=#data-scaling-and-encoding aria-label="Data scaling and encoding">Data scaling and encoding</a><ul><li><a href=#numerical-feature aria-label="numerical feature">numerical feature</a></li><li><a href=#categorical-feature aria-label="categorical feature">categorical feature</a></li></ul></li><li><a href=#data-augmentation-for-class-imbalance aria-label="Data augmentation for class imbalance">Data augmentation for class imbalance</a><ul><li><a href=#upsampling aria-label=upsampling>upsampling</a></li><li><a href=#undersampling aria-label=undersampling>undersampling</a></li><li><a href=#comparison-of-techniques aria-label="comparison of techniques">comparison of techniques</a></li></ul></li></ul></li><li><a href=#feature-engineering aria-label="Feature engineering">Feature engineering</a><ul><li><a href=#feature-importance-analysis aria-label="Feature importance analysis">Feature importance analysis</a><ul><li><a href=#feature-importance-analysis---summary aria-label="Feature Importance Analysis - Summary">Feature Importance Analysis - Summary</a></li></ul></li><li><a href=#feature-interaction aria-label="Feature interaction">Feature interaction</a><ul><li><a href=#feature-interaction-analysis aria-label="Feature Interaction Analysis">Feature Interaction Analysis</a></li><li><a href=#feature-multi-collinearity-for-generalised-linear-model aria-label="Feature Multi-Collinearity (For Generalised Linear Model)">Feature Multi-Collinearity (For Generalised Linear Model)</a><ul><li><a href=#how-to-detect-feature-multicollinearity aria-label="How to Detect Feature Multicollinearity">How to Detect Feature Multicollinearity</a></li><li><a href=#workflow-for-vif-in-linear-or-logistic-regression aria-label="Workflow for VIF in Linear or Logistic Regression">Workflow for VIF in Linear or Logistic Regression</a></li></ul></li><li><a href=#feature-binning aria-label="Feature Binning">Feature Binning</a><ul><li><a href=#benefits-of-feature-binning aria-label="Benefits of Feature Binning">Benefits of Feature Binning</a></li><li><a href=#types-of-feature-binning aria-label="Types of Feature Binning">Types of Feature Binning</a></li></ul></li></ul></li><li><a href=#how-to-handle-new-feature aria-label="how to handle new feature">how to handle new feature</a></li></ul></li></ul></div></details></div><div class=post-content><blockquote><p>Experience is the father of wisdom.</p></blockquote><p>This article offers data preprocessing, feature engineering, cross validation, loss function and model evaluation metrics, overfitting.</p><h2 id=data-preprocessing>Data preprocessing<a hidden class=anchor aria-hidden=true href=#data-preprocessing>#</a></h2><p>In the structured dataset, data may consists of different types, for examples, numerical data (eg. age), categorical data (eg. Gender)</p><h3 id=data-clearing>Data clearing<a hidden class=anchor aria-hidden=true href=#data-clearing>#</a></h3><h4 id=handling-missing-values-in-data>Handling Missing Values in Data<a hidden class=anchor aria-hidden=true href=#handling-missing-values-in-data>#</a></h4><p>Missing values can negatively impact data analysis and machine learning models. Below is a summary of the most popular approaches to handle missing data.</p><hr><ol><li><strong>Removal Techniques</strong><ul><li>Drop Rows – Remove rows with missing values.</li><li>Drop Columns – Remove columns with too many missing values.</li><li>When to Use:<br>- Small amount of missing data.<br>- Risk of losing information.</li></ul></li></ol><hr><ol start=2><li><strong>Imputation Techniques</strong><ul><li>Mean/Median/Mode Imputation – Replace missing values with the column&rsquo;s mean, median, or mode.</li><li>Forward/Backward Fill – Use previous or next values to fill missing data (time series).</li><li>KNN Imputation – Use K-Nearest Neighbors to estimate missing values.</li><li>When to Use:<br>- Moderate amount of missing data.<br>- Preserves data integrity without deletion.</li></ul></li></ol><hr><ol start=3><li><strong>Advanced Techniques</strong><ul><li>Regression/Prediction Models – Use machine learning models to predict missing values.</li><li>When to Use:<br>- Large datasets with significant missing data.<br>- More accurate, computationally expensive.</li></ul></li></ol><hr><ol start=4><li><strong>Handling Categorical Data</strong><ul><li>Mode Imputation – Fill missing values with the most frequent category.</li><li>Label &lsquo;Unknown&rsquo; – Tag missing values explicitly as &lsquo;Unknown&rsquo; or &lsquo;Missing&rsquo;.</li><li>When to Use:<br>- Categorical features.<br>- Avoids introducing biases.</li></ul></li></ol><hr><ol start=5><li><strong>Choosing the Right Method</strong></li></ol><table><thead><tr><th>Missing Rate</th><th>Recommended Approach</th></tr></thead><tbody><tr><td>&lt; 5%</td><td>Mean/Median/Mode, Drop Rows</td></tr><tr><td>5-20%</td><td>KNN, Forward Fill, Regression</td></tr><tr><td>> 20%</td><td>Multiple Imputation, Drop Columns</td></tr></tbody></table><h4 id=detecting-outliers-in-data>Detecting Outliers in Data<a hidden class=anchor aria-hidden=true href=#detecting-outliers-in-data>#</a></h4><p>Outliers are data points that significantly differ from the majority of the data. Below is a summary of the most popular statistical and machine learning methods to detect outliers.</p><hr><ol><li>Statistical Methods<ul><li>Z-Score (Standard Score)
-- Measures the number of standard deviations a data point is from the mean.<ul><li>Threshold: |z| > 3</li><li>Formula: $$z= (x - mean) / std$$</li></ul></li></ul></li></ol><hr><ol start=2><li>Machine Learning Approaches<ul><li>Isolation Forest
-- Anomaly detection algorithm that isolates outliers based on decision trees.<br>- Contamination Parameter: Proportion of outliers (e.g., 0.05).</li><li>One-Class SVM (Support Vector Machine)
-- Classifies data as inliers or outliers by finding a boundary that separates normal data.</li><li>K-Nearest Neighbors (KNN) / Local Outlier Factor (LOF)
-- Detects outliers by measuring the local density deviation of a data point.</li></ul></li></ol><hr><ol start=3><li>Choosing the Right Method</li></ol><table><thead><tr><th>Method</th><th>Best For</th><th></th></tr></thead><tbody><tr><td>Z-Score / IQR</td><td>Simple datasets with low dimensionality</td><td></td></tr><tr><td>Isolation Forest</td><td>Large datasets with complex patterns</td><td></td></tr><tr><td>One-Class SVM</td><td>High-dimensional data</td><td></td></tr><tr><td>KNN (LOF)</td><td>Local outlier detection</td><td></td></tr></tbody></table><hr><h3 id=data-scaling-and-encoding>Data scaling and encoding<a hidden class=anchor aria-hidden=true href=#data-scaling-and-encoding>#</a></h3><p>Scaling and encoding are crucial preprocessing steps for preparing data for machine learning models. This ensures that numerical features are comparable and categorical data is represented numerically.</p><hr><h4 id=numerical-feature>numerical feature<a hidden class=anchor aria-hidden=true href=#numerical-feature>#</a></h4><p>Scaling and transforming numerical data ensures that the numerical size and distribution of features are consistent.</p><ol><li><p>normalisation:</p><ul><li>Maps data into a fixed range, typically [0, 1], ensuring numerical stability and comparability.</li><li>min-max scaling:<ul><li>Formula: $$x&rsquo; = \frac{x - min}{max - min}$$</li><li>Scales data to the [0, 1] range based on minimum and maximum values.</li><li>log scaling:<ul><li>Handles wide ranges and reduces skew by applying logarithmic transformation.</li></ul></li></ul></li></ul></li><li><p>standardisation:</p><ul><li>Maps data into a standard normal distribution (mean = 0, std = 1).</li><li>z-score standardisation:<ul><li>Formula: $$z = \frac{x - mean}{std}$$</li><li>Transforms data into a distribution with a mean of 0 and standard deviation of 1.</li></ul></li></ul></li><li><p>discretisation:</p><ul><li>Converts continuous features into discrete bins, helping to handle long-tail distributions.</li></ul></li></ol><blockquote><p>Use normalisation when: A fixed output range (e.g., [0, 1]) is required OR data is stable and has no extreme values.<br>Use standardisation when: Data contains outliers or noise.</p></blockquote><ol start=4><li>feature binning<br>- Groups data into intervals or buckets.</li></ol><hr><h4 id=categorical-feature>categorical feature<a hidden class=anchor aria-hidden=true href=#categorical-feature>#</a></h4><p>Encoding categorical data is necessary to convert non-numeric labels into numerical values for model processing.</p><ol><li><p>one-hot encoding:</p><ul><li>Converts categories into binary indicators.</li><li>Each category is represented by a binary vector (e.g., 001, 010, 100).</li><li>Use for: Sparse, unordered categorical data.</li></ul></li><li><p>label encoding:</p><ul><li>Maps categories to integer values (0, 1, 2, &mldr;).</li><li>Suitable for ordered features and tree-based models.</li></ul></li><li><p>ordinal encoding:</p><ul><li>Maps categories to specific numbers, preserving their order.</li><li>Use for: Ordinal categorical data with meaningful ranking.</li></ul></li><li><p>count encoding:</p><ul><li>Replaces categories with the frequency of their occurrence.</li><li>Pros:<ul><li>Maintains feature relationships.</li><li>Provides frequency distribution.</li></ul></li><li>Cons:<ul><li>Can introduce bias.</li><li>Ineffective for large category sets.</li></ul></li></ul></li><li><p>target encoding:</p><ul><li>Maps categories to statistical values (e.g., mean, median of target).</li><li>Pros:<ul><li>Handles high-cardinality features.</li><li>Preserves category information.</li><li>Cons:<ul><li>Risk of information leakage.</li><li>Sensitive to outliers and overfitting.</li></ul></li></ul></li></ul></li></ol><table><thead><tr><th>technique</th><th>purpose</th><th>suitable for</th><th>pros</th><th>cons</th></tr></thead><tbody><tr><td>normalisation</td><td>scale to [0, 1]</td><td>KNN, neural networks</td><td>preserves data distribution</td><td>sensitive to outliers</td></tr><tr><td>standardisation</td><td>mean = 0, std = 1</td><td>SVM, linear regression, PCA</td><td>robust to outliers</td><td>not bounded to fixed range</td></tr><tr><td>log scaling</td><td>reduce skew and handle wide ranges</td><td>skewed data, exponential growth</td><td>reduces skew effectively</td><td>can distort small values</td></tr><tr><td>discretisation</td><td>convert continuous to discrete</td><td>decision trees, interpretable models</td><td>reduces noise and outliers</td><td>information loss with fewer bins</td></tr><tr><td>one-hot encoding</td><td>binary columns for each category</td><td>nominal (unordered) data</td><td>no ordinal relationships</td><td>increases dimensionality</td></tr><tr><td>label encoding</td><td>map categories to integers</td><td>ordinal data, tree-based models</td><td>simple and efficient</td><td>introduces ordinal relationship for nominal data</td></tr><tr><td>ordinal encoding</td><td>encode categories while preserving order</td><td>ordinal data</td><td>preserves category order</td><td>inappropriate for nominal data</td></tr><tr><td>count encoding</td><td>replace categories with frequency of occurrence</td><td>categorical features with few categories</td><td>maintains distribution information</td><td>biased by small sample sizes</td></tr><tr><td>target encoding</td><td>map categories to mean/median of target variable</td><td>high-cardinality categorical features</td><td>reduces dimensionality</td><td>risk of overfitting and information leakage</td></tr></tbody></table><h3 id=data-augmentation-for-class-imbalance>Data augmentation for class imbalance<a hidden class=anchor aria-hidden=true href=#data-augmentation-for-class-imbalance>#</a></h3><p>Data augmentation techniques help address class imbalance by generating new samples for minority classes or reducing the number of samples in majority classes.</p><hr><h4 id=upsampling>upsampling<a hidden class=anchor aria-hidden=true href=#upsampling>#</a></h4><p>Upsampling increases the number of samples in the minority class to match the majority class, improving model performance on imbalanced datasets.</p><ol><li><p>smote (synthetic minority oversampling technique):
-SMOTE is a popular upsampling technique used to address class imbalance by generating synthetic data points for the minority class. Unlike simple duplication, SMOTE creates new samples by interpolating between existing samples, increasing the diversity of the data.</p><p>how smote works:</p><ol><li>Select a Minority Class Sample:
-- Randomly choose a data point from the minority class.</li><li>Identify k Nearest Neighbors:
-- Find the k-nearest neighbors of the selected sample within the minority class.</li><li>Generate Synthetic Points:
-- Randomly select one of the k neighbors.<br>- Create a synthetic data point by interpolating between the selected sample and its neighbor: $$x_{new} = x_i + (x_{neighbor} - x_i) \times \lambda$$
-where ( \lambda ) is a random value between 0 and 1.</li><li>Repeat Until Balance:
-- Continue generating synthetic samples until the desired class balance is achieved.</li></ol></li></ol><hr><h4 id=undersampling>undersampling<a hidden class=anchor aria-hidden=true href=#undersampling>#</a></h4><p>Undersampling reduces the number of samples in the majority class to balance the dataset, preventing the model from being biased toward the majority class.</p><ol><li>random undersampling:<ul><li>Randomly removes samples from the majority class.</li><li>Simple and quick but may lead to information loss.</li></ul></li><li>nearmiss:<ul><li>Selects majority class samples closest to the minority class for removal.</li><li>Focuses on boundary samples, improving class separation.</li></ul></li></ol><hr><h4 id=comparison-of-techniques>comparison of techniques<a hidden class=anchor aria-hidden=true href=#comparison-of-techniques>#</a></h4><table><thead><tr><th>technique</th><th>purpose</th><th>suitable for</th><th>pros</th><th>cons</th></tr></thead><tbody><tr><td>smote</td><td>generate synthetic minority samples</td><td>imbalanced data, classification tasks</td><td>increases data diversity</td><td>may generate overlapping samples</td></tr><tr><td>random undersampling</td><td>randomly reduce majority samples</td><td>large datasets with redundant samples</td><td>simple and fast</td><td>risk of information loss</td></tr><tr><td>nearmiss</td><td>remove majority samples near minority</td><td>imbalanced data with clear boundaries</td><td>improves class boundary distinction</td><td>computationally expensive</td></tr></tbody></table><h2 id=feature-engineering>Feature engineering<a hidden class=anchor aria-hidden=true href=#feature-engineering>#</a></h2><ul><li>Numerical features: normalisation/standardisation; binning; polynomial features</li><li>Categorical features: one-hot encoding; target encoding; frequency/count feature</li><li>Text features: tf-idf; word embedding</li><li>Image features: use filter or convolution to detect feature; use pre-train model to extract feature</li></ul><h3 id=feature-importance-analysis>Feature importance analysis<a hidden class=anchor aria-hidden=true href=#feature-importance-analysis>#</a></h3><h4 id=feature-importance-analysis---summary>Feature Importance Analysis - Summary<a hidden class=anchor aria-hidden=true href=#feature-importance-analysis---summary>#</a></h4><p>Feature importance analysis helps identify which features contribute the most to a model’s predictions. This improves model interpretability, simplifies models, and guides feature selection.</p><hr><ol><li>Model-Based Feature Importance<br>Feature importance is derived directly from the model’s internal structure.<ul><li><strong>Linear Models (Linear/Logistic Regression):</strong><br>- Coefficients reflect feature importance. Larger coefficients indicate higher importance.
-- Use Case: Simple linear relationships.<br>- Action: Drop features with near-zero coefficients (Lasso), and manage multicollinearity (Ridge).</li><li><strong>Lasso Regression (L1 Regularization):</strong><br>- Shrinks some coefficients to zero, selecting the most important features.<br>- Use Case: Feature selection with many irrelevant features.<br>- Action: Tune regularization strength (<code>alpha</code>) and drop zero-coefficient features.</li><li><strong>Ridge Regression (L2 Regularization):</strong><br>- Reduces the magnitude of coefficients without shrinking them to zero.<br>- Use Case: Multicollinearity and high-dimensional data.<br>- Action: Use when elimination is not required.</li><li><strong>Tree-Based Methods (Decision Trees, Random Forest, XGBoost):</strong><br>- Measures feature importance by how much they reduce impurity (Gini or Information Gain).<ul><li>Use Case: Non-linear models and feature interactions.</li><li>Action: Focus on high-importance features for refinement.</li><li>Feature importance can be computed by how much each feature contributes to reducing impurity (classification) or variance (regression) when used in decision splits. Feature Importance Based on Gini Impurity or Gain<ul><li>Gini Impurity (for Classification): Measures how often a feature reduces the uncertainty (impurity) in a node across all trees.</li><li>Information Gain (for Regression): Measures how much the feature reduces the variance or Mean Squared Error (MSE) across all trees.</li></ul></li></ul></li></ul></li></ol><hr><ol start=2><li>Model-Free Feature Importance<br>Model-free methods assess feature relevance independently of model structure, useful for black-box models.<ul><li><strong>Recursive Feature Elimination (RFE):</strong><br>- Recursively removes the least important features by refitting the model iteratively.
-- Use Case: Optimal for incremental simplification.<br>- Action: Use <code>RFE</code> and select features based on cross-validation.</li><li><strong>Permutation Importance:</strong><br>- Randomly shuffles feature values and measures the performance drop.<br>- Use Case: Model-agnostic, works with neural networks and complex models.<br>- Action: Use <code>permutation_importance</code> and eliminate features with minimal effect.</li><li><strong>SHAP (SHapley Additive exPlanations):</strong><br>- Game-theory-based approach to assign feature contribution scores.<br>- Use Case: Explaining black-box models globally and locally.<br>- Action: Visualize SHAP plots to guide feature selection.</li></ul></li></ol><hr><h3 id=feature-interaction>Feature interaction<a hidden class=anchor aria-hidden=true href=#feature-interaction>#</a></h3><h4 id=feature-interaction-analysis>Feature Interaction Analysis<a hidden class=anchor aria-hidden=true href=#feature-interaction-analysis>#</a></h4><p>Feature interaction analysis enhances model performance by uncovering relationships between features. This allows models to capture dependencies that might not be evident through simple linear approaches.</p><hr><ol><li><em>Correlation Matrices for Numerical Variables</em><br>A correlation matrix calculates pairwise correlation between numerical features.<ul><li><strong>Pearson’s Correlation</strong> measures the strength and direction of the linear relationship between two variables.</li><li><strong>Spearman’s Correlation</strong> ranks data to capture monotonic relationships, making it robust to non-linear interactions.<br>Detects collinearity and redundant numerical features by highlighting feature pairs with high correlation.</li></ul></li><li><em>Cross-Tabulation for Categorical Variables</em><ul><li>Cross-tabulation constructs a contingency table to show the frequency distribution of categorical data.</li><li>A <strong>Chi-Square Test</strong> is applied to determine whether two categorical variables are independent by comparing observed and expected frequencies.<br>Reveals dependencies between categorical features and identifies patterns of co-occurrence.</li></ul></li><li><em>SHAP Value (SHapley Additive exPlanations)</em><ul><li>SHAP values are calculated using cooperative game theory, attributing contributions to each feature based on its impact on the model’s output.</li><li>The method generates explanations by comparing all possible permutations of features and their effects on predictions.</li><li><strong>Partial Dependence Plots</strong> visualize the relationship between specific features and predictions while averaging over other features.<br>Uncovers interactions in models like decision trees, gradient boosting, and neural networks by accurately reflecting feature contributions.</li></ul></li><li><em>Heatmap + Hierarchical Clustering</em><br>Visualize relationships between features and group similar ones.<ul><li>A heatmap displays a correlation matrix using color gradients, making it easy to spot strongly correlated features.</li><li><strong>Hierarchical Clustering</strong> groups features based on their pairwise similarity, building a dendrogram that shows the clustering process.</li><li>Features in the same cluster exhibit similar patterns and can indicate redundancy or feature interactions.<br>Detects patterns, collinearity, and clusters of interacting features, aiding in feature selection and model simplification.</li></ul></li></ol><hr><h4 id=feature-multi-collinearity-for-generalised-linear-model>Feature Multi-Collinearity (For Generalised Linear Model)<a hidden class=anchor aria-hidden=true href=#feature-multi-collinearity-for-generalised-linear-model>#</a></h4><p>Feature multi-collinearity occurs when two or more features exhibit a linear relationship, leading to redundancy in the model. In linear models or GLM (Generalized Linear Models), high collinearity can:</p><ul><li>Inflate the variance of model coefficients.</li><li>Reduce the reliability of coefficient estimates.</li><li>Lead to unstable and less interpretable models.</li><li>Cause overfitting and poor generalization to new data.</li></ul><p>Addressing multi-collinearity is essential for enhancing model performance, ensuring stability, and improving interpretability.</p><hr><h5 id=how-to-detect-feature-multicollinearity>How to Detect Feature Multicollinearity<a hidden class=anchor aria-hidden=true href=#how-to-detect-feature-multicollinearity>#</a></h5><p>1 Correlation Matrix<br>- Calculates pairwise correlation values between features.<br>- High correlation (typically > 0.7 or &lt; -0.7) indicates potential collinearity.<br>- Effective for quick visualization of feature relationships.<br>- Useful in the exploratory data analysis (EDA) phase.<br>- Limitation: Does not capture multi-variable collinearity, only pairwise.</p><ol start=2><li>VIF (Variance Inflation Factor)<ul><li>VIF measures how much the variance of a regression coefficient is inflated due to collinearity.</li><li>A VIF score of <strong>1</strong> indicates no collinearity, while:<br>- VIF between 1 and 5 suggests moderate correlation.<br>- VIF above 5 or 10 signals high collinearity requiring attention.</li><li>VIF is preferable for detecting multi-variable collinearity, unlike correlation matrices.</li></ul></li></ol><hr><h5 id=workflow-for-vif-in-linear-or-logistic-regression>Workflow for VIF in Linear or Logistic Regression<a hidden class=anchor aria-hidden=true href=#workflow-for-vif-in-linear-or-logistic-regression>#</a></h5><ol><li>Fit the Model<br>Train the linear, logistic, or generalized linear model on the dataset.</li><li>Calculate VIF<br>Compute VIF values for each independent variable to assess their collinearity.</li><li>Inspect High VIF
-Identify features with high VIF values (typically greater than 5 or 10).</li><li>Remove or Combine Features<ul><li>Remove one of the highly correlated features.</li><li>Combine or create interaction terms to preserve information while reducing redundancy.</li></ul></li><li>Refit the Model<br>Rerun the model using the reduced or modified feature set and check for improvements.<ul><li>Monitor changes in VIF scores and model coefficients.</li></ul></li><li>Check Model Performance<ul><li>Evaluate the model’s predictive performance on validation data.</li><li>Ensure that removing or modifying features results in more stable and interpretable coefficients.</li><li>Compare R², adjusted R², or AIC/BIC values to confirm improved model fit.</li></ul></li></ol><h4 id=feature-binning>Feature Binning<a hidden class=anchor aria-hidden=true href=#feature-binning>#</a></h4><p>Feature binning is the process of transforming continuous numerical features into discrete intervals or &ldquo;bins/buckets.&rdquo; This transformation helps models like logistic regression capture nonlinear patterns more effectively.</p><hr><h5 id=benefits-of-feature-binning>Benefits of Feature Binning<a hidden class=anchor aria-hidden=true href=#benefits-of-feature-binning>#</a></h5><ul><li>Handle Non-Linearity<br>Binning can capture non-linear relationships better than using continuous features directly.</li><li>Reducing Outliers / Long-Tail Distribution<br>By grouping extreme values into categories, binning reduces the influence of outliers, stabilizing model performance.</li><li>Reduce Model Complexity
-Simplifies the model, reduces noise effects, and increases robustness by limiting the granularity of numerical features.</li></ul><hr><h5 id=types-of-feature-binning>Types of Feature Binning<a hidden class=anchor aria-hidden=true href=#types-of-feature-binning>#</a></h5><ol><li>Fixed Width Binning
-Divides the range of values into equal-sized bins regardless of data distribution.</li><li>Quantile Binning<br>Bins are created so that each bin contains an equal number of data points. This approach is useful for skewed distributions.</li><li>Custom Binning
-Binning is performed based on domain knowledge or specific business logic, allowing for tailored intervals that reflect the nature of the data.</li></ol><h3 id=how-to-handle-new-feature>how to handle new feature<a hidden class=anchor aria-hidden=true href=#how-to-handle-new-feature>#</a></h3><ol><li><p>For Tree-Based Models (Random Forest, Decision Trees, XGBoost)</p><ul><li>Tree models typically do not allow incremental retraining. The structure of the tree is fixed after training. However, here are a few workarounds::</li><li>Retrain the model from scratch with old and new features.</li><li>Use the existing model as a base learner. Train a new small tree or boosting model on the residuals/errors of the original model using the new feature.</li></ul></li><li><p>XGBoost/LightGBM Specific Approach</p><ul><li>XGBoost and LightGBM allow incremental retraining using <code>update()</code> but only for new data, not new features.</li><li>Trick: Concatenate the new feature as an interaction term or use it in ensemble stacking.</li></ul></li></ol></div><footer class=post-footer><ul class=post-tags><li><a href=https://tyliu22.github.io/tags/interview/>Interview</a></li><li><a href=https://tyliu22.github.io/tags/classical_ml/>Classical_ML</a></li><li><a href=https://tyliu22.github.io/tags/data_science/>Data_science</a></li></ul><ul class=share-buttons><li><a target=_blank rel="noopener noreferrer" aria-label="share How to prepare your interview - data scientist Part 2 on x" href="https://x.com/intent/tweet/?text=How%20to%20prepare%20your%20interview%20-%20data%20scientist%20Part%202&amp;url=https%3a%2f%2ftyliu22.github.io%2finterview%2finterview-for-classical-ml---data--feature%2f&amp;hashtags=interview%2cclassical_ML%2cdata_science"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M512 62.554V449.446C512 483.97 483.97 512 449.446 512H62.554C28.03 512 0 483.97.0 449.446V62.554C0 28.03 28.029.0 62.554.0H449.446C483.971.0 512 28.03 512 62.554zM269.951 190.75 182.567 75.216H56L207.216 272.95 63.9 436.783h61.366L235.9 310.383l96.667 126.4H456L298.367 228.367l134-153.151H371.033zM127.633 110h36.468l219.38 290.065H349.5z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share How to prepare your interview - data scientist Part 2 on linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2ftyliu22.github.io%2finterview%2finterview-for-classical-ml---data--feature%2f&amp;title=How%20to%20prepare%20your%20interview%20-%20data%20scientist%20Part%202&amp;summary=How%20to%20prepare%20your%20interview%20-%20data%20scientist%20Part%202&amp;source=https%3a%2f%2ftyliu22.github.io%2finterview%2finterview-for-classical-ml---data--feature%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM160.461 423.278V197.561h-75.04v225.717h75.04zm270.539.0V293.839c0-69.333-37.018-101.586-86.381-101.586-39.804.0-57.634 21.891-67.617 37.266v-31.958h-75.021c.995 21.181.0 225.717.0 225.717h75.02V297.222c0-6.748.486-13.492 2.474-18.315 5.414-13.475 17.767-27.434 38.494-27.434 27.135.0 38.007 20.707 38.007 51.037v120.768H431zM123.448 88.722C97.774 88.722 81 105.601 81 127.724c0 21.658 16.264 39.002 41.455 39.002h.484c26.165.0 42.452-17.344 42.452-39.002-.485-22.092-16.241-38.954-41.943-39.002z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share How to prepare your interview - data scientist Part 2 on reddit" href="https://reddit.com/submit?url=https%3a%2f%2ftyliu22.github.io%2finterview%2finterview-for-classical-ml---data--feature%2f&title=How%20to%20prepare%20your%20interview%20-%20data%20scientist%20Part%202"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zM446 265.638c0-22.964-18.616-41.58-41.58-41.58-11.211.0-21.361 4.457-28.841 11.666-28.424-20.508-67.586-33.757-111.204-35.278l18.941-89.121 61.884 13.157c.756 15.734 13.642 28.29 29.56 28.29 16.407.0 29.706-13.299 29.706-29.701.0-16.403-13.299-29.702-29.706-29.702-11.666.0-21.657 6.792-26.515 16.578l-69.105-14.69c-1.922-.418-3.939-.042-5.585 1.036-1.658 1.073-2.811 2.761-3.224 4.686l-21.152 99.438c-44.258 1.228-84.046 14.494-112.837 35.232-7.468-7.164-17.589-11.591-28.757-11.591-22.965.0-41.585 18.616-41.585 41.58.0 16.896 10.095 31.41 24.568 37.918-.639 4.135-.99 8.328-.99 12.576.0 63.977 74.469 115.836 166.33 115.836s166.334-51.859 166.334-115.836c0-4.218-.347-8.387-.977-12.493 14.564-6.47 24.735-21.034 24.735-38.001zM326.526 373.831c-20.27 20.241-59.115 21.816-70.534 21.816-11.428.0-50.277-1.575-70.522-21.82-3.007-3.008-3.007-7.882.0-10.889 3.003-2.999 7.882-3.003 10.885.0 12.777 12.781 40.11 17.317 59.637 17.317 19.522.0 46.86-4.536 59.657-17.321 3.016-2.999 7.886-2.995 10.885.008 3.008 3.011 3.003 7.882-.008 10.889zm-5.23-48.781c-16.373.0-29.701-13.324-29.701-29.698.0-16.381 13.328-29.714 29.701-29.714 16.378.0 29.706 13.333 29.706 29.714.0 16.374-13.328 29.698-29.706 29.698zM160.91 295.348c0-16.381 13.328-29.71 29.714-29.71 16.369.0 29.689 13.329 29.689 29.71.0 16.373-13.32 29.693-29.689 29.693-16.386.0-29.714-13.32-29.714-29.693z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share How to prepare your interview - data scientist Part 2 on facebook" href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2ftyliu22.github.io%2finterview%2finterview-for-classical-ml---data--feature%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H342.978V319.085h66.6l12.672-82.621h-79.272v-53.617c0-22.603 11.073-44.636 46.58-44.636H425.6v-70.34s-32.71-5.582-63.982-5.582c-65.288.0-107.96 39.569-107.96 111.204v62.971h-72.573v82.621h72.573V512h-191.104c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share How to prepare your interview - data scientist Part 2 on whatsapp" href="https://api.whatsapp.com/send?text=How%20to%20prepare%20your%20interview%20-%20data%20scientist%20Part%202%20-%20https%3a%2f%2ftyliu22.github.io%2finterview%2finterview-for-classical-ml---data--feature%2f"><svg viewBox="0 0 512 512" height="30" width="30" fill="currentcolor"><path d="M449.446.0C483.971.0 512 28.03 512 62.554v386.892C512 483.97 483.97 512 449.446 512H62.554c-34.524.0-62.554-28.03-62.554-62.554V62.554c0-34.524 28.029-62.554 62.554-62.554h386.892zm-58.673 127.703c-33.842-33.881-78.847-52.548-126.798-52.568-98.799.0-179.21 80.405-179.249 179.234-.013 31.593 8.241 62.428 23.927 89.612l-25.429 92.884 95.021-24.925c26.181 14.28 55.659 21.807 85.658 21.816h.074c98.789.0 179.206-80.413 179.247-179.243.018-47.895-18.61-92.93-52.451-126.81zM263.976 403.485h-.06c-26.734-.01-52.954-7.193-75.828-20.767l-5.441-3.229-56.386 14.792 15.05-54.977-3.542-5.637c-14.913-23.72-22.791-51.136-22.779-79.287.033-82.142 66.867-148.971 149.046-148.971 39.793.014 77.199 15.531 105.329 43.692 28.128 28.16 43.609 65.592 43.594 105.4-.034 82.149-66.866 148.983-148.983 148.984zm81.721-111.581c-4.479-2.242-26.499-13.075-30.604-14.571-4.105-1.495-7.091-2.241-10.077 2.241-2.986 4.483-11.569 14.572-14.182 17.562-2.612 2.988-5.225 3.364-9.703 1.12-4.479-2.241-18.91-6.97-36.017-22.23C231.8 264.15 222.81 249.484 220.198 245s-.279-6.908 1.963-9.14c2.016-2.007 4.48-5.232 6.719-7.847 2.24-2.615 2.986-4.484 4.479-7.472 1.493-2.99.747-5.604-.374-7.846-1.119-2.241-10.077-24.288-13.809-33.256-3.635-8.733-7.327-7.55-10.077-7.688-2.609-.13-5.598-.158-8.583-.158-2.986.0-7.839 1.121-11.944 5.604-4.105 4.484-15.675 15.32-15.675 37.364.0 22.046 16.048 43.342 18.287 46.332 2.24 2.99 31.582 48.227 76.511 67.627 10.685 4.615 19.028 7.371 25.533 9.434 10.728 3.41 20.492 2.929 28.209 1.775 8.605-1.285 26.499-10.833 30.231-21.295 3.732-10.464 3.732-19.431 2.612-21.298-1.119-1.869-4.105-2.99-8.583-5.232z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share How to prepare your interview - data scientist Part 2 on telegram" href="https://telegram.me/share/url?text=How%20to%20prepare%20your%20interview%20-%20data%20scientist%20Part%202&amp;url=https%3a%2f%2ftyliu22.github.io%2finterview%2finterview-for-classical-ml---data--feature%2f"><svg viewBox="2 2 28 28" height="30" width="30" fill="currentcolor"><path d="M26.49 29.86H5.5a3.37 3.37.0 01-2.47-1 3.35 3.35.0 01-1-2.47V5.48A3.36 3.36.0 013 3 3.37 3.37.0 015.5 2h21A3.38 3.38.0 0129 3a3.36 3.36.0 011 2.46V26.37a3.35 3.35.0 01-1 2.47 3.38 3.38.0 01-2.51 1.02zm-5.38-6.71a.79.79.0 00.85-.66L24.73 9.24a.55.55.0 00-.18-.46.62.62.0 00-.41-.17q-.08.0-16.53 6.11a.59.59.0 00-.41.59.57.57.0 00.43.52l4 1.24 1.61 4.83a.62.62.0 00.63.43.56.56.0 00.4-.17L16.54 20l4.09 3A.9.9.0 0021.11 23.15zM13.8 20.71l-1.21-4q8.72-5.55 8.78-5.55c.15.0.23.0.23.16a.18.18.0 010 .06s-2.51 2.3-7.52 6.8z"/></svg></a></li><li><a target=_blank rel="noopener noreferrer" aria-label="share How to prepare your interview - data scientist Part 2 on ycombinator" href="https://news.ycombinator.com/submitlink?t=How%20to%20prepare%20your%20interview%20-%20data%20scientist%20Part%202&u=https%3a%2f%2ftyliu22.github.io%2finterview%2finterview-for-classical-ml---data--feature%2f"><svg width="30" height="30" viewBox="0 0 512 512" fill="currentcolor" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"><path d="M449.446.0C483.971.0 512 28.03 512 62.554V449.446C512 483.97 483.97 512 449.446 512H62.554C28.03 512 0 483.97.0 449.446V62.554C0 28.03 28.029.0 62.554.0H449.446zM183.8767 87.9921h-62.034L230.6673 292.4508V424.0079h50.6655V292.4508L390.1575 87.9921H328.1233L256 238.2489z"/></svg></a></li></ul></footer></article></main><footer class=footer><span>&copy; 2024 Powered by Snoopy</span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
-</a><script>let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove("dark"),localStorage.setItem("pref-theme","light")):(document.body.classList.add("dark"),localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="copy";function s(){t.innerHTML="copied!",setTimeout(()=>{t.innerHTML="copy"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>How to prepare your interview - data scientist Part 2 | Tianyu Liu</title>
+<meta name="keywords" content="interview, classical_ML, data_science">
+<meta name="description" content="Data preprocessing; Feature engineering;">
+<meta name="author" content="Tianyu Liu">
+<link rel="canonical" href="https://tyliu22.github.io/interview/interview-for-classical-ml---data--feature/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.5ff2630c4d1b3e25bc21f0ecd96681dbcf58219e741fa627857820b5485cb770.css" integrity="sha256-X/JjDE0bPiW8IfDs2WaB289YIZ50H6YnhXggtUhct3A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://tyliu22.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://tyliu22.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://tyliu22.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://tyliu22.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://tyliu22.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://tyliu22.github.io/interview/interview-for-classical-ml---data--feature/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+  
+
+<meta property="og:title" content="How to prepare your interview - data scientist Part 2" />
+<meta property="og:description" content="Data preprocessing; Feature engineering;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://tyliu22.github.io/interview/interview-for-classical-ml---data--feature/" />
+<meta property="og:image" content="https://tyliu22.github.io/images/msg.png" /><meta property="article:section" content="interview" />
+<meta property="article:published_time" content="2024-12-27T00:00:00+00:00" />
+<meta property="article:modified_time" content="2024-12-27T00:00:00+00:00" />
+
+
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://tyliu22.github.io/images/msg.png" />
+<meta name="twitter:title" content="How to prepare your interview - data scientist Part 2"/>
+<meta name="twitter:description" content="Data preprocessing; Feature engineering;"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Interviews",
+      "item": "https://tyliu22.github.io/interview/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "How to prepare your interview - data scientist Part 2",
+      "item": "https://tyliu22.github.io/interview/interview-for-classical-ml---data--feature/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "How to prepare your interview - data scientist Part 2",
+  "name": "How to prepare your interview - data scientist Part 2",
+  "description": "Data preprocessing; Feature engineering;",
+  "keywords": [
+    "interview", "classical_ML", "data_science"
+  ],
+  "articleBody": " Experience is the father of wisdom.\nThis article offers data preprocessing, feature engineering, cross validation, loss function and model evaluation metrics, overfitting.\nData preprocessing In the structured dataset, data may consists of different types, for examples, numerical data (eg. age), categorical data (eg. Gender)\nData clearing Handling Missing Values in Data Missing values can negatively impact data analysis and machine learning models. Below is a summary of the most popular approaches to handle missing data.\nRemoval Techniques Drop Rows – Remove rows with missing values. Drop Columns – Remove columns with too many missing values. When to Use:\n- Small amount of missing data.\n- Risk of losing information. Imputation Techniques Mean/Median/Mode Imputation – Replace missing values with the column’s mean, median, or mode. Forward/Backward Fill – Use previous or next values to fill missing data (time series). KNN Imputation – Use K-Nearest Neighbors to estimate missing values. When to Use:\n- Moderate amount of missing data.\n- Preserves data integrity without deletion. Advanced Techniques Regression/Prediction Models – Use machine learning models to predict missing values. When to Use:\n- Large datasets with significant missing data.\n- More accurate, computationally expensive. Handling Categorical Data Mode Imputation – Fill missing values with the most frequent category. Label ‘Unknown’ – Tag missing values explicitly as ‘Unknown’ or ‘Missing’. When to Use:\n- Categorical features.\n- Avoids introducing biases. Choosing the Right Method Missing Rate Recommended Approach \u003c 5% Mean/Median/Mode, Drop Rows 5-20% KNN, Forward Fill, Regression \u003e 20% Multiple Imputation, Drop Columns Detecting Outliers in Data Outliers are data points that significantly differ from the majority of the data. Below is a summary of the most popular statistical and machine learning methods to detect outliers.\nStatistical Methods Z-Score (Standard Score) - Measures the number of standard deviations a data point is from the mean. Threshold: |z| \u003e 3 Formula: $$z= (x - mean) / std$$ Machine Learning Approaches Isolation Forest - Anomaly detection algorithm that isolates outliers based on decision trees.\n- Contamination Parameter: Proportion of outliers (e.g., 0.05). One-Class SVM (Support Vector Machine) - Classifies data as inliers or outliers by finding a boundary that separates normal data. K-Nearest Neighbors (KNN) / Local Outlier Factor (LOF) - Detects outliers by measuring the local density deviation of a data point. Choosing the Right Method Method Best For Z-Score / IQR Simple datasets with low dimensionality Isolation Forest Large datasets with complex patterns One-Class SVM High-dimensional data KNN (LOF) Local outlier detection Data scaling and encoding Scaling and encoding are crucial preprocessing steps for preparing data for machine learning models. This ensures that numerical features are comparable and categorical data is represented numerically.\nnumerical feature Scaling and transforming numerical data ensures that the numerical size and distribution of features are consistent.\nnormalisation:\nMaps data into a fixed range, typically [0, 1], ensuring numerical stability and comparability. min-max scaling: Formula: $$x’ = \\frac{x - min}{max - min}$$ Scales data to the [0, 1] range based on minimum and maximum values. log scaling: Handles wide ranges and reduces skew by applying logarithmic transformation. standardisation:\nMaps data into a standard normal distribution (mean = 0, std = 1). z-score standardisation: Formula: $$z = \\frac{x - mean}{std}$$ Transforms data into a distribution with a mean of 0 and standard deviation of 1. discretisation:\nConverts continuous features into discrete bins, helping to handle long-tail distributions. Use normalisation when: A fixed output range (e.g., [0, 1]) is required OR data is stable and has no extreme values.\nUse standardisation when: Data contains outliers or noise.\nfeature binning\n- Groups data into intervals or buckets. categorical feature Encoding categorical data is necessary to convert non-numeric labels into numerical values for model processing.\none-hot encoding:\nConverts categories into binary indicators. Each category is represented by a binary vector (e.g., 001, 010, 100). Use for: Sparse, unordered categorical data. label encoding:\nMaps categories to integer values (0, 1, 2, …). Suitable for ordered features and tree-based models. ordinal encoding:\nMaps categories to specific numbers, preserving their order. Use for: Ordinal categorical data with meaningful ranking. count encoding:\nReplaces categories with the frequency of their occurrence. Pros: Maintains feature relationships. Provides frequency distribution. Cons: Can introduce bias. Ineffective for large category sets. target encoding:\nMaps categories to statistical values (e.g., mean, median of target). Pros: Handles high-cardinality features. Preserves category information. Cons: Risk of information leakage. Sensitive to outliers and overfitting. technique purpose suitable for pros cons normalisation scale to [0, 1] KNN, neural networks preserves data distribution sensitive to outliers standardisation mean = 0, std = 1 SVM, linear regression, PCA robust to outliers not bounded to fixed range log scaling reduce skew and handle wide ranges skewed data, exponential growth reduces skew effectively can distort small values discretisation convert continuous to discrete decision trees, interpretable models reduces noise and outliers information loss with fewer bins one-hot encoding binary columns for each category nominal (unordered) data no ordinal relationships increases dimensionality label encoding map categories to integers ordinal data, tree-based models simple and efficient introduces ordinal relationship for nominal data ordinal encoding encode categories while preserving order ordinal data preserves category order inappropriate for nominal data count encoding replace categories with frequency of occurrence categorical features with few categories maintains distribution information biased by small sample sizes target encoding map categories to mean/median of target variable high-cardinality categorical features reduces dimensionality risk of overfitting and information leakage Data augmentation for class imbalance Data augmentation techniques help address class imbalance by generating new samples for minority classes or reducing the number of samples in majority classes.\nupsampling Upsampling increases the number of samples in the minority class to match the majority class, improving model performance on imbalanced datasets.\nsmote (synthetic minority oversampling technique): SMOTE is a popular upsampling technique used to address class imbalance by generating synthetic data points for the minority class. Unlike simple duplication, SMOTE creates new samples by interpolating between existing samples, increasing the diversity of the data.\nhow smote works:\nSelect a Minority Class Sample: - Randomly choose a data point from the minority class. Identify k Nearest Neighbors: - Find the k-nearest neighbors of the selected sample within the minority class. Generate Synthetic Points: - Randomly select one of the k neighbors.\n- Create a synthetic data point by interpolating between the selected sample and its neighbor: $$x_{new} = x_i + (x_{neighbor} - x_i) \\times \\lambda$$ where ( \\lambda ) is a random value between 0 and 1. Repeat Until Balance: - Continue generating synthetic samples until the desired class balance is achieved. undersampling Undersampling reduces the number of samples in the majority class to balance the dataset, preventing the model from being biased toward the majority class.\nrandom undersampling: Randomly removes samples from the majority class. Simple and quick but may lead to information loss. nearmiss: Selects majority class samples closest to the minority class for removal. Focuses on boundary samples, improving class separation. comparison of techniques technique purpose suitable for pros cons smote generate synthetic minority samples imbalanced data, classification tasks increases data diversity may generate overlapping samples random undersampling randomly reduce majority samples large datasets with redundant samples simple and fast risk of information loss nearmiss remove majority samples near minority imbalanced data with clear boundaries improves class boundary distinction computationally expensive Feature engineering Numerical features: normalisation/standardisation; binning; polynomial features Categorical features: one-hot encoding; target encoding; frequency/count feature Text features: tf-idf; word embedding Image features: use filter or convolution to detect feature; use pre-train model to extract feature Feature importance analysis Feature Importance Analysis - Summary Feature importance analysis helps identify which features contribute the most to a model’s predictions. This improves model interpretability, simplifies models, and guides feature selection.\nModel-Based Feature Importance\nFeature importance is derived directly from the model’s internal structure. Linear Models (Linear/Logistic Regression):\n- Coefficients reflect feature importance. Larger coefficients indicate higher importance. - Use Case: Simple linear relationships.\n- Action: Drop features with near-zero coefficients (Lasso), and manage multicollinearity (Ridge). Lasso Regression (L1 Regularization):\n- Shrinks some coefficients to zero, selecting the most important features.\n- Use Case: Feature selection with many irrelevant features.\n- Action: Tune regularization strength (alpha) and drop zero-coefficient features. Ridge Regression (L2 Regularization):\n- Reduces the magnitude of coefficients without shrinking them to zero.\n- Use Case: Multicollinearity and high-dimensional data.\n- Action: Use when elimination is not required. Tree-Based Methods (Decision Trees, Random Forest, XGBoost):\n- Measures feature importance by how much they reduce impurity (Gini or Information Gain). Use Case: Non-linear models and feature interactions. Action: Focus on high-importance features for refinement. Feature importance can be computed by how much each feature contributes to reducing impurity (classification) or variance (regression) when used in decision splits. Feature Importance Based on Gini Impurity or Gain Gini Impurity (for Classification): Measures how often a feature reduces the uncertainty (impurity) in a node across all trees. Information Gain (for Regression): Measures how much the feature reduces the variance or Mean Squared Error (MSE) across all trees. Model-Free Feature Importance\nModel-free methods assess feature relevance independently of model structure, useful for black-box models. Recursive Feature Elimination (RFE):\n- Recursively removes the least important features by refitting the model iteratively. - Use Case: Optimal for incremental simplification.\n- Action: Use RFE and select features based on cross-validation. Permutation Importance:\n- Randomly shuffles feature values and measures the performance drop.\n- Use Case: Model-agnostic, works with neural networks and complex models.\n- Action: Use permutation_importance and eliminate features with minimal effect. SHAP (SHapley Additive exPlanations):\n- Game-theory-based approach to assign feature contribution scores.\n- Use Case: Explaining black-box models globally and locally.\n- Action: Visualize SHAP plots to guide feature selection. Feature interaction Feature Interaction Analysis Feature interaction analysis enhances model performance by uncovering relationships between features. This allows models to capture dependencies that might not be evident through simple linear approaches.\nCorrelation Matrices for Numerical Variables\nA correlation matrix calculates pairwise correlation between numerical features. Pearson’s Correlation measures the strength and direction of the linear relationship between two variables. Spearman’s Correlation ranks data to capture monotonic relationships, making it robust to non-linear interactions.\nDetects collinearity and redundant numerical features by highlighting feature pairs with high correlation. Cross-Tabulation for Categorical Variables Cross-tabulation constructs a contingency table to show the frequency distribution of categorical data. A Chi-Square Test is applied to determine whether two categorical variables are independent by comparing observed and expected frequencies.\nReveals dependencies between categorical features and identifies patterns of co-occurrence. SHAP Value (SHapley Additive exPlanations) SHAP values are calculated using cooperative game theory, attributing contributions to each feature based on its impact on the model’s output. The method generates explanations by comparing all possible permutations of features and their effects on predictions. Partial Dependence Plots visualize the relationship between specific features and predictions while averaging over other features.\nUncovers interactions in models like decision trees, gradient boosting, and neural networks by accurately reflecting feature contributions. Heatmap + Hierarchical Clustering\nVisualize relationships between features and group similar ones. A heatmap displays a correlation matrix using color gradients, making it easy to spot strongly correlated features. Hierarchical Clustering groups features based on their pairwise similarity, building a dendrogram that shows the clustering process. Features in the same cluster exhibit similar patterns and can indicate redundancy or feature interactions.\nDetects patterns, collinearity, and clusters of interacting features, aiding in feature selection and model simplification. Feature Multi-Collinearity (For Generalised Linear Model) Feature multi-collinearity occurs when two or more features exhibit a linear relationship, leading to redundancy in the model. In linear models or GLM (Generalized Linear Models), high collinearity can:\nInflate the variance of model coefficients. Reduce the reliability of coefficient estimates. Lead to unstable and less interpretable models. Cause overfitting and poor generalization to new data. Addressing multi-collinearity is essential for enhancing model performance, ensuring stability, and improving interpretability.\nHow to Detect Feature Multicollinearity 1 Correlation Matrix\n- Calculates pairwise correlation values between features.\n- High correlation (typically \u003e 0.7 or \u003c -0.7) indicates potential collinearity.\n- Effective for quick visualization of feature relationships.\n- Useful in the exploratory data analysis (EDA) phase.\n- Limitation: Does not capture multi-variable collinearity, only pairwise.\nVIF (Variance Inflation Factor) VIF measures how much the variance of a regression coefficient is inflated due to collinearity. A VIF score of 1 indicates no collinearity, while:\n- VIF between 1 and 5 suggests moderate correlation.\n- VIF above 5 or 10 signals high collinearity requiring attention. VIF is preferable for detecting multi-variable collinearity, unlike correlation matrices. Workflow for VIF in Linear or Logistic Regression Fit the Model\nTrain the linear, logistic, or generalized linear model on the dataset. Calculate VIF\nCompute VIF values for each independent variable to assess their collinearity. Inspect High VIF Identify features with high VIF values (typically greater than 5 or 10). Remove or Combine Features Remove one of the highly correlated features. Combine or create interaction terms to preserve information while reducing redundancy. Refit the Model\nRerun the model using the reduced or modified feature set and check for improvements. Monitor changes in VIF scores and model coefficients. Check Model Performance Evaluate the model’s predictive performance on validation data. Ensure that removing or modifying features results in more stable and interpretable coefficients. Compare R², adjusted R², or AIC/BIC values to confirm improved model fit. Feature Binning Feature binning is the process of transforming continuous numerical features into discrete intervals or “bins/buckets.” This transformation helps models like logistic regression capture nonlinear patterns more effectively.\nBenefits of Feature Binning Handle Non-Linearity\nBinning can capture non-linear relationships better than using continuous features directly. Reducing Outliers / Long-Tail Distribution\nBy grouping extreme values into categories, binning reduces the influence of outliers, stabilizing model performance. Reduce Model Complexity Simplifies the model, reduces noise effects, and increases robustness by limiting the granularity of numerical features. Types of Feature Binning Fixed Width Binning Divides the range of values into equal-sized bins regardless of data distribution. Quantile Binning\nBins are created so that each bin contains an equal number of data points. This approach is useful for skewed distributions. Custom Binning Binning is performed based on domain knowledge or specific business logic, allowing for tailored intervals that reflect the nature of the data. how to handle new feature For Tree-Based Models (Random Forest, Decision Trees, XGBoost)\nTree models typically do not allow incremental retraining. The structure of the tree is fixed after training. However, here are a few workarounds:: Retrain the model from scratch with old and new features. Use the existing model as a base learner. Train a new small tree or boosting model on the residuals/errors of the original model using the new feature. XGBoost/LightGBM Specific Approach\nXGBoost and LightGBM allow incremental retraining using update() but only for new data, not new features. Trick: Concatenate the new feature as an interaction term or use it in ensemble stacking. ",
+  "wordCount" : "2461",
+  "inLanguage": "en",
+  "image":"https://tyliu22.github.io/images/msg.png","datePublished": "2024-12-27T00:00:00Z",
+  "dateModified": "2024-12-27T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Tianyu Liu"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://tyliu22.github.io/interview/interview-for-classical-ml---data--feature/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tianyu Liu",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://tyliu22.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://tyliu22.github.io/" accesskey="h" title="Tianyu Liu (Alt + H)">Tianyu Liu</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://tyliu22.github.io/archives" title="Archives">
+                    <span>Archives</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://tyliu22.github.io/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://tyliu22.github.io/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.peanuts.com/about/snoopy" title="Snoopy">
+                    <span>Snoopy</span>&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://tyliu22.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://tyliu22.github.io/interview/">Interviews</a></div>
+    <h1 class="post-title entry-hint-parent">
+      How to prepare your interview - data scientist Part 2
+    </h1>
+    <div class="post-description">
+      Data preprocessing; Feature engineering;
+    </div>
+    <div class="post-meta"><span title='2024-12-27 00:00:00 +0000 UTC'>December 27, 2024</span>&nbsp;·&nbsp;12 min&nbsp;·&nbsp;Tianyu Liu
+
+</div>
+  </header> 
+<figure class="entry-cover">
+        <img loading="eager" srcset="https://tyliu22.github.io/images/msg_hu5deb5e6d9e0f2517f781ba2ad78170fc_29736_360x0_resize_box_3.png 360w ,https://tyliu22.github.io/images/msg_hu5deb5e6d9e0f2517f781ba2ad78170fc_29736_480x0_resize_box_3.png 480w ,https://tyliu22.github.io/images/msg_hu5deb5e6d9e0f2517f781ba2ad78170fc_29736_720x0_resize_box_3.png 720w ,https://tyliu22.github.io/images/msg_hu5deb5e6d9e0f2517f781ba2ad78170fc_29736_1080x0_resize_box_3.png 1080w ,https://tyliu22.github.io/images/msg_hu5deb5e6d9e0f2517f781ba2ad78170fc_29736_1500x0_resize_box_3.png 1500w ,https://tyliu22.github.io/images/msg.png 1600w" 
+            sizes="(min-width: 768px) 720px, 100vw" src="https://tyliu22.github.io/images/msg.png" alt="Generated using [OG Image Playground by Vercel](https://og-playground.vercel.app/)" 
+            width="1600" height="800">
+        <p>Generated using <a href="https://og-playground.vercel.app/">OG Image Playground by Vercel</a></p>
+</figure><div class="toc">
+    <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#data-preprocessing" aria-label="Data preprocessing">Data preprocessing</a><ul>
+                        
+                <li>
+                    <a href="#data-clearing" aria-label="Data clearing">Data clearing</a><ul>
+                        
+                <li>
+                    <a href="#handling-missing-values-in-data" aria-label="Handling Missing Values in Data">Handling Missing Values in Data</a></li>
+                <li>
+                    <a href="#detecting-outliers-in-data" aria-label="Detecting Outliers in Data">Detecting Outliers in Data</a></li></ul>
+                </li>
+                <li>
+                    <a href="#data-scaling-and-encoding" aria-label="Data scaling and encoding">Data scaling and encoding</a><ul>
+                        
+                <li>
+                    <a href="#numerical-feature" aria-label="numerical feature">numerical feature</a></li>
+                <li>
+                    <a href="#categorical-feature" aria-label="categorical feature">categorical feature</a></li></ul>
+                </li>
+                <li>
+                    <a href="#data-augmentation-for-class-imbalance" aria-label="Data augmentation for class imbalance">Data augmentation for class imbalance</a><ul>
+                        
+                <li>
+                    <a href="#upsampling" aria-label="upsampling">upsampling</a></li>
+                <li>
+                    <a href="#undersampling" aria-label="undersampling">undersampling</a></li>
+                <li>
+                    <a href="#comparison-of-techniques" aria-label="comparison of techniques">comparison of techniques</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#feature-engineering" aria-label="Feature engineering">Feature engineering</a><ul>
+                        
+                <li>
+                    <a href="#feature-importance-analysis" aria-label="Feature importance analysis">Feature importance analysis</a><ul>
+                        
+                <li>
+                    <a href="#feature-importance-analysis---summary" aria-label="Feature Importance Analysis - Summary">Feature Importance Analysis - Summary</a></li></ul>
+                </li>
+                <li>
+                    <a href="#feature-interaction" aria-label="Feature interaction">Feature interaction</a><ul>
+                        
+                <li>
+                    <a href="#feature-interaction-analysis" aria-label="Feature Interaction Analysis">Feature Interaction Analysis</a></li>
+                <li>
+                    <a href="#feature-multi-collinearity-for-generalised-linear-model" aria-label="Feature Multi-Collinearity (For Generalised Linear Model)">Feature Multi-Collinearity (For Generalised Linear Model)</a><ul>
+                        
+                <li>
+                    <a href="#how-to-detect-feature-multicollinearity" aria-label="How to Detect Feature Multicollinearity">How to Detect Feature Multicollinearity</a></li>
+                <li>
+                    <a href="#workflow-for-vif-in-linear-or-logistic-regression" aria-label="Workflow for VIF in Linear or Logistic Regression">Workflow for VIF in Linear or Logistic Regression</a></li></ul>
+                </li>
+                <li>
+                    <a href="#feature-binning" aria-label="Feature Binning">Feature Binning</a><ul>
+                        
+                <li>
+                    <a href="#benefits-of-feature-binning" aria-label="Benefits of Feature Binning">Benefits of Feature Binning</a></li>
+                <li>
+                    <a href="#types-of-feature-binning" aria-label="Types of Feature Binning">Types of Feature Binning</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#how-to-handle-new-feature" aria-label="how to handle new feature">how to handle new feature</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><blockquote>
+<p>Experience is the father of wisdom.</p>
+</blockquote>
+<p>This article offers data preprocessing, feature engineering, cross validation, loss function and model evaluation metrics, overfitting.</p>
+<h2 id="data-preprocessing">Data preprocessing<a hidden class="anchor" aria-hidden="true" href="#data-preprocessing">#</a></h2>
+<p>In the structured dataset, data may consists of different types, for examples, numerical data (eg. age), categorical data (eg. Gender)</p>
+<h3 id="data-clearing">Data clearing<a hidden class="anchor" aria-hidden="true" href="#data-clearing">#</a></h3>
+<h4 id="handling-missing-values-in-data">Handling Missing Values in Data<a hidden class="anchor" aria-hidden="true" href="#handling-missing-values-in-data">#</a></h4>
+<p>Missing values can negatively impact data analysis and machine learning models. Below is a summary of the most popular approaches to handle missing data.</p>
+<hr>
+<ol>
+<li><strong>Removal Techniques</strong>
+<ul>
+<li>Drop Rows – Remove rows with missing values.</li>
+<li>Drop Columns – Remove columns with too many missing values.</li>
+<li>When to Use:<br>
+- Small amount of missing data.<br>
+- Risk of losing information.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<ol start="2">
+<li><strong>Imputation Techniques</strong>
+<ul>
+<li>Mean/Median/Mode Imputation – Replace missing values with the column&rsquo;s mean, median, or mode.</li>
+<li>Forward/Backward Fill – Use previous or next values to fill missing data (time series).</li>
+<li>KNN Imputation – Use K-Nearest Neighbors to estimate missing values.</li>
+<li>When to Use:<br>
+- Moderate amount of missing data.<br>
+- Preserves data integrity without deletion.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<ol start="3">
+<li><strong>Advanced Techniques</strong>
+<ul>
+<li>Regression/Prediction Models – Use machine learning models to predict missing values.</li>
+<li>When to Use:<br>
+- Large datasets with significant missing data.<br>
+- More accurate, computationally expensive.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<ol start="4">
+<li><strong>Handling Categorical Data</strong>
+<ul>
+<li>Mode Imputation – Fill missing values with the most frequent category.</li>
+<li>Label &lsquo;Unknown&rsquo; – Tag missing values explicitly as &lsquo;Unknown&rsquo; or &lsquo;Missing&rsquo;.</li>
+<li>When to Use:<br>
+- Categorical features.<br>
+- Avoids introducing biases.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<ol start="5">
+<li><strong>Choosing the Right Method</strong></li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Missing Rate</th>
+<th>Recommended Approach</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt; 5%</td>
+<td>Mean/Median/Mode, Drop Rows</td>
+</tr>
+<tr>
+<td>5-20%</td>
+<td>KNN, Forward Fill, Regression</td>
+</tr>
+<tr>
+<td>&gt; 20%</td>
+<td>Multiple Imputation, Drop Columns</td>
+</tr>
+</tbody>
+</table>
+<h4 id="detecting-outliers-in-data">Detecting Outliers in Data<a hidden class="anchor" aria-hidden="true" href="#detecting-outliers-in-data">#</a></h4>
+<p>Outliers are data points that significantly differ from the majority of the data. Below is a summary of the most popular statistical and machine learning methods to detect outliers.</p>
+<hr>
+<ol>
+<li>Statistical Methods
+<ul>
+<li>Z-Score (Standard Score)
+- Measures the number of standard deviations a data point is from the mean.
+<ul>
+<li>Threshold: |z| &gt; 3</li>
+<li>Formula:   $$z= (x - mean) / std$$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<ol start="2">
+<li>Machine Learning Approaches
+<ul>
+<li>Isolation Forest
+- Anomaly detection algorithm that isolates outliers based on decision trees.<br>
+- Contamination Parameter: Proportion of outliers (e.g., 0.05).</li>
+<li>One-Class SVM (Support Vector Machine)
+- Classifies data as inliers or outliers by finding a boundary that separates normal data.</li>
+<li>K-Nearest Neighbors (KNN) / Local Outlier Factor (LOF)
+- Detects outliers by measuring the local density deviation of a data point.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<ol start="3">
+<li>Choosing the Right Method</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Best For</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Z-Score / IQR</td>
+<td>Simple datasets with low dimensionality</td>
+<td></td>
+</tr>
+<tr>
+<td>Isolation Forest</td>
+<td>Large datasets with complex patterns</td>
+<td></td>
+</tr>
+<tr>
+<td>One-Class SVM</td>
+<td>High-dimensional data</td>
+<td></td>
+</tr>
+<tr>
+<td>KNN (LOF)</td>
+<td>Local outlier detection</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="data-scaling-and-encoding">Data scaling and encoding<a hidden class="anchor" aria-hidden="true" href="#data-scaling-and-encoding">#</a></h3>
+<p>Scaling and encoding are crucial preprocessing steps for preparing data for machine learning models. This ensures that numerical features are comparable and categorical data is represented numerically.</p>
+<hr>
+<h4 id="numerical-feature">numerical feature<a hidden class="anchor" aria-hidden="true" href="#numerical-feature">#</a></h4>
+<p>Scaling and transforming numerical data ensures that the numerical size and distribution of features are consistent.</p>
+<ol>
+<li>
+<p>normalisation:</p>
+<ul>
+<li>Maps data into a fixed range, typically [0, 1], ensuring numerical stability and comparability.</li>
+<li>min-max scaling:
+<ul>
+<li>Formula:  $$x&rsquo; = \frac{x - min}{max - min}$$</li>
+<li>Scales data to the [0, 1] range based on minimum and maximum values.</li>
+<li>log scaling:
+<ul>
+<li>Handles wide ranges and reduces skew by applying logarithmic transformation.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>standardisation:</p>
+<ul>
+<li>Maps data into a standard normal distribution (mean = 0, std = 1).</li>
+<li>z-score standardisation:
+<ul>
+<li>Formula:  $$z = \frac{x - mean}{std}$$</li>
+<li>Transforms data into a distribution with a mean of 0 and standard deviation of 1.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>discretisation:</p>
+<ul>
+<li>Converts continuous features into discrete bins, helping to handle long-tail distributions.</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>Use normalisation when: A fixed output range (e.g., [0, 1]) is required OR data is stable and has no extreme values.<br>
+Use standardisation when: Data contains outliers or noise.</p>
+</blockquote>
+<ol start="4">
+<li>feature binning<br>
+- Groups data into intervals or buckets.</li>
+</ol>
+<hr>
+<h4 id="categorical-feature">categorical feature<a hidden class="anchor" aria-hidden="true" href="#categorical-feature">#</a></h4>
+<p>Encoding categorical data is necessary to convert non-numeric labels into numerical values for model processing.</p>
+<ol>
+<li>
+<p>one-hot encoding:</p>
+<ul>
+<li>Converts categories into binary indicators.</li>
+<li>Each category is represented by a binary vector (e.g., 001, 010, 100).</li>
+<li>Use for: Sparse, unordered categorical data.</li>
+</ul>
+</li>
+<li>
+<p>label encoding:</p>
+<ul>
+<li>Maps categories to integer values (0, 1, 2, &hellip;).</li>
+<li>Suitable for ordered features and tree-based models.</li>
+</ul>
+</li>
+<li>
+<p>ordinal encoding:</p>
+<ul>
+<li>Maps categories to specific numbers, preserving their order.</li>
+<li>Use for: Ordinal categorical data with meaningful ranking.</li>
+</ul>
+</li>
+<li>
+<p>count encoding:</p>
+<ul>
+<li>Replaces categories with the frequency of their occurrence.</li>
+<li>Pros:
+<ul>
+<li>Maintains feature relationships.</li>
+<li>Provides frequency distribution.</li>
+</ul>
+</li>
+<li>Cons:
+<ul>
+<li>Can introduce bias.</li>
+<li>Ineffective for large category sets.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>target encoding:</p>
+<ul>
+<li>Maps categories to statistical values (e.g., mean, median of target).</li>
+<li>Pros:
+<ul>
+<li>Handles high-cardinality features.</li>
+<li>Preserves category information.</li>
+<li>Cons:
+<ul>
+<li>Risk of information leakage.</li>
+<li>Sensitive to outliers and overfitting.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>technique</th>
+<th>purpose</th>
+<th>suitable for</th>
+<th>pros</th>
+<th>cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>normalisation</td>
+<td>scale to [0, 1]</td>
+<td>KNN, neural networks</td>
+<td>preserves data distribution</td>
+<td>sensitive to outliers</td>
+</tr>
+<tr>
+<td>standardisation</td>
+<td>mean = 0, std = 1</td>
+<td>SVM, linear regression, PCA</td>
+<td>robust to outliers</td>
+<td>not bounded to fixed range</td>
+</tr>
+<tr>
+<td>log scaling</td>
+<td>reduce skew and handle wide ranges</td>
+<td>skewed data, exponential growth</td>
+<td>reduces skew effectively</td>
+<td>can distort small values</td>
+</tr>
+<tr>
+<td>discretisation</td>
+<td>convert continuous to discrete</td>
+<td>decision trees, interpretable models</td>
+<td>reduces noise and outliers</td>
+<td>information loss with fewer bins</td>
+</tr>
+<tr>
+<td>one-hot encoding</td>
+<td>binary columns for each category</td>
+<td>nominal (unordered) data</td>
+<td>no ordinal relationships</td>
+<td>increases dimensionality</td>
+</tr>
+<tr>
+<td>label encoding</td>
+<td>map categories to integers</td>
+<td>ordinal data, tree-based models</td>
+<td>simple and efficient</td>
+<td>introduces ordinal relationship for nominal data</td>
+</tr>
+<tr>
+<td>ordinal encoding</td>
+<td>encode categories while preserving order</td>
+<td>ordinal data</td>
+<td>preserves category order</td>
+<td>inappropriate for nominal data</td>
+</tr>
+<tr>
+<td>count encoding</td>
+<td>replace categories with frequency of occurrence</td>
+<td>categorical features with few categories</td>
+<td>maintains distribution information</td>
+<td>biased by small sample sizes</td>
+</tr>
+<tr>
+<td>target encoding</td>
+<td>map categories to mean/median of target variable</td>
+<td>high-cardinality categorical features</td>
+<td>reduces dimensionality</td>
+<td>risk of overfitting and information leakage</td>
+</tr>
+</tbody>
+</table>
+<h3 id="data-augmentation-for-class-imbalance">Data augmentation for class imbalance<a hidden class="anchor" aria-hidden="true" href="#data-augmentation-for-class-imbalance">#</a></h3>
+<p>Data augmentation techniques help address class imbalance by generating new samples for minority classes or reducing the number of samples in majority classes.</p>
+<hr>
+<h4 id="upsampling">upsampling<a hidden class="anchor" aria-hidden="true" href="#upsampling">#</a></h4>
+<p>Upsampling increases the number of samples in the minority class to match the majority class, improving model performance on imbalanced datasets.</p>
+<ol>
+<li>
+<p>smote (synthetic minority oversampling technique):
+SMOTE is a popular upsampling technique used to address class imbalance by generating synthetic data points for the minority class. Unlike simple duplication, SMOTE creates new samples by interpolating between existing samples, increasing the diversity of the data.</p>
+<p>how smote works:</p>
+<ol>
+<li>Select a Minority Class Sample:
+- Randomly choose a data point from the minority class.</li>
+<li>Identify k Nearest Neighbors:
+- Find the k-nearest neighbors of the selected sample within the minority class.</li>
+<li>Generate Synthetic Points:
+- Randomly select one of the k neighbors.<br>
+- Create a synthetic data point by interpolating between the selected sample and its neighbor:  $$x_{new} = x_i + (x_{neighbor} - x_i) \times \lambda$$
+where ( \lambda ) is a random value between 0 and 1.</li>
+<li>Repeat Until Balance:
+- Continue generating synthetic samples until the desired class balance is achieved.</li>
+</ol>
+</li>
+</ol>
+<hr>
+<h4 id="undersampling">undersampling<a hidden class="anchor" aria-hidden="true" href="#undersampling">#</a></h4>
+<p>Undersampling reduces the number of samples in the majority class to balance the dataset, preventing the model from being biased toward the majority class.</p>
+<ol>
+<li>random undersampling:
+<ul>
+<li>Randomly removes samples from the majority class.</li>
+<li>Simple and quick but may lead to information loss.</li>
+</ul>
+</li>
+<li>nearmiss:
+<ul>
+<li>Selects majority class samples closest to the minority class for removal.</li>
+<li>Focuses on boundary samples, improving class separation.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4 id="comparison-of-techniques">comparison of techniques<a hidden class="anchor" aria-hidden="true" href="#comparison-of-techniques">#</a></h4>
+<table>
+<thead>
+<tr>
+<th>technique</th>
+<th>purpose</th>
+<th>suitable for</th>
+<th>pros</th>
+<th>cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>smote</td>
+<td>generate synthetic minority samples</td>
+<td>imbalanced data, classification tasks</td>
+<td>increases data diversity</td>
+<td>may generate overlapping samples</td>
+</tr>
+<tr>
+<td>random undersampling</td>
+<td>randomly reduce majority samples</td>
+<td>large datasets with redundant samples</td>
+<td>simple and fast</td>
+<td>risk of information loss</td>
+</tr>
+<tr>
+<td>nearmiss</td>
+<td>remove majority samples near minority</td>
+<td>imbalanced data with clear boundaries</td>
+<td>improves class boundary distinction</td>
+<td>computationally expensive</td>
+</tr>
+</tbody>
+</table>
+<h2 id="feature-engineering">Feature engineering<a hidden class="anchor" aria-hidden="true" href="#feature-engineering">#</a></h2>
+<ul>
+<li>Numerical features: normalisation/standardisation; binning; polynomial features</li>
+<li>Categorical features: one-hot encoding; target encoding; frequency/count feature</li>
+<li>Text features: tf-idf; word embedding</li>
+<li>Image features: use filter or convolution to detect feature; use pre-train model to extract feature</li>
+</ul>
+<h3 id="feature-importance-analysis">Feature importance analysis<a hidden class="anchor" aria-hidden="true" href="#feature-importance-analysis">#</a></h3>
+<h4 id="feature-importance-analysis---summary">Feature Importance Analysis - Summary<a hidden class="anchor" aria-hidden="true" href="#feature-importance-analysis---summary">#</a></h4>
+<p>Feature importance analysis helps identify which features contribute the most to a model’s predictions. This improves model interpretability, simplifies models, and guides feature selection.</p>
+<hr>
+<ol>
+<li>Model-Based Feature Importance<br>
+Feature importance is derived directly from the model’s internal structure.
+<ul>
+<li><strong>Linear Models (Linear/Logistic Regression):</strong><br>
+- Coefficients reflect feature importance. Larger coefficients indicate higher importance.
+- Use Case: Simple linear relationships.<br>
+- Action: Drop features with near-zero coefficients (Lasso), and manage multicollinearity (Ridge).</li>
+<li><strong>Lasso Regression (L1 Regularization):</strong><br>
+- Shrinks some coefficients to zero, selecting the most important features.<br>
+- Use Case: Feature selection with many irrelevant features.<br>
+- Action: Tune regularization strength (<code>alpha</code>) and drop zero-coefficient features.</li>
+<li><strong>Ridge Regression (L2 Regularization):</strong><br>
+- Reduces the magnitude of coefficients without shrinking them to zero.<br>
+- Use Case: Multicollinearity and high-dimensional data.<br>
+- Action: Use when elimination is not required.</li>
+<li><strong>Tree-Based Methods (Decision Trees, Random Forest, XGBoost):</strong><br>
+- Measures feature importance by how much they reduce impurity (Gini or Information Gain).
+<ul>
+<li>Use Case: Non-linear models and feature interactions.</li>
+<li>Action: Focus on high-importance features for refinement.</li>
+<li>Feature importance can be computed by how much each feature contributes to reducing impurity (classification) or variance (regression) when used in decision splits. Feature Importance Based on Gini Impurity or Gain
+<ul>
+<li>Gini Impurity (for Classification): Measures how often a feature reduces the uncertainty (impurity) in a node across all trees.</li>
+<li>Information Gain (for Regression): Measures how much the feature reduces the variance or Mean Squared Error (MSE) across all trees.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<ol start="2">
+<li>Model-Free Feature Importance<br>
+Model-free methods assess feature relevance independently of model structure, useful for black-box models.
+<ul>
+<li><strong>Recursive Feature Elimination (RFE):</strong><br>
+- Recursively removes the least important features by refitting the model iteratively.
+- Use Case: Optimal for incremental simplification.<br>
+- Action: Use <code>RFE</code> and select features based on cross-validation.</li>
+<li><strong>Permutation Importance:</strong><br>
+- Randomly shuffles feature values and measures the performance drop.<br>
+- Use Case: Model-agnostic, works with neural networks and complex models.<br>
+- Action: Use <code>permutation_importance</code> and eliminate features with minimal effect.</li>
+<li><strong>SHAP (SHapley Additive exPlanations):</strong><br>
+- Game-theory-based approach to assign feature contribution scores.<br>
+- Use Case: Explaining black-box models globally and locally.<br>
+- Action: Visualize SHAP plots to guide feature selection.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="feature-interaction">Feature interaction<a hidden class="anchor" aria-hidden="true" href="#feature-interaction">#</a></h3>
+<h4 id="feature-interaction-analysis">Feature Interaction Analysis<a hidden class="anchor" aria-hidden="true" href="#feature-interaction-analysis">#</a></h4>
+<p>Feature interaction analysis enhances model performance by uncovering relationships between features. This allows models to capture dependencies that might not be evident through simple linear approaches.</p>
+<hr>
+<ol>
+<li><em>Correlation Matrices for Numerical Variables</em><br>
+A correlation matrix calculates pairwise correlation between numerical features.
+<ul>
+<li><strong>Pearson’s Correlation</strong> measures the strength and direction of the linear relationship between two variables.</li>
+<li><strong>Spearman’s Correlation</strong> ranks data to capture monotonic relationships, making it robust to non-linear interactions.<br>
+Detects collinearity and redundant numerical features by highlighting feature pairs with high correlation.</li>
+</ul>
+</li>
+<li><em>Cross-Tabulation for Categorical Variables</em>
+<ul>
+<li>Cross-tabulation constructs a contingency table to show the frequency distribution of categorical data.</li>
+<li>A <strong>Chi-Square Test</strong> is applied to determine whether two categorical variables are independent by comparing observed and expected frequencies.<br>
+Reveals dependencies between categorical features and identifies patterns of co-occurrence.</li>
+</ul>
+</li>
+<li><em>SHAP Value (SHapley Additive exPlanations)</em>
+<ul>
+<li>SHAP values are calculated using cooperative game theory, attributing contributions to each feature based on its impact on the model’s output.</li>
+<li>The method generates explanations by comparing all possible permutations of features and their effects on predictions.</li>
+<li><strong>Partial Dependence Plots</strong> visualize the relationship between specific features and predictions while averaging over other features.<br>
+Uncovers interactions in models like decision trees, gradient boosting, and neural networks by accurately reflecting feature contributions.</li>
+</ul>
+</li>
+<li><em>Heatmap + Hierarchical Clustering</em><br>
+Visualize relationships between features and group similar ones.
+<ul>
+<li>A heatmap displays a correlation matrix using color gradients, making it easy to spot strongly correlated features.</li>
+<li><strong>Hierarchical Clustering</strong> groups features based on their pairwise similarity, building a dendrogram that shows the clustering process.</li>
+<li>Features in the same cluster exhibit similar patterns and can indicate redundancy or feature interactions.<br>
+Detects patterns, collinearity, and clusters of interacting features, aiding in feature selection and model simplification.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4 id="feature-multi-collinearity-for-generalised-linear-model">Feature Multi-Collinearity (For Generalised Linear Model)<a hidden class="anchor" aria-hidden="true" href="#feature-multi-collinearity-for-generalised-linear-model">#</a></h4>
+<p>Feature multi-collinearity occurs when two or more features exhibit a linear relationship, leading to redundancy in the model. In linear models or GLM (Generalized Linear Models), high collinearity can:</p>
+<ul>
+<li>Inflate the variance of model coefficients.</li>
+<li>Reduce the reliability of coefficient estimates.</li>
+<li>Lead to unstable and less interpretable models.</li>
+<li>Cause overfitting and poor generalization to new data.</li>
+</ul>
+<p>Addressing multi-collinearity is essential for enhancing model performance, ensuring stability, and improving interpretability.</p>
+<hr>
+<h5 id="how-to-detect-feature-multicollinearity">How to Detect Feature Multicollinearity<a hidden class="anchor" aria-hidden="true" href="#how-to-detect-feature-multicollinearity">#</a></h5>
+<p>1  Correlation Matrix<br>
+- Calculates pairwise correlation values between features.<br>
+- High correlation (typically &gt; 0.7 or &lt; -0.7) indicates potential collinearity.<br>
+- Effective for quick visualization of feature relationships.<br>
+- Useful in the exploratory data analysis (EDA) phase.<br>
+- Limitation: Does not capture multi-variable collinearity, only pairwise.</p>
+<ol start="2">
+<li>VIF (Variance Inflation Factor)
+<ul>
+<li>VIF measures how much the variance of a regression coefficient is inflated due to collinearity.</li>
+<li>A VIF score of <strong>1</strong> indicates no collinearity, while:<br>
+- VIF between 1 and 5 suggests moderate correlation.<br>
+- VIF above 5 or 10 signals high collinearity requiring attention.</li>
+<li>VIF is preferable for detecting multi-variable collinearity, unlike correlation matrices.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h5 id="workflow-for-vif-in-linear-or-logistic-regression">Workflow for VIF in Linear or Logistic Regression<a hidden class="anchor" aria-hidden="true" href="#workflow-for-vif-in-linear-or-logistic-regression">#</a></h5>
+<ol>
+<li>Fit the Model<br>
+Train the linear, logistic, or generalized linear model on the dataset.</li>
+<li>Calculate VIF<br>
+Compute VIF values for each independent variable to assess their collinearity.</li>
+<li>Inspect High VIF
+Identify features with high VIF values (typically greater than 5 or 10).</li>
+<li>Remove or Combine Features
+<ul>
+<li>Remove one of the highly correlated features.</li>
+<li>Combine or create interaction terms to preserve information while reducing redundancy.</li>
+</ul>
+</li>
+<li>Refit the Model<br>
+Rerun the model using the reduced or modified feature set and check for improvements.
+<ul>
+<li>Monitor changes in VIF scores and model coefficients.</li>
+</ul>
+</li>
+<li>Check Model Performance
+<ul>
+<li>Evaluate the model’s predictive performance on validation data.</li>
+<li>Ensure that removing or modifying features results in more stable and interpretable coefficients.</li>
+<li>Compare R², adjusted R², or AIC/BIC values to confirm improved model fit.</li>
+</ul>
+</li>
+</ol>
+<h4 id="feature-binning">Feature Binning<a hidden class="anchor" aria-hidden="true" href="#feature-binning">#</a></h4>
+<p>Feature binning is the process of transforming continuous numerical features into discrete intervals or &ldquo;bins/buckets.&rdquo; This transformation helps models like logistic regression capture nonlinear patterns more effectively.</p>
+<hr>
+<h5 id="benefits-of-feature-binning">Benefits of Feature Binning<a hidden class="anchor" aria-hidden="true" href="#benefits-of-feature-binning">#</a></h5>
+<ul>
+<li>Handle Non-Linearity<br>
+Binning can capture non-linear relationships better than using continuous features directly.</li>
+<li>Reducing Outliers / Long-Tail Distribution<br>
+By grouping extreme values into categories, binning reduces the influence of outliers, stabilizing model performance.</li>
+<li>Reduce Model Complexity
+Simplifies the model, reduces noise effects, and increases robustness by limiting the granularity of numerical features.</li>
+</ul>
+<hr>
+<h5 id="types-of-feature-binning">Types of Feature Binning<a hidden class="anchor" aria-hidden="true" href="#types-of-feature-binning">#</a></h5>
+<ol>
+<li>Fixed Width Binning
+Divides the range of values into equal-sized bins regardless of data distribution.</li>
+<li>Quantile Binning<br>
+Bins are created so that each bin contains an equal number of data points. This approach is useful for skewed distributions.</li>
+<li>Custom Binning
+Binning is performed based on domain knowledge or specific business logic, allowing for tailored intervals that reflect the nature of the data.</li>
+</ol>
+<h3 id="how-to-handle-new-feature">how to handle new feature<a hidden class="anchor" aria-hidden="true" href="#how-to-handle-new-feature">#</a></h3>
+<ol>
+<li>
+<p>For Tree-Based Models (Random Forest, Decision Trees, XGBoost)</p>
+<ul>
+<li>Tree models typically do not allow incremental retraining. The structure of the tree is fixed after training. However, here are a few workarounds::</li>
+<li>Retrain the model from scratch with old and new features.</li>
+<li>Use the existing model as a base learner. Train a new small tree or boosting model on the residuals/errors of the original model using the new feature.</li>
+</ul>
+</li>
+<li>
+<p>XGBoost/LightGBM Specific Approach</p>
+<ul>
+<li>XGBoost and LightGBM allow incremental retraining using <code>update()</code> but only for new data, not new features.</li>
+<li>Trick: Concatenate the new feature as an interaction term or use it in ensemble stacking.</li>
+</ul>
+</li>
+</ol>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://tyliu22.github.io/tags/interview/">Interview</a></li>
+      <li><a href="https://tyliu22.github.io/tags/classical_ml/">Classical_ML</a></li>
+      <li><a href="https://tyliu22.github.io/tags/data_science/">Data_science</a></li>
+    </ul>
+
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share How to prepare your interview - data scientist Part 2 on x"
+            href="https://x.com/intent/tweet/?text=How%20to%20prepare%20your%20interview%20-%20data%20scientist%20Part%202&amp;url=https%3a%2f%2ftyliu22.github.io%2finterview%2finterview-for-classical-ml---data--feature%2f&amp;hashtags=interview%2cclassical_ML%2cdata_science">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share How to prepare your interview - data scientist Part 2 on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2ftyliu22.github.io%2finterview%2finterview-for-classical-ml---data--feature%2f&amp;title=How%20to%20prepare%20your%20interview%20-%20data%20scientist%20Part%202&amp;summary=How%20to%20prepare%20your%20interview%20-%20data%20scientist%20Part%202&amp;source=https%3a%2f%2ftyliu22.github.io%2finterview%2finterview-for-classical-ml---data--feature%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share How to prepare your interview - data scientist Part 2 on reddit"
+            href="https://reddit.com/submit?url=https%3a%2f%2ftyliu22.github.io%2finterview%2finterview-for-classical-ml---data--feature%2f&title=How%20to%20prepare%20your%20interview%20-%20data%20scientist%20Part%202">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share How to prepare your interview - data scientist Part 2 on facebook"
+            href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2ftyliu22.github.io%2finterview%2finterview-for-classical-ml---data--feature%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share How to prepare your interview - data scientist Part 2 on whatsapp"
+            href="https://api.whatsapp.com/send?text=How%20to%20prepare%20your%20interview%20-%20data%20scientist%20Part%202%20-%20https%3a%2f%2ftyliu22.github.io%2finterview%2finterview-for-classical-ml---data--feature%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share How to prepare your interview - data scientist Part 2 on telegram"
+            href="https://telegram.me/share/url?text=How%20to%20prepare%20your%20interview%20-%20data%20scientist%20Part%202&amp;url=https%3a%2f%2ftyliu22.github.io%2finterview%2finterview-for-classical-ml---data--feature%2f">
+            <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share How to prepare your interview - data scientist Part 2 on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=How%20to%20prepare%20your%20interview%20-%20data%20scientist%20Part%202&u=https%3a%2f%2ftyliu22.github.io%2finterview%2finterview-for-classical-ml---data--feature%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    
+    
+    <span>&copy; 2025 Powered by Snoopy</span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
