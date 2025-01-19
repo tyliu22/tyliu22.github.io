@@ -10,9 +10,9 @@
     <atom:link href="https://tyliu22.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>How to configure Python virtual environment and Docker</title>
-      <link>https://tyliu22.github.io/model/emoji-support/</link>
+      <link>https://tyliu22.github.io/model/python-venv-docker/</link>
       <pubDate>Tue, 05 Mar 2019 00:00:00 +0000</pubDate>
-      <guid>https://tyliu22.github.io/model/emoji-support/</guid>
+      <guid>https://tyliu22.github.io/model/python-venv-docker/</guid>
       <description>Python is a popular, high-level, general-purpose programming language known for its simplicity and readability. A virtual environment is an isolated Python environment that allows you to work on a project without affecting the global Python installation or other projects. It ensures that dependencies for one project do not interfere with others. Dependencies are external libraries or packages that a Python project requires to function. Task: Suppose you have several ML projects, each project requires a seperate python environment with different python version.</description>
     </item>
   </channel>
